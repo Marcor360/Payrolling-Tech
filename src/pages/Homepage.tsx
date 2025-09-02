@@ -1,5 +1,8 @@
+import Headers from "../components/header.tsx";
 export default function HomePage() {
     return (
-        <h1>Hola</h1>
+        <div>
+            <Headers />
+        </div >
     )
 }
