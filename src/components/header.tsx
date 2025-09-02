@@ -1,28 +1,41 @@
-// Navbar.tsx
 import Logo from "/img/logos/1.png";
 
 export default function Navbar() {
     return (
-        <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-black/5">
-            <div className="mx-auto max-w-7xl px-4">
-                <div className="flex items-center gap-8 py-3">
-                    {/* Logo (link al home) */}
-                    <a href="/" className="flex items-center gap-3 shrink-0">
-                        <img
-                            src={Logo as unknown as string}
-                            alt="Logo"
-                            className="h-3 md:h-4 w-auto block"
+        <header className="fixed inset-x-0 top-0 z-50 bg-white/80 backdrop-blur"
+            style={{
+                position: "sticky",
+                top: 0,
+                zIndex: 50,
+            }}
+        >
+            <div
+                style={{
+                    maxWidth: "90%",
+                    margin: "0 auto",
+                    padding: "0.75rem 1rem",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                }}
+            >
+                {/* Logo (link al home) */}
+                <a href="/">
+                    <img
+                        src={Logo as unknown as string}
+                        alt="Logo"
+                        style={{ height: "150px", width: "auto", display: "block" }}
+                    />
+                </a>
 
-                        />
-                    </a>
-
-                    {/* Nav: enlaces con espacio entre ellos */}
-                    <nav aria-label="Principal" className="flex-1 ">
-                        <a href="#">Servicios</a>
-                        <a href="#">Contacto</a>
-                        <a href="#">Login</a>
-                    </nav>
-                </div>
+                {/* Nav: enlaces con espacio entre ellos */}
+                <nav
+                    style={{ marginLeft: "auto", display: "flex", gap: "10rem" }}
+                >
+                    <a className="text-base md:text-long" href="#">Servicios</a>
+                    <a className="text-base md:text-long" href="#">Contacto</a>
+                    <a className="text-base md:text-long" href="#">Login</a>
+                </nav>
             </div>
         </header>
     );
