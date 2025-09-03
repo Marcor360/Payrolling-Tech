@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+
+/* Custom theme colors */
+
+@theme {
+    --color-cardeno: #8f07fd;
+    --color-fondo-cremita: #f4f3e9;
+    --color-mango: #febe0b;
+    --color-futura: #ff006f;
+    --color-cereza: #cf51fe;
+    --color-noche: #040633;
+    --color-nevado: #2887f9;
+}
+
+
 /* Poppins Regular as global font */
 @font-face {
     font-family: "Poppins";
@@ -15,6 +29,7 @@ html {
     font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial,
         "Noto Sans", "Liberation Sans", "Apple Color Emoji", "Segoe UI Emoji",
         "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+    background-color: var(--color-fondo-cremita);
 }
 
 *,
@@ -25,5 +40,4 @@ html {
 
 a {
     text-decoration: none;
-    color: black;
 }
