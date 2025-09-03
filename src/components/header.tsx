@@ -1,40 +1,16 @@
-import Logo from "/img/logos/1.png";
+import logoUrl from "/img/logos/1.png?url";
 
 export default function Navbar() {
     return (
-        <header className="fixed inset-x-0 top-0 z-50 bg-white/80 backdrop-blur"
-            style={{
-                position: "sticky",
-                top: 0,
-                zIndex: 50,
-            }}
-        >
-            <div
-                style={{
-                    maxWidth: "90%",
-                    margin: "0 auto",
-                    padding: "0.75rem 1rem",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                }}
-            >
-                {/* Logo (link al home) */}
-                <a href="/">
-                    <img
-                        src={Logo as unknown as string}
-                        alt="Logo"
-                        style={{ height: "150px", width: "auto", display: "block" }}
-                    />
+        <header className="sticky top-0 z-50 bg-white/80 backdrop-blur">
+            <div className="mx-auto w-full max-w-screen-2xl px-4 py-3 flex items-center justify-between">
+                <a href="/" className="block">
+                    <img src={logoUrl} alt="Logo" className="h-18 md:h-30 w-auto block" />
                 </a>
-
-                {/* Nav: enlaces con espacio entre ellos */}
-                <nav
-                    style={{ marginLeft: "auto", display: "flex", gap: "10rem" }}
-                >
-                    <a className="text-base md:text-long" href="#">Servicios</a>
-                    <a className="text-base md:text-long" href="#">Contacto</a>
-                    <a className="text-base md:text-long" href="#">Login</a>
+                <nav className="flex gap-8 md:gap-12 xl:gap-16" aria-label="primary">
+                    <a className="text-lg md:text-xl lg:text-2xl font-bold text:hover" href="#servicios">Servicios</a>
+                    <a className="text-lg md:text-xl lg:text-2xl font-bold" href="#contacto">Contacto</a>
+                    <a className="text-lg md:text-xl lg:text-2xl font-bold" href="#login">Login</a>
                 </nav>
             </div>
         </header>

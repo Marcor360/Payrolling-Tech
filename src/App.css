@@ -1,6 +1,20 @@
-/* apply a natural box layout model to all elements, but allowing components to change */
+@import "tailwindcss";
+
+/* Poppins Regular as global font */
+@font-face {
+    font-family: "Poppins";
+    src: url("./assets/fonts/Poppins-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* apply a natural box layout model to all elements, and global font */
 html {
     box-sizing: border-box;
+    font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial,
+        "Noto Sans", "Liberation Sans", "Apple Color Emoji", "Segoe UI Emoji",
+        "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
 }
 
 *,
