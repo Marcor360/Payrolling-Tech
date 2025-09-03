@@ -4,8 +4,22 @@ import logoUrl from "/img/logos/1.png?url";
 export default function Navbar() {
     const [open, setOpen] = useState(false);
 
+    // Lock scroll and close on Escape when the drawer is open
+    useEffect(() => {
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === "Escape") setOpen(false);
+        };
+        window.addEventListener("keydown", onKey);
+        const prev = document.body.style.overflow;
+        document.body.style.overflow = open ? "hidden" : prev;
+        return () => {
+            window.removeEventListener("keydown", onKey);
+            document.body.style.overflow = prev;
+        };
+    }, [open]);
+
     return (
-        <header className="sticky top-0 z-50 bg-white/30 backdrop-blur">
+        <header className="sticky top-0 z-50 bg-white/20 backdrop-blur">
             <div className="relative mx-auto w-full max-w-screen-2xl px-4 py-3 flex items-center justify-between">
                 <a href="/" className="block">
                     <img src={logoUrl} alt="Logo" className="h-18 md:h-30 w-auto block" />
@@ -21,10 +35,10 @@ export default function Navbar() {
                 {/* Mobile toggle */}
                 <button
                     type="button"
-                    className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-cardeno hover:text-mango hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-mango"
+                    className={`md:hidden inline-flex items-center justify-center p-2 rounded-md text-cardeno hover:text-mango hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-mango ${open ? 'opacity-0 pointer-events-none' : ''}`}
                     aria-controls="mobile-menu"
                     aria-expanded={open}
-                    aria-label={open ? "Cerrar menú" : "Abrir menú"}
+                    aria-label={open ? "Cerrar menu" : "Abrir menu"}
                     onClick={() => setOpen(!open)}
                 >
                     {open ? (
@@ -44,24 +58,24 @@ export default function Navbar() {
                 </button>
 
                 {/* Mobile overlay + left drawer */}
-                {/* Backdrop */}
+                {/* Backdrop (tinted morado + blur) */}
                 {open && (
                     <div
-                        className="md:hidden fixed inset-0 z-40 bg-cardeno/40 backdrop-blur-md transition-opacity"
+                        className="md:hidden fixed inset-0 z-[60] bg-cardeno/40 backdrop-blur-md transition-opacity"
                         onClick={() => setOpen(false)}
                         aria-hidden="true"
                     />
                 )}
 
-                {/* Drawer panel (50% width) */}
+                {/* Drawer panel: ocupa la mitad izquierda, morado + blur */}
                 <aside
                     role="dialog"
                     aria-modal="true"
-                    aria-label="Menú"
-                    className={`md:hidden fixed left-0 top-0 bottom-0 z-50 w-1/2 max-w-xs bg-cardeno/10 backdrop-blur-xl border-r border-white/15 shadow-2xl ring-1 ring-white/10 transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full"}`}
+                    aria-label="Menu"
+                    className={`md:hidden fixed left-0 top-0 bottom-0 z-[70] w-1/2 min-w-[50vw] bg-cardeno/90 text-white backdrop-blur-2xl border-r border-white/20 shadow-2xl ring-1 ring-white/20 transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full"}`}
                 >
-                    {/* Decorative gradient background */}
-                    <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-cardeno/40 via-cereza/30 to-nevado/30 opacity-90" />
+                    {/* Decoración: gradiente sutil */}
+                    <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-cardeno/80 via-cereza/50 to-nevado/50 opacity-90" />
 
                     <div className="h-full flex flex-col">
                         <div className="flex items-center justify-between px-4 py-3">
@@ -70,8 +84,8 @@ export default function Navbar() {
                             </a>
                             <button
                                 type="button"
-                                className="inline-flex items-center justify-center p-2 rounded-md text-mango hover:text-nevado hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-mango"
-                                aria-label="Cerrar menú"
+                                className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-mango hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-mango"
+                                aria-label="Cerrar menu"
                                 onClick={() => setOpen(false)}
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -92,10 +106,6 @@ export default function Navbar() {
                         </nav>
                     </div>
                 </aside>
-
-                {/* Close on Escape & lock scroll when open */}
-                {/* Effects at component level */}
-                {/* Note: Effects declared below the return won't run; keeping here for clarity in source diff. */}
             </div>
         </header>
     );
