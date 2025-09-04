@@ -2,9 +2,13 @@ import { useRef, useCallback } from "react";
 
 type Card = {
   title: string;
-  color: string;   // reservado por si lo usas después
-  img: string;     // frente
-  imgBack?: string;// reverso (opcional)
+  color: string;      // opcional para futuros acentos
+  img: string;        // frente (100%)
+  imgBack?: string;   // fondo del reverso
+  backTitle: string;
+  backText: string;
+  cta?: string;
+  href?: string;      // destino del botón
 };
 
 const CARDS: Card[] = [
@@ -13,30 +17,54 @@ const CARDS: Card[] = [
     color: "bg-cardeno",
     img: "/img/img-tarjetas/Tarjeta_reclutamiento_frente.webp",
     imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-1.webp",
+    backTitle: "Reclutamiento",
+    backText:
+      "Localizamos el mejor talento \ncon herramientas digitales y \nalcance nacional, cubriendo \ntus vacantes de forma ágil \ncon perfiles que aportan valor \na tu negocio.",
+    cta: "Conoce más",
+    href: "#",
   },
   {
     title: "Nómina",
     color: "bg-mango",
     img: "/img/img-tarjetas/Tarjeta_Nomina_frente.webp",
     imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-2.webp",
+    backTitle: "Nómina",
+    backText:
+      "Ofrecemos maquila y \nautoservicio para generar \nnómina y cumplir con \nobligaciones fiscales y de \nseguridad social con precisión \ny 0 errores",
+    cta: "Conoce más",
+    href: "#",
   },
   {
     title: "Vales",
     color: "bg-cereza",
     img: "/img/img-tarjetas/Tarjeta_vales_frente.webp",
     imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-3.webp",
+    backTitle: "Vales",
+    backText:
+      "Centraliza vales, simplifica \nprocesos y motiva a tu equipo, \ncon control total de gastos, \noptimización de recursos y \nmáximas deducciones fiscales",
+    cta: "Conoce más",
+    href: "#",
   },
   {
     title: "Adelantos Nómina",
     color: "bg-nevado",
     img: "/img/img-tarjetas/Tarjeta_adelantos nomina_frente.webp",
     imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-1.webp",
+    backTitle: "Adelantos y\npréstamos sobre\nnómina",
+    backText: "Centraliza la administración \nde vales y préstamos de \nhasta 3 meses.",
+    cta: "Conoce más",
+    href: "#",
   },
   {
     title: "Seguros de vida",
     color: "bg-futura",
     img: "/img/img-tarjetas/Tarjeta_Seguros de vida_frente.webp",
     imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-2.webp",
+    backTitle: "Seguros de gastos\nmédicos y vida",
+    backText:
+      "Beneficios que aumentan la \nlealtad y reducen la rotación, \ndeducibles fiscalmente para \noptimizar costos, proteger a tu \nequipo y fortalecer tu \ncompetitividad.",
+    cta: "Conoce más",
+    href: "#",
   },
 ];
 
@@ -57,20 +85,18 @@ export default function ServicesSlider() {
 
   return (
     <div className="w-full overflow-x-hidden">
-      {/* ===== Desktop: stack/overlap con flip 3D y expansión ===== */}
+      {/* ===== Desktop: stack/overlap con flip 3D (sin overlay) ===== */}
       <div className="hidden md:block">
         <div
           className="
-            relative w-full max-w-full mx-auto overflow-hidden
+            relative w-full max-w-full mx-auto overflow-hidden [contain:paint]
             md:[--card-w:260px] md:[--overlap:85px]  md:[--card-h:360px]
             lg:[--card-w:280px] lg:[--overlap:120px] lg:[--card-h:380px]
             xl:[--card-w:300px] xl:[--overlap:130px] xl:[--card-h:400px]
             2xl:[--card-w:320px] 2xl:[--overlap:135px] 2xl:[--card-h:420px]
           "
           style={{
-            // ancho total = card-w + 4*overlap (5 cartas)
             width: "calc(var(--card-w) + calc(4 * var(--overlap)))",
-            // +24px para que el scale no provoque overflow vertical
             height: "calc(var(--card-h) + 24px)",
           }}
         >
@@ -87,7 +113,7 @@ export default function ServicesSlider() {
                 width: "var(--card-w)",
                 height: "var(--card-h)",
                 left: `calc(${i} * var(--overlap))`,
-                // === Opción B: solo invertimos quién queda arriba ===
+                // Opción B: primera arriba
                 zIndex: 10 + (CARDS.length - i),
               }}
             >
@@ -101,7 +127,7 @@ export default function ServicesSlider() {
                   group-hover:[transition-delay:120ms]
                 "
               >
-                {/* Frente */}
+                {/* Frente: imagen 100% */}
                 <div
                   className="
                     absolute inset-0 rounded-2xl border border-black/5 shadow-xl
@@ -117,7 +143,7 @@ export default function ServicesSlider() {
                   />
                 </div>
 
-                {/* Reverso */}
+                {/* Reverso: imagen + texto blanco (sin sombreado) */}
                 <div
                   className="
                     absolute inset-0 rounded-2xl border border-black/5 shadow-xl
@@ -128,10 +154,34 @@ export default function ServicesSlider() {
                   <img
                     src={c.imgBack ?? c.img}
                     alt={`${c.title} reverso`}
-                    className="block h-full w-full object-cover select-none pointer-events-none"
-                    draggable={false}
+                    className="absolute inset-0 h-full w-full object-cover"
                     loading="lazy"
+                    draggable={false}
                   />
+                  <div className="relative z-10 h-full w-full text-white flex flex-col">
+                    <div className="flex-1 px-5 py-6 md:px-6 md:py-7">
+                      <h3 className="text-lg md:text-xl font-extrabold leading-tight whitespace-pre-line">
+                        {c.backTitle}
+                      </h3>
+                      <p className="mt-3 text-xs md:text-sm leading-relaxed whitespace-pre-line">
+                        {c.backText}
+                      </p>
+                    </div>
+
+                    {/* Botón como <a>, mismo estilo */}
+                    <a
+                      href={c.href ?? "#"}
+                      className="
+                        block px-5 py-3 md:py-3.5 text-center font-semibold
+                        bg-white/12 backdrop-blur border-t border-white/25
+                        hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40
+                        rounded-b-2xl
+                      "
+                      aria-label={`Conoce más sobre ${c.title}`}
+                    >
+                      {c.cta ?? "Conoce más"}
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -139,7 +189,7 @@ export default function ServicesSlider() {
         </div>
       </div>
 
-      {/* ===== Mobile: sin títulos e imagen al 100% ===== */}
+      {/* ===== Mobile: carrusel (solo frente) ===== */}
       <div className="md:hidden relative">
         <div
           ref={scroller}
