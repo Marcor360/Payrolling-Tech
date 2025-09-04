@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import logoUrl from "/img/logos/1.png?url";
 
-export default function Navbar() {
+type HeaderVariant = "default" | "darkTransparent";
+
+export default function Navbar({ variant = "default" }: { variant?: HeaderVariant }) {
     const [open, setOpen] = useState(false);
 
     // Lock scroll and close on Escape when the drawer is open
@@ -18,8 +20,10 @@ export default function Navbar() {
         };
     }, [open]);
 
+    const isDarkTransparent = variant === "darkTransparent";
+
     return (
-        <header className="sticky top-0 z-50 bg-white/20 backdrop-blur">
+        <header className={`sticky top-0 z-50 ${isDarkTransparent ? "bg-transparent" : "bg-white/20"} backdrop-blur`}>
             <div className="relative mx-auto w-full max-w-screen-2xl px-4 py-3 flex items-center justify-between">
                 <a href="/" className="block">
                     <img src={logoUrl} alt="Logo" className="h-18 md:h-30 w-auto block" />
@@ -27,15 +31,15 @@ export default function Navbar() {
 
                 {/* Desktop nav */}
                 <nav className="hidden md:flex gap-8 md:gap-12 xl:gap-16" aria-label="primary">
-                    <a className="text-lg md:text-xl lg:text-2xl font-bold text-black hover:text-mango transition-colors" href="#servicios">Servicios</a>
-                    <a className="text-lg md:text-xl lg:text-2xl font-bold text-black hover:text-mango transition-colors" href="#contacto">Contacto</a>
-                    <a className="text-lg md:text-xl lg:text-2xl font-bold text-black hover:text-mango transition-colors" href="#login">Login</a>
+                    <a className={`text-lg md:text-xl lg:text-2xl font-bold transition-colors ${isDarkTransparent ? "text-white hover:text-mango" : "text-black hover:text-mango"}`} href="#servicios">Servicios</a>
+                    <a className={`text-lg md:text-xl lg:text-2xl font-bold transition-colors ${isDarkTransparent ? "text-white hover:text-mango" : "text-black hover:text-mango"}`} href="#contacto">Contacto</a>
+                    <a className={`text-lg md:text-xl lg:text-2xl font-bold transition-colors ${isDarkTransparent ? "text-white hover:text-mango" : "text-black hover:text-mango"}`} href="#login">Login</a>
                 </nav>
 
                 {/* Mobile toggle */}
                 <button
                     type="button"
-                    className={`md:hidden inline-flex items-center justify-center p-2 rounded-md text-cardeno hover:text-mango hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-mango ${open ? 'opacity-0 pointer-events-none' : ''}`}
+                    className={`md:hidden inline-flex items-center justify-center p-2 rounded-md ${isDarkTransparent ? "text-white" : "text-cardeno"} hover:text-mango hover:bg-black/5 focus:outline-none focus:ring-2 focus:ring-mango ${open ? 'opacity-0 pointer-events-none' : ''}`}
                     aria-controls="mobile-menu"
                     aria-expanded={open}
                     aria-label={open ? "Cerrar menu" : "Abrir menu"}
