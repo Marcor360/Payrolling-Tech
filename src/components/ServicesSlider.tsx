@@ -2,41 +2,41 @@ import { useRef, useCallback } from "react";
 
 type Card = {
   title: string;
-  color: string; // tailwind bg- token (custom)
-  img: string;   // absolute path from public (frente)
-  imgBack?: string; // ← opcional: reverso
+  color: string; // no lo usamos visualmente ya, pero lo dejamos por si lo necesitas luego
+  img: string;   // frente
+  imgBack?: string; // reverso (opcional)
 };
 
 const CARDS: Card[] = [
   {
     title: "Reclutamiento",
     color: "bg-cardeno",
-    img: "/img/img-tarjetas/Tarjeta reclutamiento_frente.webp",
-    // imgBack: "/img/img-tarjetas/Tarjeta reclutamiento_reverso.webp",
+    img: "/img/img-tarjetas/Tarjeta_reclutamiento_frente.webp",
+    imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-1.webp",
   },
   {
     title: "Nómina",
     color: "bg-mango",
-    img: "/img/img-tarjetas/Tarjeta Nomina_frente.webp",
-    // imgBack: "/img/img-tarjetas/Tarjeta Nomina_reverso.webp",
+    img: "/img/img-tarjetas/Tarjeta_Nomina_frente.webp",
+    imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-2.webp",
   },
   {
     title: "Vales",
     color: "bg-cereza",
-    img: "/img/img-tarjetas/Tarjeta vales_frente.webp",
-    // imgBack: "/img/img-tarjetas/Tarjeta vales_reverso.webp",
+    img: "/img/img-tarjetas/Tarjeta_vales_frente.webp",
+    imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-3.webp",
   },
   {
     title: "Adelantos Nómina",
     color: "bg-nevado",
-    img: "/img/img-tarjetas/Tarjeta adelantos nomina_frente.webp",
-    // imgBack: "/img/img-tarjetas/Tarjeta adelantos nomina_reverso.webp",
+    img: "/img/img-tarjetas/Tarjeta_adelantos nomina_frente.webp",
+    imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-1.webp",
   },
   {
     title: "Seguros de vida",
     color: "bg-futura",
     img: "/img/img-tarjetas/Tarjeta_Seguros de vida_frente.webp",
-    // imgBack: "/img/img-tarjetas/Tarjeta_Seguros de vida_reverso.webp",
+    imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-2.webp",
   },
 ];
 
@@ -69,7 +69,7 @@ export default function ServicesSlider() {
           "
           style={{
             width: "calc(var(--card-w) + calc(4 * var(--overlap)))",
-            height: "calc(var(--card-h) + 24px)", // margen para hover
+            height: "calc(var(--card-h) + 24px)",
           }}
         >
           {CARDS.map((c, i) => (
@@ -85,10 +85,10 @@ export default function ServicesSlider() {
                 width: "var(--card-w)",
                 height: "var(--card-h)",
                 left: `calc(${i} * var(--overlap))`,
-                zIndex: 10 + i, // orden base del “stack”
+                zIndex: 10 + i,
               }}
             >
-              {/* Contenedor que rota 180° con un pequeño delay para que se note la expansión primero */}
+              {/* Flipper */}
               <div
                 className="
                   relative h-full w-full transform-gpu
@@ -98,55 +98,41 @@ export default function ServicesSlider() {
                   group-hover:[transition-delay:120ms]
                 "
               >
-                {/* Cara frontal */}
+                {/* Cara frontal (solo imagen, 100%) */}
                 <div
                   className="
                     absolute inset-0
                     rounded-2xl border border-black/5 shadow-xl
-                    bg-white/90 backdrop-blur overflow-hidden
+                    overflow-hidden
                     [backface-visibility:hidden]
                   "
                 >
-                  <div
-                    className={`${c.color} text-white inline-flex items-center px-3 py-1.5 rounded-md text-xs font-semibold shadow absolute left-3 top-3 z-10`}
-                  >
-                    {c.title}
-                  </div>
-                  <div className="h-full w-full flex items-center justify-center bg-neutral-50">
-                    <img
-                      src={c.img}
-                      alt={c.title}
-                      className="max-h-[86%] w-auto object-contain select-none pointer-events-none"
-                      draggable={false}
-                      loading="lazy"
-                    />
-                  </div>
+                  <img
+                    src={c.img}
+                    alt={c.title}
+                    className="h-full w-full object-cover select-none pointer-events-none"
+                    draggable={false}
+                    loading="lazy"
+                  />
                 </div>
 
-                {/* Cara trasera (rota 180° para que se vea derecha al voltear) */}
+                {/* Cara trasera (solo imagen, 100%) */}
                 <div
                   className="
                     absolute inset-0
                     rounded-2xl border border-black/5 shadow-xl
-                    bg-white/90 backdrop-blur overflow-hidden
+                    overflow-hidden
                     [transform:rotateY(180deg)]
                     [backface-visibility:hidden]
                   "
                 >
-                  <div
-                    className={`${c.color} text-white inline-flex items-center px-3 py-1.5 rounded-md text-xs font-semibold shadow absolute left-3 top-3 z-10`}
-                  >
-                    {c.title}
-                  </div>
-                  <div className="h-full w-full flex items-center justify-center bg-neutral-50">
-                    <img
-                      src={c.imgBack ?? c.img}
-                      alt={`${c.title} reverso`}
-                      className="max-h-[86%] w-auto object-contain select-none pointer-events-none"
-                      draggable={false}
-                      loading="lazy"
-                    />
-                  </div>
+                  <img
+                    src={c.imgBack ?? c.img}
+                    alt={`${c.title} reverso`}
+                    className="h-full w-full object-cover select-none pointer-events-none"
+                    draggable={false}
+                    loading="lazy"
+                  />
                 </div>
               </div>
             </div>
@@ -154,7 +140,7 @@ export default function ServicesSlider() {
         </div>
       </div>
 
-      {/* ===== Mobile sin cambios (carrusel) ===== */}
+      {/* ===== Mobile: sin títulos y la imagen al 100% ===== */}
       <div className="md:hidden relative">
         <div
           ref={scroller}
@@ -173,29 +159,21 @@ export default function ServicesSlider() {
               className="
                 snap-center shrink-0
                 rounded-2xl border border-black/5 shadow-xl
-                bg-white/90 backdrop-blur overflow-hidden
+                overflow-hidden
               "
               style={{ width: 300, height: 380 }}
             >
-              <div className="relative h-full w-full">
-                <div
-                  className={`${c.color} text-white inline-flex items-center px-3 py-1.5 rounded-md text-xs font-semibold shadow absolute left-3 top-3 z-10`}
-                >
-                  {c.title}
-                </div>
-                <div className="h-full w-full flex items-center justify-center bg-neutral-50">
-                  <img
-                    src={c.img}
-                    alt={c.title}
-                    className="max-h-[86%] w-auto object-contain"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
+              <img
+                src={c.img}
+                alt={c.title}
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
             </article>
           ))}
         </div>
 
+        {/* Flechas */}
         <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-1">
           <button
             type="button"
