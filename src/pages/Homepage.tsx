@@ -43,7 +43,7 @@ export default function HomePage() {
           {/* Contenido */} 
           <div className="mx-auto max-w-7xl px-4 py-12 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-10">
             {/* Texto principal (lado izquierdo) */}
-            <div className="md:col-span-1">
+            <div className="md:col-span-1 text-center md:text-left">
               <h1 className="text-cardeno font-extrabold leading-tight text-4xl sm:text-5xl md:text-6xl">
                 POTENCIA, RETÉN Y
                 <br className="hidden sm:block" />
@@ -62,8 +62,8 @@ export default function HomePage() {
             </div>
 
             {/* Lado derecho: encabezado de sección para servicios */}
-            <div className="md:col-span-2 flex flex-col items-start">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-noche tracking-tight">
+            <div className="md:col-span-2 flex flex-col items-center md:items-start">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-noche tracking-tight text-center md:text-left">
                 NUESTROS SERVICIOS
               </h2>
 
