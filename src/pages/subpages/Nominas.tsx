@@ -1,33 +1,41 @@
 import Headers from "../../components/header.tsx"
 import Foter from "../../components/footer.tsx"
-//
 
-// Video en carpeta public (usar ruta absoluta)
+import FondoHeadBubles from "/img/tarjetas/Fondo-tarjetas/FondoNomina.webp"
+import Text1 from "/img/textos/TuNominaRapidoySinErrores.webp"
 
 export default function Nominas() {
 
     return (
         <>
-            <Headers variant="darkTransparent" />
-            <section aria-label="Hero Nóminas" className="relative overflow-hidden bg-[#0b0f2a] text-white">
-                <div className="mx-auto max-w-7xl px-4 py-16 text-center">
-                    <h1 className="font-extrabold leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
-                        Tu <span className="bg-cardeno px-2 rounded-sm">nòmina</span> <span>ràpido</span> y <span>sin errores</span>
-                    </h1>
-                    <p className="mt-4 text-white/90 text-base sm:text-lg md:text-xl">
+            <section
+                aria-label="Hero Nóminas"
+                className="relative overflow-hidden text-white bg-cover bg-bottom min-h-[680px] md:min-h-[760px] lg:min-h-[840px]"
+                style={{ backgroundImage: `url(${FondoHeadBubles})` }}
+            >
+                <Headers variant="darkTransparent" />
+                <div className="mx-auto max-w-7xl px-4 pt-0 md:pt-1 lg:pt-2 pb-6 md:pb-6 text-center -mt-4 md:-mt-6 lg:-mt-8">
+                    <img
+                        src={Text1}
+                        alt="Tu nómina rápido y sin errores"
+                        className="mx-auto w-full max-w-3xl h-auto"
+                        loading="eager"
+                        decoding="async"
+                    />
+                    <p className="mt-1 md:mt-1 text-white/90 text-base sm:text-lg md:text-xl">
                         tu <span className="font-bold text-white">activo</span> más importante para <span className="font-extrabold text-white">hacer crecer negocio</span>
                     </p>
 
                     <a
-                        href=""
-                        className="mt-8 inline-block rounded-md bg-yellow-400 px-6 py-3 font-semibold text-noche shadow hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400/60"
+                        href="https://api.whatsapp.com/send/?phone=528138646238&text=%C2%A1Hola%21+Quiero+m%C3%A1s+info+del+servicio+de+%2APayrolling+Tech%2A&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer"
+                        className="mt-1 md:mt-2 inline-block rounded-md bg-yellow-400 px-6 py-3 font-semibold text-noche shadow hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400/60"
                     >
                         Conoce nuestro servicio
                     </a>
                 </div>
             </section>
             <section>
-                <div className="mx-auto w-full max-w-5xl px-4">
+                <div className="mx-auto w-full max-w-5xl px-4 pt-15">
                     {/* aqui va el video */}
                     <video
                         className="w-full h-auto rounded-md shadow-sm"
@@ -40,12 +48,12 @@ export default function Nominas() {
                     </video>
                 </div>
             </section>
-            <section className="py-10">
+            <section className="py-10 pt-20">
                 <div className="mx-auto w-full max-w-6xl px-4">
                     <h2 className="text-cardeno font-extrabold tracking-tight text-3xl sm:text-4xl md:text-5xl text-center md:text-left">
                         ¿QUE INCLUYE NUESTRO SERVICIO?
                     </h2>
-                    <ul className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 text-noche/90 text-sm sm:text-base list-disc list-inside md:list-outside md:pl-6 text-center md:text-left">
+                    <ul className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 text-noche/90 text-sm sm:text-base md:text-lg list-disc list-inside md:list-outside md:pl-6 text-center md:text-left">
                         <li>
                             Cálculo de nómina y timbrado de recibos mensual, quincenal o semanal.
                         </li>

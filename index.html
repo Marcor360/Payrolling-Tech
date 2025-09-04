@@ -1,15 +1,84 @@
 <!doctype html>
-<html lang="en">
+<html lang="es-MX">
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/img/logos/Isotipo_Payrolling.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Payrolling Tech</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/img/logos/Isotipo_Payrolling.svg" />
+
+  <!-- SEO básico -->
+  <title>Payrolling Tech | Nómina automatizada para PyMEs en México</title>
+  <meta name="description" content="Servicio de nómina en línea para PyMEs en México: automatiza cálculos, cumple con el SAT y evita errores y multas. Implementación rápida y soporte especializado." />
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+  <link rel="canonical" href="https://www.payrollingtech.com/" />
+  <link rel="alternate" href="https://www.payrollingtech.com/" hreflang="es-MX" />
+  <link rel="alternate" href="https://www.payrollingtech.com/" hreflang="x-default" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Payrolling Tech" />
+  <meta property="og:title" content="Nómina automatizada para PyMEs en México | Payrolling Tech" />
+  <meta property="og:description" content="Automatiza tu nómina, cumple con el SAT y evita errores. Servicio de nómina en línea para PyMEs en México." />
+  <meta property="og:url" content="https://www.payrollingtech.com/" />
+  <meta property="og:locale" content="es_MX" />
+  <meta property="og:image" content="https://www.payrollingtech.com/img/og/og-payrolling.jpg" />
+  <meta property="og:image:alt" content="Panel de nómina automatizada Payrolling Tech" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Nómina automatizada para PyMEs en México | Payrolling Tech" />
+  <meta name="twitter:description" content="Automatiza tu nómina, cumple con el SAT y evita errores. Servicio de nómina en línea para PyMEs en México." />
+  <meta name="twitter:image" content="https://www.payrollingtech.com/img/og/og-payrolling.jpg" />
+
+  <!-- Navegadores / tema -->
+  <meta name="theme-color" content="#0B5FFF" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="apple-touch-icon" href="/img/icons/apple-touch-icon.png" />
+
+  <!-- JSON-LD: Organization + Service + WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.payrollingtech.com/#organization",
+        "name": "Payrolling Tech",
+        "url": "https://www.payrollingtech.com/",
+        "logo": "https://www.payrollingtech.com/img/logos/Isotipo_Payrolling.svg",
+        "sameAs": []
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.payrollingtech.com/#service",
+        "serviceType": "Nómina automatizada y administración de nómina",
+        "provider": { "@id": "https://www.payrollingtech.com/#organization" },
+        "areaServed": { "@type": "Country", "name": "México" },
+        "audience": { "@type": "BusinessAudience", "businessType": "PyMEs" },
+        "termsOfService": "https://www.payrollingtech.com/terminos"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.payrollingtech.com/#website",
+        "url": "https://www.payrollingtech.com/",
+        "name": "Payrolling Tech",
+        "inLanguage": "es-MX",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://www.payrollingtech.com/buscar?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 
 <body>
   <div id="root"></div>
+  <noscript>Habilita JavaScript para usar Payrolling Tech.</noscript>
   <script type="module" src="/src/main.tsx"></script>
 </body>
 
