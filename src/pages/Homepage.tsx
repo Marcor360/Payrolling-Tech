@@ -19,8 +19,12 @@ export default function HomePage() {
   return (
     <div>
       <Header />
+
       {/* Hero responsive con fondo para móvil y desktop */}
-      <section aria-label="Hero" className="relative">
+      <section
+        aria-label="Hero"
+        className="relative overflow-x-hidden overscroll-x-none"
+      >
         <div className="relative isolate min-h-[680px] md:min-h-[750px]">
           {/* Imagen de fondo responsiva */}
           <picture>
@@ -36,10 +40,10 @@ export default function HomePage() {
           {/* Capa sutil para legibilidad */}
           <div className="absolute inset-0 -z-10 bg-gradient-to-br from-white/40 via-fondo-cremita/40 to-white/30" />
 
-          {/* Contenido */}
-          <div className="mx-auto max-w-7xl px-4 py-12 md:py-16 grid grid-cols-1 md:grid-cols-2 gap-10">
+          {/* Contenido */} 
+          <div className="mx-auto max-w-7xl px-4 py-12 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-10">
             {/* Texto principal (lado izquierdo) */}
-            <div>
+            <div className="md:col-span-1">
               <h1 className="text-cardeno font-extrabold leading-tight text-4xl sm:text-5xl md:text-6xl">
                 POTENCIA, RETÉN Y
                 <br className="hidden sm:block" />
@@ -58,29 +62,39 @@ export default function HomePage() {
             </div>
 
             {/* Lado derecho: encabezado de sección para servicios */}
-            <div className="flex flex-col items-start">
+            <div className="md:col-span-2 flex flex-col items-start">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-noche tracking-tight">
                 NUESTROS SERVICIOS
               </h2>
-              <div className="mt-6">
-                {/* Slider de servicios */}
+
+              {/* Wrapper que limita el ancho del stack del slider */}
+              <div className="mt-6 w-full md:max-w-none">
                 <ServicesSlider />
-                {/* Contacto */}
+                {/* Contacto (tu formulario va abajo en su propia sección) */}
               </div>
             </div>
           </div>
         </div>
       </section>
+
       {/* Sección de Contacto */}
-      <section aria-label="Contacto" className="py-12 md:py-16 ">
+      <section aria-label="Contacto" className="py-12 md:py-16">
         <div className="mx-auto max-w-5xl px-4">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-noche tracking-tight">
             Contáctanos
           </h2>
-          <p className="mt-2 text-noche/80">¿Listo para impulsar tu capital humano? Escríbenos.</p>
-          <form onSubmit={handleSubmit} className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <p className="mt-2 text-noche/80">
+            ¿Listo para impulsar tu capital humano? Escríbenos.
+          </p>
+
+          <form
+            onSubmit={handleSubmit}
+            className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
             <div className="flex flex-col">
-              <label htmlFor="nombre" className="text-sm font-medium text-noche">Nombre</label>
+              <label htmlFor="nombre" className="text-sm font-medium text-noche">
+                Nombre
+              </label>
               <input
                 id="nombre"
                 name="nombre"
@@ -93,7 +107,9 @@ export default function HomePage() {
             </div>
 
             <div className="flex flex-col">
-              <label htmlFor="apellido" className="text-sm font-medium text-noche">Apellido</label>
+              <label htmlFor="apellido" className="text-sm font-medium text-noche">
+                Apellido
+              </label>
               <input
                 id="apellido"
                 name="apellido"
@@ -106,7 +122,9 @@ export default function HomePage() {
             </div>
 
             <div className="flex flex-col">
-              <label htmlFor="empresa" className="text-sm font-medium text-noche">Empresa</label>
+              <label htmlFor="empresa" className="text-sm font-medium text-noche">
+                Empresa
+              </label>
               <input
                 id="empresa"
                 name="empresa"
@@ -119,7 +137,9 @@ export default function HomePage() {
             </div>
 
             <div className="flex flex-col">
-              <label htmlFor="correo" className="text-sm font-medium text-noche">Correo</label>
+              <label htmlFor="correo" className="text-sm font-medium text-noche">
+                Correo
+              </label>
               <input
                 id="correo"
                 name="correo"
@@ -132,7 +152,9 @@ export default function HomePage() {
             </div>
 
             <div className="md:col-span-2 flex flex-col">
-              <label htmlFor="mensaje" className="text-sm font-medium text-noche">Mensaje</label>
+              <label htmlFor="mensaje" className="text-sm font-medium text-noche">
+                Mensaje
+              </label>
               <textarea
                 id="mensaje"
                 name="mensaje"
@@ -155,6 +177,7 @@ export default function HomePage() {
           </form>
         </div>
       </section>
+
       <Footer />
     </div>
   );
