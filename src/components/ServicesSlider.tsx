@@ -3,15 +3,41 @@ import { useRef, useCallback } from "react";
 type Card = {
   title: string;
   color: string; // tailwind bg- token (custom)
-  img: string;   // absolute path from public
+  img: string;   // absolute path from public (frente)
+  imgBack?: string; // ← opcional: reverso
 };
 
 const CARDS: Card[] = [
-  { title: "Reclutamiento",      color: "bg-cardeno", img: "/img/img-tarjetas/Tarjeta reclutamiento_frente.webp" },
-  { title: "Nómina",             color: "bg-mango",   img: "/img/img-tarjetas/Tarjeta Nomina_frente.webp" },
-  { title: "Vales",              color: "bg-cereza",  img: "/img/img-tarjetas/Tarjeta vales_frente.webp" },
-  { title: "Adelantos Nómina",   color: "bg-nevado",  img: "/img/img-tarjetas/Tarjeta adelantos nomina_frente.webp" },
-  { title: "Seguros de vida",    color: "bg-futura",  img: "/img/img-tarjetas/Tarjeta_Seguros de vida_frente.webp" },
+  {
+    title: "Reclutamiento",
+    color: "bg-cardeno",
+    img: "/img/img-tarjetas/Tarjeta reclutamiento_frente.webp",
+    // imgBack: "/img/img-tarjetas/Tarjeta reclutamiento_reverso.webp",
+  },
+  {
+    title: "Nómina",
+    color: "bg-mango",
+    img: "/img/img-tarjetas/Tarjeta Nomina_frente.webp",
+    // imgBack: "/img/img-tarjetas/Tarjeta Nomina_reverso.webp",
+  },
+  {
+    title: "Vales",
+    color: "bg-cereza",
+    img: "/img/img-tarjetas/Tarjeta vales_frente.webp",
+    // imgBack: "/img/img-tarjetas/Tarjeta vales_reverso.webp",
+  },
+  {
+    title: "Adelantos Nómina",
+    color: "bg-nevado",
+    img: "/img/img-tarjetas/Tarjeta adelantos nomina_frente.webp",
+    // imgBack: "/img/img-tarjetas/Tarjeta adelantos nomina_reverso.webp",
+  },
+  {
+    title: "Seguros de vida",
+    color: "bg-futura",
+    img: "/img/img-tarjetas/Tarjeta_Seguros de vida_frente.webp",
+    // imgBack: "/img/img-tarjetas/Tarjeta_Seguros de vida_reverso.webp",
+  },
 ];
 
 export default function ServicesSlider() {
@@ -31,7 +57,7 @@ export default function ServicesSlider() {
 
   return (
     <div className="w-full overflow-x-hidden">
-      {/* Desktop: stack/overlap responsivo SIN desbordar */}
+      {/* ===== Desktop: stack/overlap con flip 3D y expansión ===== */}
       <div className="hidden md:block">
         <div
           className="
@@ -42,47 +68,93 @@ export default function ServicesSlider() {
             2xl:[--card-w:320px] 2xl:[--overlap:135px] 2xl:[--card-h:420px]
           "
           style={{
-            // ancho total = card-w + 4*overlap (5 cartas)
             width: "calc(var(--card-w) + calc(4 * var(--overlap)))",
-            height: "calc(var(--card-h) + 20px)", // margen para hover
+            height: "calc(var(--card-h) + 24px)", // margen para hover
           }}
         >
           {CARDS.map((c, i) => (
-            <article
+            <div
               key={c.title}
               className="
-                absolute bottom-0
-                rounded-2xl border border-black/5 shadow-xl
-                bg-white/90 backdrop-blur overflow-hidden
-                transition-transform duration-300 hover:-translate-y-1
+                absolute bottom-0 group
+                transition-transform duration-300 will-change-transform
+                hover:scale-105 hover:-translate-y-1 hover:!z-[100]
+                [perspective:1200px]
               "
               style={{
                 width: "var(--card-w)",
                 height: "var(--card-h)",
                 left: `calc(${i} * var(--overlap))`,
-                zIndex: 10 + i,
+                zIndex: 10 + i, // orden base del “stack”
               }}
             >
+              {/* Contenedor que rota 180° con un pequeño delay para que se note la expansión primero */}
               <div
-                className={`${c.color} text-white inline-flex items-center px-3 py-1.5 rounded-md text-xs font-semibold shadow absolute left-3 top-3 z-10`}
+                className="
+                  relative h-full w-full transform-gpu
+                  transition-transform duration-700
+                  [transform-style:preserve-3d]
+                  group-hover:[transform:rotateY(180deg)]
+                  group-hover:[transition-delay:120ms]
+                "
               >
-                {c.title}
+                {/* Cara frontal */}
+                <div
+                  className="
+                    absolute inset-0
+                    rounded-2xl border border-black/5 shadow-xl
+                    bg-white/90 backdrop-blur overflow-hidden
+                    [backface-visibility:hidden]
+                  "
+                >
+                  <div
+                    className={`${c.color} text-white inline-flex items-center px-3 py-1.5 rounded-md text-xs font-semibold shadow absolute left-3 top-3 z-10`}
+                  >
+                    {c.title}
+                  </div>
+                  <div className="h-full w-full flex items-center justify-center bg-neutral-50">
+                    <img
+                      src={c.img}
+                      alt={c.title}
+                      className="max-h-[86%] w-auto object-contain select-none pointer-events-none"
+                      draggable={false}
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+
+                {/* Cara trasera (rota 180° para que se vea derecha al voltear) */}
+                <div
+                  className="
+                    absolute inset-0
+                    rounded-2xl border border-black/5 shadow-xl
+                    bg-white/90 backdrop-blur overflow-hidden
+                    [transform:rotateY(180deg)]
+                    [backface-visibility:hidden]
+                  "
+                >
+                  <div
+                    className={`${c.color} text-white inline-flex items-center px-3 py-1.5 rounded-md text-xs font-semibold shadow absolute left-3 top-3 z-10`}
+                  >
+                    {c.title}
+                  </div>
+                  <div className="h-full w-full flex items-center justify-center bg-neutral-50">
+                    <img
+                      src={c.imgBack ?? c.img}
+                      alt={`${c.title} reverso`}
+                      className="max-h-[86%] w-auto object-contain select-none pointer-events-none"
+                      draggable={false}
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="h-full w-full flex items-center justify-center bg-neutral-50">
-                <img
-                  src={c.img}
-                  alt={c.title}
-                  className="max-h-[86%] w-auto object-contain select-none pointer-events-none"
-                  draggable={false}
-                  loading="lazy"
-                />
-              </div>
-            </article>
+            </div>
           ))}
         </div>
       </div>
 
-      {/* Mobile: carrusel con scroll-snap (contenedor no expande el viewport) */}
+      {/* ===== Mobile sin cambios (carrusel) ===== */}
       <div className="md:hidden relative">
         <div
           ref={scroller}
@@ -124,7 +196,6 @@ export default function ServicesSlider() {
           ))}
         </div>
 
-        {/* Flechas */}
         <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-1">
           <button
             type="button"
