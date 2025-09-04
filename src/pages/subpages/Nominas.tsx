@@ -15,11 +15,13 @@ function Card({
     imgDefault,
     imgActive,
     align = "left",
+    href = "",
 }: {
     label: string;
     imgDefault: string;
     imgActive: string;
     align?: "left" | "right";
+    href?: string;
 }) {
     const [hover, setHover] = useState(false);
     const [open, setOpen] = useState(false);
@@ -67,7 +69,7 @@ function Card({
                             className="w-full max-w-2xl md:max-w-3xl h-auto rounded-2xl ring-4 ring-cardeno shadow-2xl"
                         />
                         <a
-                            href=""
+                            href={href}
                             className="absolute inset-0 m-auto h-12 w-48 flex items-center justify-center rounded-xl bg-yellow-400 text-noche font-extrabold shadow hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400/60"
                         >
                             Ingresar
@@ -184,6 +186,7 @@ export default function Nominas() {
                         label="Colaboradores"
                         imgDefault={Colab1}
                         imgActive={Colab2}
+                        href="http://payrolling-tech.webhop.org:9362/mn/sirele/index"
                     />
 
                     {/* Clientes */}
@@ -192,6 +195,7 @@ export default function Nominas() {
                         imgDefault={Colient1}
                         imgActive={Colient2}
                         align="right"
+                        href="http://payrolling-tech.webhop.org:9362/mn/index"
                     />
                 </div>
             </section>
