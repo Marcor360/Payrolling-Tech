@@ -2,9 +2,9 @@ import { useRef, useCallback } from "react";
 
 type Card = {
   title: string;
-  color: string; // no lo usamos visualmente ya, pero lo dejamos por si lo necesitas luego
-  img: string;   // frente
-  imgBack?: string; // reverso (opcional)
+  color: string;   // reservado por si lo usas después
+  img: string;     // frente
+  imgBack?: string;// reverso (opcional)
 };
 
 const CARDS: Card[] = [
@@ -61,14 +61,16 @@ export default function ServicesSlider() {
       <div className="hidden md:block">
         <div
           className="
-            relative w-full max-w-full mx-auto overflow-x-hidden
+            relative w-full max-w-full mx-auto overflow-hidden
             md:[--card-w:260px] md:[--overlap:85px]  md:[--card-h:360px]
             lg:[--card-w:280px] lg:[--overlap:120px] lg:[--card-h:380px]
             xl:[--card-w:300px] xl:[--overlap:130px] xl:[--card-h:400px]
             2xl:[--card-w:320px] 2xl:[--overlap:135px] 2xl:[--card-h:420px]
           "
           style={{
+            // ancho total = card-w + 4*overlap (5 cartas)
             width: "calc(var(--card-w) + calc(4 * var(--overlap)))",
+            // +24px para que el scale no provoque overflow vertical
             height: "calc(var(--card-h) + 24px)",
           }}
         >
@@ -76,7 +78,7 @@ export default function ServicesSlider() {
             <div
               key={c.title}
               className="
-                absolute bottom-0 group
+                absolute bottom-0 group origin-bottom
                 transition-transform duration-300 will-change-transform
                 hover:scale-105 hover:-translate-y-1 hover:!z-[100]
                 [perspective:1200px]
@@ -85,7 +87,8 @@ export default function ServicesSlider() {
                 width: "var(--card-w)",
                 height: "var(--card-h)",
                 left: `calc(${i} * var(--overlap))`,
-                zIndex: 10 + i,
+                // === Opción B: solo invertimos quién queda arriba ===
+                zIndex: 10 + (CARDS.length - i),
               }}
             >
               {/* Flipper */}
@@ -98,38 +101,34 @@ export default function ServicesSlider() {
                   group-hover:[transition-delay:120ms]
                 "
               >
-                {/* Cara frontal (solo imagen, 100%) */}
+                {/* Frente */}
                 <div
                   className="
-                    absolute inset-0
-                    rounded-2xl border border-black/5 shadow-xl
-                    overflow-hidden
-                    [backface-visibility:hidden]
+                    absolute inset-0 rounded-2xl border border-black/5 shadow-xl
+                    overflow-hidden [backface-visibility:hidden]
                   "
                 >
                   <img
                     src={c.img}
                     alt={c.title}
-                    className="h-full w-full object-cover select-none pointer-events-none"
+                    className="block h-full w-full object-cover select-none pointer-events-none"
                     draggable={false}
                     loading="lazy"
                   />
                 </div>
 
-                {/* Cara trasera (solo imagen, 100%) */}
+                {/* Reverso */}
                 <div
                   className="
-                    absolute inset-0
-                    rounded-2xl border border-black/5 shadow-xl
-                    overflow-hidden
-                    [transform:rotateY(180deg)]
+                    absolute inset-0 rounded-2xl border border-black/5 shadow-xl
+                    overflow-hidden [transform:rotateY(180deg)]
                     [backface-visibility:hidden]
                   "
                 >
                   <img
                     src={c.imgBack ?? c.img}
                     alt={`${c.title} reverso`}
-                    className="h-full w-full object-cover select-none pointer-events-none"
+                    className="block h-full w-full object-cover select-none pointer-events-none"
                     draggable={false}
                     loading="lazy"
                   />
@@ -140,7 +139,7 @@ export default function ServicesSlider() {
         </div>
       </div>
 
-      {/* ===== Mobile: sin títulos y la imagen al 100% ===== */}
+      {/* ===== Mobile: sin títulos e imagen al 100% ===== */}
       <div className="md:hidden relative">
         <div
           ref={scroller}
@@ -166,7 +165,7 @@ export default function ServicesSlider() {
               <img
                 src={c.img}
                 alt={c.title}
-                className="h-full w-full object-cover"
+                className="block h-full w-full object-cover"
                 loading="lazy"
               />
             </article>
