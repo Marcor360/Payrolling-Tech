@@ -1,5 +1,5 @@
 import { useRef, useCallback } from "react";
-
+import Nominas from "../pages/subpages/Nominas.tsx"
 type Card = {
   title: string;
   color: string;
@@ -52,7 +52,7 @@ const CARDS: Card[] = [
     backText:
       "Ofrecemos maquila y \nautoservicio para generar \nnómina y cumplir con \nobligaciones fiscales y de \nseguridad social con precisión \ny 0 errores",
     cta: "Conoce más",
-    href: "#",
+    href: "./nominas",
   },
   {
     title: "Vales",
