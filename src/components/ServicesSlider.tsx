@@ -11,7 +11,6 @@ type Card = {
   href?: string;
 };
 
-// Color del TÍTULO por card (se mantiene como lo tenías)
 const titleColorFor = (title: string) => {
   switch (title) {
     case "Reclutamiento":
@@ -29,7 +28,6 @@ const titleColorFor = (title: string) => {
   }
 };
 
-// Color del CUERPO (backText): noche SOLO en Nómina y Seguros de vida, blanco en las demás
 const bodyColorFor = (title: string) =>
   title === "Nómina" || title === "Seguros de vida" ? "text-noche" : "text-white";
 
@@ -106,19 +104,24 @@ export default function ServicesSlider() {
   }, []);
 
   return (
+    <>
     <div className="w-full overflow-x-hidden">
       {/* ===== Desktop ===== */}
       <div className="hidden md:block">
         <div
           className="
-            relative w-full max-w-full mx-auto overflow-hidden [contain:paint]
+            relative w-full max-w-full mx-auto
+            overflow-hidden [contain:paint]
+            box-border pr-6 md:pr-8 lg:pr-10 xl:pr-12 2xl:pr-14
             md:[--card-w:260px] md:[--overlap:85px]  md:[--card-h:360px]
             lg:[--card-w:280px] lg:[--overlap:120px] lg:[--card-h:380px]
             xl:[--card-w:300px] xl:[--overlap:130px] xl:[--card-h:400px]
             2xl:[--card-w:320px] 2xl:[--overlap:135px] 2xl:[--card-h:420px]
           "
           style={{
+            // ancho exacto del stack (sin bleed extra)
             width: "calc(var(--card-w) + calc(4 * var(--overlap)))",
+            // margen vertical para el scale en hover
             height: "calc(var(--card-h) + 24px)",
           }}
         >
@@ -135,7 +138,7 @@ export default function ServicesSlider() {
                 width: "var(--card-w)",
                 height: "var(--card-h)",
                 left: `calc(${i} * var(--overlap))`,
-                zIndex: 10 + (CARDS.length - i), // z-index invertido (Opción B)
+                zIndex: 10 + (CARDS.length - i), // Opción B (primera arriba)
               }}
             >
               {/* Flipper */}
@@ -148,7 +151,7 @@ export default function ServicesSlider() {
                   group-hover:[transition-delay:120ms]
                 "
               >
-                {/* Frente: imagen 100% */}
+                {/* Frente */}
                 <div
                   className="
                     absolute inset-0 rounded-2xl border border-black/5 shadow-xl
@@ -164,7 +167,7 @@ export default function ServicesSlider() {
                   />
                 </div>
 
-                {/* Reverso: imagen + título con color + cuerpo con color condicional */}
+                {/* Reverso */}
                 <div
                   className="
                     absolute inset-0 rounded-2xl border border-black/5 shadow-xl
@@ -180,7 +183,6 @@ export default function ServicesSlider() {
                     draggable={false}
                   />
                   <div className="relative z-10 h-full w-full flex flex-col">
-                    {/* Texto anclado abajo */}
                     <div className="px-5 py-6 md:px-6 md:py-7 mt-auto">
                       <h3
                         className={`text-lg md:text-xl font-extrabold leading-tight whitespace-pre-line ${titleColorFor(
@@ -198,7 +200,6 @@ export default function ServicesSlider() {
                       </p>
                     </div>
 
-                    {/* Botón <a> con mismo estilo, forzando texto blanco */}
                     <a
                       href={c.href ?? "#"}
                       className="
@@ -253,7 +254,6 @@ export default function ServicesSlider() {
           ))}
         </div>
 
-        {/* Flechas */}
         <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-1">
           <button
             type="button"
@@ -271,7 +271,6 @@ export default function ServicesSlider() {
             type="button"
             className="pointer-events-auto inline-flex items-center justify-center w-9 h-9 rounded-full bg-cardeno/80 text-white shadow hover:bg-cardeno"
             aria-label="Siguiente"
-            onClick={() => scrollByCard(1)}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
               viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -282,5 +281,6 @@ export default function ServicesSlider() {
         </div>
       </div>
     </div>
+    </>
   );
 }
