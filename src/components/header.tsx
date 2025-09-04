@@ -76,7 +76,7 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                     role="dialog"
                     aria-modal="true"
                     aria-label="Menu"
-                    className={`md:hidden fixed left-0 top-0 bottom-0 z-[70] w-1/2 min-w-[50vw] bg-cardeno/90 text-white backdrop-blur-2xl border-r border-white/20 shadow-2xl ring-1 ring-white/20 transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full"}`}
+                    className={`md:hidden fixed left-0 top-0 bottom-0 z-[70] w-full bg-cardeno text-white backdrop-blur-2xl shadow-2xl transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full"}`}
                 >
                     {/* Decoración: gradiente sutil */}
                     <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-cardeno/80 via-cereza/50 to-nevado/50 opacity-90" />
@@ -103,10 +103,10 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                             <div className="h-px bg-gradient-to-r from-transparent via-mango/70 to-transparent" />
                         </div>
 
-                        <nav className="px-4 py-5 flex flex-col gap-4" aria-label="mobile">
-                            <a onClick={() => setOpen(false)} className="text-lg font-semibold text-white hover:text-mango transition-colors" href="#servicios">Servicios</a>
-                            <a onClick={() => setOpen(false)} className="text-lg font-semibold text-white hover:text-mango transition-colors" href="#contacto">Contacto</a>
-                            <a onClick={() => setOpen(false)} className="text-lg font-semibold text-white hover:text-mango transition-colors" href="#login">Login</a>
+                        <nav className="px-4 py-6 flex flex-col gap-5" aria-label="mobile">
+                            <a onClick={() => setOpen(false)} className="text-xl font-bold text-white drop-shadow hover:text-mango transition-colors" href="#servicios">Servicios</a>
+                            <a onClick={() => setOpen(false)} className="text-xl font-bold text-white drop-shadow hover:text-mango transition-colors" href="#contacto">Contacto</a>
+                            <a onClick={() => setOpen(false)} className="text-xl font-bold text-white drop-shadow hover:text-mango transition-colors" href="#login">Login</a>
                         </nav>
                     </div>
                 </aside>

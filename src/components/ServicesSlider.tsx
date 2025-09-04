@@ -1,5 +1,5 @@
 import { useRef, useCallback } from "react";
-import Nominas from "../pages/subpages/Nominas.tsx"
+import { Link } from "react-router-dom";
 type Card = {
   title: string;
   color: string;
@@ -54,7 +54,7 @@ const CARDS: Card[] = [
     backText:
       "Ofrecemos maquila y \nautoservicio para generar \nnómina y cumplir con \nobligaciones fiscales y de \nseguridad social con precisión \ny 0 errores",
     cta: "Conoce más",
-    href: "./nominas",
+    href: "/nominas",
   },
   {
     title: "Vales",
@@ -198,20 +198,36 @@ export default function ServicesSlider() {
                       </p>
                     </div>
 
-                    {/* Botón <a> con mismo estilo, forzando texto blanco */}
-                    <a
-                      href={c.href ?? "#"}
-                      className="
-                        block px-5 py-3 md:py-3.5 text-center font-semibold
-                        text-white
-                        bg-white/12 backdrop-blur border-t border-white/25
-                        hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40
-                        rounded-b-2xl
-                      "
-                      aria-label={`Conoce más sobre ${c.title}`}
-                    >
-                      {c.cta ?? "Conoce más"}
-                    </a>
+                    {/* Botón al fondo: Link para rutas internas */}
+                    {c.href?.startsWith('/') ? (
+                      <Link
+                        to={c.href}
+                        className="
+                          block px-5 py-3 md:py-3.5 text-center font-semibold
+                          text-white
+                          bg-white/12 backdrop-blur border-t border-white/25
+                          hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40
+                          rounded-b-2xl
+                        "
+                        aria-label={`Conoce más sobre ${c.title}`}
+                      >
+                        {c.cta ?? "Conoce más"}
+                      </Link>
+                    ) : (
+                      <a
+                        href={c.href ?? "#"}
+                        className="
+                          block px-5 py-3 md:py-3.5 text-center font-semibold
+                          text-white
+                          bg-white/12 backdrop-blur border-t border-white/25
+                          hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40
+                          rounded-b-2xl
+                        "
+                        aria-label={`Conoce más sobre ${c.title}`}
+                      >
+                        {c.cta ?? "Conoce más"}
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
