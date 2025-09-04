@@ -19,7 +19,6 @@ export default function HomePage() {
   return (
     <div>
       <Header />
-
       {/* Hero responsive con fondo para móvil y desktop */}
       <section
         aria-label="Hero"
@@ -40,7 +39,7 @@ export default function HomePage() {
           {/* Capa sutil para legibilidad */}
           <div className="absolute inset-0 -z-10 bg-gradient-to-br from-white/40 via-fondo-cremita/40 to-white/30" />
 
-          {/* Contenido */} 
+          {/* Contenido */}
           <div className="mx-auto max-w-7xl px-4 py-12 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-10">
             {/* Texto principal (lado izquierdo) */}
             <div className="md:col-span-1 text-center md:text-left">
