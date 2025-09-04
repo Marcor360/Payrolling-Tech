@@ -2,16 +2,16 @@ import { useRef, useCallback } from "react";
 
 type Card = {
   title: string;
-  color: string;      // opcional para futuros acentos
-  img: string;        // frente (100%)
-  imgBack?: string;   // fondo del reverso
+  color: string;
+  img: string;
+  imgBack?: string;
   backTitle: string;
   backText: string;
   cta?: string;
   href?: string;
 };
 
-// Color del título por card
+// Color del TÍTULO por card (se mantiene como lo tenías)
 const titleColorFor = (title: string) => {
   switch (title) {
     case "Reclutamiento":
@@ -28,6 +28,10 @@ const titleColorFor = (title: string) => {
       return "text-white";
   }
 };
+
+// Color del CUERPO (backText): noche SOLO en Nómina y Seguros de vida, blanco en las demás
+const bodyColorFor = (title: string) =>
+  title === "Nómina" || title === "Seguros de vida" ? "text-noche" : "text-white";
 
 const CARDS: Card[] = [
   {
@@ -103,7 +107,7 @@ export default function ServicesSlider() {
 
   return (
     <div className="w-full overflow-x-hidden">
-      {/* ===== Desktop: stack/overlap con flip 3D ===== */}
+      {/* ===== Desktop ===== */}
       <div className="hidden md:block">
         <div
           className="
@@ -131,7 +135,7 @@ export default function ServicesSlider() {
                 width: "var(--card-w)",
                 height: "var(--card-h)",
                 left: `calc(${i} * var(--overlap))`,
-                zIndex: 10 + (CARDS.length - i), // Opción B
+                zIndex: 10 + (CARDS.length - i), // z-index invertido (Opción B)
               }}
             >
               {/* Flipper */}
@@ -160,7 +164,7 @@ export default function ServicesSlider() {
                   />
                 </div>
 
-                {/* Reverso: imagen + texto anclado abajo */}
+                {/* Reverso: imagen + título con color + cuerpo con color condicional */}
                 <div
                   className="
                     absolute inset-0 rounded-2xl border border-black/5 shadow-xl
@@ -175,8 +179,8 @@ export default function ServicesSlider() {
                     loading="lazy"
                     draggable={false}
                   />
-                  <div className="relative z-10 h-full w-full text-white flex flex-col">
-                    {/* 👇 Empuja este bloque hasta abajo */}
+                  <div className="relative z-10 h-full w-full flex flex-col">
+                    {/* Texto anclado abajo */}
                     <div className="px-5 py-6 md:px-6 md:py-7 mt-auto">
                       <h3
                         className={`text-lg md:text-xl font-extrabold leading-tight whitespace-pre-line ${titleColorFor(
@@ -185,16 +189,21 @@ export default function ServicesSlider() {
                       >
                         {c.backTitle}
                       </h3>
-                      <p className="mt-3 text-xs md:text-sm leading-relaxed whitespace-pre-line">
+                      <p
+                        className={`mt-3 text-xs md:text-sm leading-relaxed whitespace-pre-line ${bodyColorFor(
+                          c.title
+                        )}`}
+                      >
                         {c.backText}
                       </p>
                     </div>
 
-                    {/* Botón <a> al fondo */}
+                    {/* Botón <a> con mismo estilo, forzando texto blanco */}
                     <a
                       href={c.href ?? "#"}
                       className="
                         block px-5 py-3 md:py-3.5 text-center font-semibold
+                        text-white
                         bg-white/12 backdrop-blur border-t border-white/25
                         hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40
                         rounded-b-2xl
