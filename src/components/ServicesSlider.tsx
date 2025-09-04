@@ -1,5 +1,6 @@
 import { useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
+
 type Card = {
   title: string;
   color: string;
@@ -11,7 +12,7 @@ type Card = {
   href?: string;
 };
 
-// Color del TÍTULO por card (se mantiene como lo tenías)
+// Color del TÍTULO por card
 const titleColorFor = (title: string) => {
   switch (title) {
     case "Reclutamiento":
@@ -29,7 +30,7 @@ const titleColorFor = (title: string) => {
   }
 };
 
-// Color del CUERPO (backText): noche SOLO en Nómina y Seguros de vida, blanco en las demás
+// Color del CUERPO (backText)
 const bodyColorFor = (title: string) =>
   title === "Nómina" || title === "Seguros de vida" ? "text-noche" : "text-white";
 
@@ -116,6 +117,8 @@ export default function ServicesSlider() {
             lg:[--card-w:280px] lg:[--overlap:120px] lg:[--card-h:380px]
             xl:[--card-w:300px] xl:[--overlap:130px] xl:[--card-h:400px]
             2xl:[--card-w:320px] 2xl:[--overlap:135px] 2xl:[--card-h:420px]
+            transform-gpu
+            xl:-translate-x-2 2xl:-translate-x-3  /* ← desplazamos un poco a la izquierda solo en pantallas grandes */
           "
           style={{
             width: "calc(var(--card-w) + calc(4 * var(--overlap)))",
@@ -128,7 +131,7 @@ export default function ServicesSlider() {
               className="
                 absolute bottom-0 group origin-bottom
                 transition-transform duration-300 will-change-transform
-                hover:scale-105 hover:-translate-y-1 hover:!z-[100]
+                hover:scale-[1.04] hover:-translate-y-1 hover:!z-[100]  /* ← 1.04 para evitar overflow extremo */
                 [perspective:1200px]
               "
               style={{
@@ -148,7 +151,7 @@ export default function ServicesSlider() {
                   group-hover:[transition-delay:120ms]
                 "
               >
-                {/* Frente: imagen 100% */}
+                {/* Frente */}
                 <div
                   className="
                     absolute inset-0 rounded-2xl border border-black/5 shadow-xl
@@ -164,7 +167,7 @@ export default function ServicesSlider() {
                   />
                 </div>
 
-                {/* Reverso: imagen + título con color + cuerpo con color condicional */}
+                {/* Reverso */}
                 <div
                   className="
                     absolute inset-0 rounded-2xl border border-black/5 shadow-xl
@@ -198,8 +201,8 @@ export default function ServicesSlider() {
                       </p>
                     </div>
 
-                    {/* Botón al fondo: Link para rutas internas */}
-                    {c.href?.startsWith('/') ? (
+                    {/* Botón: Link si es ruta interna, <a> si es externa */}
+                    {c.href?.startsWith("/") ? (
                       <Link
                         to={c.href}
                         className="
@@ -269,7 +272,6 @@ export default function ServicesSlider() {
           ))}
         </div>
 
-        {/* Flechas */}
         <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-1">
           <button
             type="button"
