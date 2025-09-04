@@ -8,7 +8,25 @@ type Card = {
   backTitle: string;
   backText: string;
   cta?: string;
-  href?: string;      // destino del botón
+  href?: string;
+};
+
+// Color del título por card
+const titleColorFor = (title: string) => {
+  switch (title) {
+    case "Reclutamiento":
+      return "text-mango";
+    case "Nómina":
+      return "text-noche";
+    case "Vales":
+      return "text-noche";
+    case "Adelantos Nómina":
+      return "text-mango";
+    case "Seguros de vida":
+      return "text-noche";
+    default:
+      return "text-white";
+  }
 };
 
 const CARDS: Card[] = [
@@ -85,7 +103,7 @@ export default function ServicesSlider() {
 
   return (
     <div className="w-full overflow-x-hidden">
-      {/* ===== Desktop: stack/overlap con flip 3D (sin overlay) ===== */}
+      {/* ===== Desktop: stack/overlap con flip 3D ===== */}
       <div className="hidden md:block">
         <div
           className="
@@ -113,8 +131,7 @@ export default function ServicesSlider() {
                 width: "var(--card-w)",
                 height: "var(--card-h)",
                 left: `calc(${i} * var(--overlap))`,
-                // Opción B: primera arriba
-                zIndex: 10 + (CARDS.length - i),
+                zIndex: 10 + (CARDS.length - i), // Opción B
               }}
             >
               {/* Flipper */}
@@ -143,7 +160,7 @@ export default function ServicesSlider() {
                   />
                 </div>
 
-                {/* Reverso: imagen + texto blanco (sin sombreado) */}
+                {/* Reverso: imagen + texto anclado abajo */}
                 <div
                   className="
                     absolute inset-0 rounded-2xl border border-black/5 shadow-xl
@@ -159,8 +176,13 @@ export default function ServicesSlider() {
                     draggable={false}
                   />
                   <div className="relative z-10 h-full w-full text-white flex flex-col">
-                    <div className="flex-1 px-5 py-6 md:px-6 md:py-7">
-                      <h3 className="text-lg md:text-xl font-extrabold leading-tight whitespace-pre-line">
+                    {/* 👇 Empuja este bloque hasta abajo */}
+                    <div className="px-5 py-6 md:px-6 md:py-7 mt-auto">
+                      <h3
+                        className={`text-lg md:text-xl font-extrabold leading-tight whitespace-pre-line ${titleColorFor(
+                          c.title
+                        )}`}
+                      >
                         {c.backTitle}
                       </h3>
                       <p className="mt-3 text-xs md:text-sm leading-relaxed whitespace-pre-line">
@@ -168,7 +190,7 @@ export default function ServicesSlider() {
                       </p>
                     </div>
 
-                    {/* Botón como <a>, mismo estilo */}
+                    {/* Botón <a> al fondo */}
                     <a
                       href={c.href ?? "#"}
                       className="
