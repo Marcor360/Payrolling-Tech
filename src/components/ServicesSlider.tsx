@@ -113,15 +113,16 @@ export default function ServicesSlider() {
         <div
           className="
             relative w-full max-w-full mx-auto overflow-hidden [contain:paint]
-            md:[--card-w:260px] md:[--overlap:85px]  md:[--card-h:360px]
-            lg:[--card-w:280px] lg:[--overlap:120px] lg:[--card-h:380px]
-            xl:[--card-w:300px] xl:[--overlap:130px] xl:[--card-h:400px]
-            2xl:[--card-w:320px] 2xl:[--overlap:135px] 2xl:[--card-h:420px]
+            md:[--card-w:220px] md:[--overlap:65px]  md:[--card-h:340px] md:[--safe-w:12px]
+            lg:[--card-w:280px] lg:[--overlap:120px] lg:[--card-h:380px] lg:[--safe-w:16px]
+            xl:[--card-w:300px] xl:[--overlap:130px] xl:[--card-h:400px] xl:[--safe-w:20px]
+            2xl:[--card-w:300px] 2xl:[--overlap:122px] 2xl:[--card-h:400px] 2xl:[--safe-w:20px]
+            min-[1800px]:[--card-w:300px] min-[1800px]:[--overlap:125px] min-[1800px]:[--card-h:410px] min-[1800px]:[--safe-w:22px]
             transform-gpu
-            xl:-translate-x-2 2xl:-translate-x-3  /* ← desplazamos un poco a la izquierda solo en pantallas grandes */
+            xl:translate-x-0 2xl:translate-x-0 min-[1800px]:translate-x-0
           "
           style={{
-            width: "calc(var(--card-w) + calc(4 * var(--overlap)))",
+            width: "calc(var(--card-w) + calc(4 * var(--overlap)) + var(--safe-w, 0px))",
             height: "calc(var(--card-h) + 24px)",
           }}
         >
@@ -131,7 +132,7 @@ export default function ServicesSlider() {
               className="
                 absolute bottom-0 group origin-bottom
                 transition-transform duration-300 will-change-transform
-                hover:scale-[1.04] hover:-translate-y-1 hover:!z-[100]  /* ← 1.04 para evitar overflow extremo */
+                md:hover:scale-[1.02] lg:hover:scale-[1.04] hover:-translate-y-1 hover:!z-[100]
                 [perspective:1200px]
               "
               style={{
