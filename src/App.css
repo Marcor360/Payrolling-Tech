@@ -30,6 +30,8 @@ html {
         "Noto Sans", "Liberation Sans", "Apple Color Emoji", "Segoe UI Emoji",
         "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
     background-color: var(--color-fondo-cremita);
+    /* Smooth scrolling for anchor navigation */
+    scroll-behavior: smooth;
 }
 
 *,

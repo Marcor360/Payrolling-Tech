@@ -61,7 +61,7 @@ export default function HomePage() {
             </div>
 
             {/* Lado derecho: encabezado de sección para servicios */}
-            <div className="md:col-span-2 flex flex-col items-center md:items-start">
+            <div id="servicios" className="md:col-span-2 flex flex-col items-center md:items-start scroll-mt-24">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-noche tracking-tight text-center md:text-left">
                 NUESTROS SERVICIOS
               </h2>
@@ -77,7 +77,7 @@ export default function HomePage() {
       </section>
 
       {/* Sección de Contacto */}
-      <section aria-label="Contacto" className="py-12 md:py-16">
+      <section id="contacto" aria-label="Contacto" className="py-12 md:py-16 scroll-mt-24">
         <div className="mx-auto max-w-5xl px-4">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-noche tracking-tight">
             Contáctanos

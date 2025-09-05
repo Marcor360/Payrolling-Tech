@@ -173,7 +173,7 @@ export default function Nominas() {
                     </div>
                 </div>
             </section>
-            <section aria-label="Ingresar y facilitar procesos" className="relative overflow-hidden py-12 md:py-16 bg-[#f6f3ef]">
+            <section id="login" aria-label="Ingresar y facilitar procesos" className="relative overflow-hidden py-12 md:py-16 bg-[#f6f3ef] scroll-mt-24">
                 {/* Texto de fondo */}
                 <div className="pointer-events-none absolute inset-x-0 top-4 flex justify-center z-0">
                     <img src={Text2} alt="¡Ingresa y facilita tus procesos!" className="w-[90%] max-w-5xl h-auto opacity-100" />

@@ -23,9 +23,9 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
     const isDarkTransparent = variant === "darkTransparent";
 
     const links = [
-        { href: "#servicios", label: "Servicios" },
-        { href: "#contacto", label: "Contacto" },
-        { href: "#login", label: "Login" },
+        { href: "/#servicios", label: "Servicios" },
+        { href: "/#contacto", label: "Contacto" },
+        { href: "/nominas#login", label: "Login" },
     ];
 
     const desktopLinkClasses = `text-lg md:text-xl lg:text-2xl font-bold transition-colors ${isDarkTransparent ? "text-white hover:text-mango" : "text-black hover:text-mango"}`;
@@ -68,7 +68,7 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
 
             {/* Mobile nav */}
             <nav
-                className={`fixed top-0 left-0 z-[60] h-screen w-[50vw] max-w-sm transform ${open ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 bg-cardeno/70 backdrop-blur-xl border-r border-mango/80 shadow-2xl p-6 md:hidden rounded-r-2xl`}
+                className={`fixed top-0 left-0 z-[60] h-screen w-[50vw] max-w-sm transform ${open ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 bg-cardeno/70 backdrop-blur-xl border-r border-mango/80 shadow-2xl p-6 md:hidden rounded-r-2xl flex flex-col`}
                 aria-label="mobile"
             >
                 <div className="flex items-center justify-between mb-6">
@@ -89,7 +89,7 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                         </svg>
                     </button>
                 </div>
-                <div className="flex flex-col gap-4">
+                <div className="flex-1 flex flex-col justify-start mt-14 gap-5">
                     {links.map((l) => (
                         <a
                             key={l.href}
