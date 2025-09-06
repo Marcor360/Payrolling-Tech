@@ -1,4 +1,4 @@
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 type Card = {
@@ -92,10 +92,12 @@ const CARDS: Card[] = [
 ];
 
 export default function ServicesSlider() {
-  const scroller = useRef<HTMLDivElement>(null);
+  const hScroller = useRef<HTMLDivElement>(null); // desktop arrows (se conserva)
+  const vWrapRef = useRef<HTMLDivElement>(null);  // mobile "atardecer"
 
+  // Desktop: scroll con flechas (horizontal)
   const scrollByCard = useCallback((dir: 1 | -1) => {
-    const el = scroller.current;
+    const el = hScroller.current;
     if (!el) return;
     const card = el.querySelector<HTMLDivElement>("[data-card]");
     if (!card) return;
@@ -106,23 +108,91 @@ export default function ServicesSlider() {
     el.scrollBy({ left: dir * step, behavior: "smooth" });
   }, []);
 
+  // MOBILE: efecto "atardecer" (entra de derecha→centro→izquierda) + flip al centrar
+  useEffect(() => {
+    const wrap = vWrapRef.current;
+    if (!wrap) return;
+
+    const items = Array.from(
+      wrap.querySelectorAll<HTMLDivElement>("[data-vcard]")
+    );
+
+    // knobs (ajusta a tu gusto)
+    const MAX_SHIFT = 140;   // px → cuánto se mueve de derecha a izquierda
+    const MAX_FADE = 0.35;   // opacidad al alejarse del centro
+    const THRESHOLD = 0.12;  // qué tan cerca del centro para voltear
+
+    let ticking = false;
+
+    const update = () => {
+      const wRect = wrap.getBoundingClientRect();
+      const centerY = wRect.top + wRect.height / 2;
+
+      items.forEach((item) => {
+        const r = item.getBoundingClientRect();
+        const itemCenter = r.top + r.height / 2;
+
+        // d ∈ [-1, 1] relativo al centro del contenedor
+        let d = (itemCenter - centerY) / (wRect.height / 2);
+        if (d > 1) d = 1;
+        if (d < -1) d = -1;
+
+        // Atardecer: entra desde la derecha (d=+1 => +MAX_SHIFT),
+        // en el centro (d=0 => 0), sale a la izquierda (d=-1 => -MAX_SHIFT)
+        const shiftX = d * MAX_SHIFT;
+        const rotZ = d * -2;          // leve inclinación
+        const scale = 1 - 0.08 * Math.abs(d);
+        const opacity = 1 - MAX_FADE * Math.abs(d);
+
+        item.style.transform = `
+          translateX(${shiftX}px)
+          rotateZ(${rotZ}deg)
+          scale(${scale})
+        `;
+        item.style.opacity = `${opacity}`;
+
+        // Flip cuando está centrada
+        const centered = Math.abs(d) < THRESHOLD;
+        if (centered) item.classList.add("is-centered");
+        else item.classList.remove("is-centered");
+      });
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          update();
+          ticking = false;
+        });
+      }
+    };
+
+    wrap.addEventListener("scroll", onScroll, { passive: true });
+    // inicial
+    update();
+
+    return () => {
+      wrap.removeEventListener("scroll", onScroll as any);
+    };
+  }, []);
+
   return (
     <div className="w-full overflow-x-hidden">
-      {/* ===== Desktop ===== */}
+      {/* ===== Desktop: stack superpuesto ===== */}
       <div className="hidden md:block">
         <div
+          ref={hScroller}
           className="
             relative w-full max-w-full mx-auto overflow-hidden [contain:paint]
             md:[--card-w:220px] md:[--overlap:65px]  md:[--card-h:340px] md:[--safe-w:12px]
             lg:[--card-w:280px] lg:[--overlap:120px] lg:[--card-h:380px] lg:[--safe-w:16px]
             xl:[--card-w:300px] xl:[--overlap:130px] xl:[--card-h:400px] xl:[--safe-w:20px]
             2xl:[--card-w:300px] 2xl:[--overlap:122px] 2xl:[--card-h:400px] 2xl:[--safe-w:20px]
-            min-[1800px]:[--card-w:300px] min-[1800px]:[--overlap:125px] min-[1800px]:[--card-h:410px] min-[1800px]:[--safe-w:22px]
-            transform-gpu
-            xl:translate-x-0 2xl:translate-x-0 min-[1800px]:translate-x-0
           "
           style={{
-            width: "calc(var(--card-w) + calc(4 * var(--overlap)) + var(--safe-w, 0px))",
+            width:
+              "calc(var(--card-w) + calc(4 * var(--overlap)) + var(--safe-w, 0px))",
             height: "calc(var(--card-h) + 24px)",
           }}
         >
@@ -139,10 +209,10 @@ export default function ServicesSlider() {
                 width: "var(--card-w)",
                 height: "var(--card-h)",
                 left: `calc(${i} * var(--overlap))`,
-                zIndex: 10 + (CARDS.length - i), // z-index invertido (Opción B)
+                zIndex: 10 + (CARDS.length - i),
               }}
             >
-              {/* Flipper */}
+              {/* Flipper desktop (hover) */}
               <div
                 className="
                   relative h-full w-full transform-gpu
@@ -153,12 +223,7 @@ export default function ServicesSlider() {
                 "
               >
                 {/* Frente */}
-                <div
-                  className="
-                    absolute inset-0 rounded-2xl border border-black/5 shadow-xl
-                    overflow-hidden [backface-visibility:hidden]
-                  "
-                >
+                <div className="absolute inset-0 rounded-2xl border border-black/5 shadow-xl overflow-hidden [backface-visibility:hidden]">
                   <img
                     src={c.img}
                     alt={c.title}
@@ -169,13 +234,7 @@ export default function ServicesSlider() {
                 </div>
 
                 {/* Reverso */}
-                <div
-                  className="
-                    absolute inset-0 rounded-2xl border border-black/5 shadow-xl
-                    overflow-hidden [transform:rotateY(180deg)]
-                    [backface-visibility:hidden]
-                  "
-                >
+                <div className="absolute inset-0 rounded-2xl border border-black/5 shadow-xl overflow-hidden [transform:rotateY(180deg)] [backface-visibility:hidden]">
                   <img
                     src={c.imgBack ?? c.img}
                     alt={`${c.title} reverso`}
@@ -184,7 +243,6 @@ export default function ServicesSlider() {
                     draggable={false}
                   />
                   <div className="relative z-10 h-full w-full flex flex-col">
-                    {/* Texto anclado abajo */}
                     <div className="px-5 py-6 md:px-6 md:py-7 mt-auto">
                       <h3
                         className={`text-lg md:text-xl font-extrabold leading-tight whitespace-pre-line ${titleColorFor(
@@ -202,17 +260,10 @@ export default function ServicesSlider() {
                       </p>
                     </div>
 
-                    {/* Botón: Link si es ruta interna, <a> si es externa */}
                     {c.href?.startsWith("/") ? (
                       <Link
                         to={c.href}
-                        className="
-                          block px-5 py-3 md:py-3.5 text-center font-semibold
-                          text-white
-                          bg-white/12 backdrop-blur border-t border-white/25
-                          hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40
-                          rounded-b-2xl
-                        "
+                        className="block px-5 py-3 md:py-3.5 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl"
                         aria-label={`Conoce más sobre ${c.title}`}
                       >
                         {c.cta ?? "Conoce más"}
@@ -220,13 +271,7 @@ export default function ServicesSlider() {
                     ) : (
                       <a
                         href={c.href ?? "#"}
-                        className="
-                          block px-5 py-3 md:py-3.5 text-center font-semibold
-                          text-white
-                          bg-white/12 backdrop-blur border-t border-white/25
-                          hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40
-                          rounded-b-2xl
-                        "
+                        className="block px-5 py-3 md:py-3.5 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl"
                         aria-label={`Conoce más sobre ${c.title}`}
                       >
                         {c.cta ?? "Conoce más"}
@@ -240,64 +285,110 @@ export default function ServicesSlider() {
         </div>
       </div>
 
-      {/* ===== Mobile: carrusel (solo frente) ===== */}
+      {/* ===== Mobile: “atardecer” (der → centro → izq) + flip al centrar ===== */}
       <div className="md:hidden relative">
         <div
-          ref={scroller}
+          ref={vWrapRef}
           className="
-            w-full max-w-full
-            flex items-stretch gap-4 overflow-x-auto px-1 py-2
-            snap-x snap-mandatory scroll-smooth
+            relative w-full h-[80vh] max-h-[640px]
+            overflow-y-auto px-4
+            snap-y snap-mandatory
+            [perspective:1000px] [transform-style:preserve-3d]
             [-ms-overflow-style:none] [scrollbar-width:none]
           "
           aria-label="Servicios"
         >
+          {/* separadores para que primera y última puedan centrarse bien */}
+          <div className="h-10" />
           {CARDS.map((c) => (
             <article
               key={c.title}
-              data-card
+              data-vcard
               className="
-                snap-center shrink-0
-                rounded-2xl border border-black/5 shadow-xl
-                overflow-hidden
+                group
+                snap-center shrink-0 mx-auto my-6
+                w-[86vw] max-w-[340px] h-[420px]
+                rounded-2xl border border-black/5 shadow-xl overflow-hidden
+                transition-[transform,opacity] duration-150 will-change-transform
+                [transform-style:preserve-3d]
               "
-              style={{ width: 300, height: 380 }}
+              style={{
+                transform: "translateX(140px) rotateZ(0deg) scale(1)",
+                opacity: 0.8,
+              }}
             >
-              <img
-                src={c.img}
-                alt={c.title}
-                className="block h-full w-full object-cover"
-                loading="lazy"
-              />
+              {/* Flipper controlado por .is-centered en el <article> */}
+              <div
+                className="
+                  relative h-full w-full transform-gpu
+                  transition-transform duration-600
+                  [transform-style:preserve-3d]
+                  group-[.is-centered]:[transform:rotateY(180deg)]
+                "
+              >
+                {/* Frente */}
+                <div className="absolute inset-0 rounded-2xl overflow-hidden [backface-visibility:hidden]">
+                  <img
+                    src={c.img}
+                    alt={c.title}
+                    className="block h-full w-full object-cover select-none pointer-events-none"
+                    draggable={false}
+                    loading="lazy"
+                  />
+                </div>
+
+                {/* Reverso */}
+                <div className="absolute inset-0 rounded-2xl overflow-hidden [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                  <img
+                    src={c.imgBack ?? c.img}
+                    alt={`${c.title} reverso`}
+                    className="absolute inset-0 h-full w-full object-cover"
+                    loading="lazy"
+                    draggable={false}
+                  />
+                  <div className="relative z-10 h-full w-full flex flex-col">
+                    {/* Texto abajo */}
+                    <div className="px-5 py-5 mt-auto">
+                      <h3
+                        className={`text-base font-extrabold leading-tight whitespace-pre-line ${titleColorFor(
+                          c.title
+                        )}`}
+                      >
+                        {c.backTitle}
+                      </h3>
+                      <p
+                        className={`mt-2 text-xs leading-relaxed whitespace-pre-line ${bodyColorFor(
+                          c.title
+                        )}`}
+                      >
+                        {c.backText}
+                      </p>
+                    </div>
+
+                    {/* Botón */}
+                    {c.href?.startsWith("/") ? (
+                      <Link
+                        to={c.href}
+                        className="block px-5 py-3 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl"
+                        aria-label={`Conoce más sobre ${c.title}`}
+                      >
+                        {c.cta ?? "Conoce más"}
+                      </Link>
+                    ) : (
+                      <a
+                        href={c.href ?? "#"}
+                        className="block px-5 py-3 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl"
+                        aria-label={`Conoce más sobre ${c.title}`}
+                      >
+                        {c.cta ?? "Conoce más"}
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
             </article>
           ))}
-        </div>
-
-        <div className="pointer-events-none absolute inset-y-0 left-0 right-0 flex items-center justify-between px-1">
-          <button
-            type="button"
-            className="pointer-events-auto inline-flex items-center justify-center w-9 h-9 rounded-full bg-cardeno/80 text-white shadow hover:bg-cardeno"
-            aria-label="Anterior"
-            onClick={() => scrollByCard(-1)}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            className="pointer-events-auto inline-flex items-center justify-center w-9 h-9 rounded-full bg-cardeno/80 text-white shadow hover:bg-cardeno"
-            aria-label="Siguiente"
-            onClick={() => scrollByCard(1)}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </button>
+          <div className="h-10" />
         </div>
       </div>
     </div>
