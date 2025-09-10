@@ -1,4 +1,4 @@
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 type Card = {
@@ -18,13 +18,13 @@ const titleColorFor = (title: string) => {
     case "Reclutamiento":
       return "text-mango";
     case "Nómina":
-      return "text-noche";
+      return "text-cardeno";
     case "Vales":
-      return "text-noche";
+      return "text-mango";
     case "Adelantos Nómina":
       return "text-mango";
     case "Seguros de vida":
-      return "text-noche";
+      return "text-cardeno";
     default:
       return "text-white";
   }
@@ -96,17 +96,7 @@ export default function ServicesSlider() {
   const vWrapRef = useRef<HTMLDivElement>(null);  // mobile "atardecer"
 
   // Desktop: scroll con flechas (horizontal)
-  const scrollByCard = useCallback((dir: 1 | -1) => {
-    const el = hScroller.current;
-    if (!el) return;
-    const card = el.querySelector<HTMLDivElement>("[data-card]");
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const style = getComputedStyle(card);
-    const gap = parseInt(style.marginRight || "16", 10) || 16;
-    const step = rect.width + gap;
-    el.scrollBy({ left: dir * step, behavior: "smooth" });
-  }, []);
+
 
   // MOBILE: efecto "atardecer" (entra de derecha→centro→izquierda) + flip al centrar
   useEffect(() => {
