@@ -40,7 +40,7 @@ export default function HomePage() {
           <div className="absolute inset-0 -z-10 bg-gradient-to-br from-white/40 via-fondo-cremita/40 to-white/30" />
 
           {/* Contenido */}
-          <div className="mx-auto max-w-7xl px-4 py-12 md:py-16 grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div className="mx-auto max-w-7xl px-4 py-12 md:py-16 grid grid-cols-1 md:[grid-template-columns:1.15fr_2.1fr] gap-10 lg:gap-14">
             {/* Texto principal (lado izquierdo) */}
             <div className="md:col-span-1 text-center md:text-left md:relative md:z-10">
               <h1 className="text-cardeno font-extrabold leading-tight text-4xl sm:text-5xl md:text-5xl lg:text-6xl">
@@ -61,13 +61,13 @@ export default function HomePage() {
             </div>
 
             {/* Lado derecho: encabezado de sección para servicios */}
-            <div id="servicios" className="md:col-span-2 flex flex-col items-center md:items-start scroll-mt-24 md:pt-4 lg:pt-0">
+            <div id="servicios" className="md:col-span-1 flex flex-col items-center md:items-start scroll-mt-24 md:pt-4 lg:pt-0 md:pl-6 lg:pl-8">
               <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-extrabold text-noche tracking-tight text-center md:text-left">
                 NUESTROS SERVICIOS
               </h2>
 
               {/* Wrapper que limita el ancho del stack del slider */}
-              <div className="mt-6 md:mt-4 w-full md:max-w-[640px] lg:max-w-none md:ml-8 lg:ml-0">
+              <div className="mt-6 md:mt-4 w-full md:max-w-none">
                 <ServicesSlider />
                 {/* Contacto (tu formulario va abajo en su propia sección) */}
               </div>

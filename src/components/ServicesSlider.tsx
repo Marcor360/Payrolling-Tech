@@ -95,8 +95,6 @@ export default function ServicesSlider() {
   const hScroller = useRef<HTMLDivElement>(null); // desktop arrows (se conserva)
   const vWrapRef = useRef<HTMLDivElement>(null);  // mobile "atardecer"
 
-  // Desktop: scroll con flechas (horizontal)
-
 
   // MOBILE: efecto "atardecer" (entra de derecha→centro→izquierda) + flip al centrar
   useEffect(() => {
@@ -168,22 +166,22 @@ export default function ServicesSlider() {
   }, []);
 
   return (
-    <div className="w-full overflow-x-hidden">
+    <div className="w-full overflow-visible">
       {/* ===== Desktop: stack superpuesto ===== */}
       <div className="hidden md:block">
         <div
           ref={hScroller}
           className="
-            relative w-full max-w-full mx-auto overflow-hidden [contain:paint]
-            md:[--card-w:220px] md:[--overlap:65px]  md:[--card-h:340px] md:[--safe-w:12px]
-            lg:[--card-w:280px] lg:[--overlap:120px] lg:[--card-h:380px] lg:[--safe-w:16px]
-            xl:[--card-w:300px] xl:[--overlap:130px] xl:[--card-h:400px] xl:[--safe-w:20px]
-            2xl:[--card-w:300px] 2xl:[--overlap:122px] 2xl:[--card-h:400px] 2xl:[--safe-w:20px]
+            relative w-full max-w-none mx-auto md:ml-0 md:mr-0 overflow-visible [contain:paint]
+            md:[--card-w:220px] md:[--overlap:88px] md:[--card-h:340px] md:[--safe-w:120px] md:[--stack-offset:36px]
+            lg:[--card-w:260px] lg:[--overlap:136px] lg:[--card-h:380px] lg:[--safe-w:180px] lg:[--stack-offset:48px]
+            xl:[--card-w:280px] xl:[--overlap:150px] xl:[--card-h:400px] xl:[--safe-w:220px] xl:[--stack-offset:60px]
+            2xl:[--card-w:300px] 2xl:[--overlap:160px] 2xl:[--card-h:420px] 2xl:[--safe-w:260px] 2xl:[--stack-offset:72px]
           "
           style={{
             width:
-              "calc(var(--card-w) + calc(4 * var(--overlap)) + var(--safe-w, 0px))",
-            height: "calc(var(--card-h) + 24px)",
+              "calc(var(--stack-offset, 0px) + var(--card-w) + 4 * var(--overlap) + var(--safe-w, 0px))",
+            height: "calc(var(--card-h) + 28px)",
           }}
         >
           {CARDS.map((c, i) => (
@@ -198,7 +196,7 @@ export default function ServicesSlider() {
               style={{
                 width: "var(--card-w)",
                 height: "var(--card-h)",
-                left: `calc(${i} * var(--overlap))`,
+                left: `calc(var(--stack-offset, 0px) + ${i} * var(--overlap))`,
                 zIndex: 10 + (CARDS.length - i),
               }}
             >
@@ -288,8 +286,8 @@ export default function ServicesSlider() {
           "
           aria-label="Servicios"
         >
-          {/* separadores para que primera y última puedan centrarse bien */}
-          <div className="h-10" />
+          {/* separadores más altos para que la primera tarjeta alcance el centro */}
+          <div className="h-[28vh] min-h-[140px]" />
           {CARDS.map((c) => (
             <article
               key={c.title}
@@ -378,7 +376,7 @@ export default function ServicesSlider() {
               </div>
             </article>
           ))}
-          <div className="h-10" />
+          <div className="h-[28vh] min-h-[140px]" />
         </div>
       </div>
     </div>
