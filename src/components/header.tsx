@@ -25,7 +25,7 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
     const links = [
         { href: "/#servicios", label: "Servicios" },
         { href: "/#contacto", label: "Contacto" },
-        { href: "/nominas#login", label: "Login" },
+        { href: "/Login", label: "Login" },
     ];
 
     const desktopLinkClasses = `text-lg md:text-xl lg:text-2xl font-bold transition-colors ${isDarkTransparent ? "text-white hover:text-mango" : "text-black hover:text-mango"}`;
