@@ -12,14 +12,14 @@ export default function HomePage() {
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
     console.log("Contacto:", data);
-    alert("¡Gracias! Hemos recibido tu mensaje.");
+    alert("\u00A1Gracias! Hemos recibido tu mensaje.");
     e.currentTarget.reset();
   };
 
   return (
     <div>
       <Header />
-      {/* Hero responsive con fondo para móvil y desktop */}
+      {/* Hero responsive con fondo para movil y desktop */}
       <section
         aria-label="Hero"
         className="relative overflow-x-hidden overscroll-x-none"
@@ -42,26 +42,29 @@ export default function HomePage() {
           {/* Contenido */}
           <div className="mx-auto max-w-7xl px-4 py-12 md:py-16 grid grid-cols-1 md:[grid-template-columns:1.15fr_2.1fr] gap-10 lg:gap-14">
             {/* Texto principal (lado izquierdo) */}
-            <div className="md:col-span-1 text-center md:text-left md:relative md:z-10">
+            <div className="md:col-span-1 text-center md:text-left md:relative md:z-10 md:ml-0 md:pl-4 lg:-ml-12 lg:pl-0 xl:-ml-16 2xl:-ml-24">
               <h1 className="text-cardeno font-extrabold leading-tight text-4xl sm:text-5xl md:text-5xl lg:text-6xl">
-                POTENCIA, RETÉN Y
+                {"POTENCIA, RET\u00C9N Y"}
                 <br className="hidden sm:block" />
                 DESARROLLA
               </h1>
               <p className="mt-6 text-lg sm:text-xl text-noche/90">
-                tu <span className="font-bold">activo</span> más importante
+                {"tu "}
+                <span className="font-bold">activo</span>
+                {" m\u00E1s importante"}
                 <br className="hidden sm:block" />
-                para <span className="font-extrabold">hacer negocio</span>
+                {"para "}
+                <span className="font-extrabold">hacer negocio</span>
               </p>
               <p className="mt-4 max-w-xl text-sm sm:text-base text-noche/80">
-                Payrolling impulsa tu <span className="font-semibold">Gestión de Capital Humano</span>
-                en cada etapa: atracción, desarrollo y retención del talento que hace
-                crecer a tu empresa.
+                {"Payrolling impulsa tu "}
+                <span className="font-semibold">Gesti\u00F3n de Capital Humano</span>
+                {" en cada etapa: atracci\u00F3n, desarrollo y retenci\u00F3n del talento que hace crecer a tu empresa."}
               </p>
             </div>
 
-            {/* Lado derecho: encabezado de sección para servicios */}
-            <div id="servicios" className="md:col-span-1 flex flex-col items-center md:items-start scroll-mt-24 md:pt-4 lg:pt-0 md:pl-6 lg:pl-8">
+            {/* Lado derecho: encabezado de seccion para servicios */}
+            <div id="servicios" className="md:col-span-1 flex flex-col items-center md:items-center lg:items-start scroll-mt-24 md:pt-6 lg:pt-0 md:pl-0 lg:pl-8">
               <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-extrabold text-noche tracking-tight text-center md:text-left">
                 NUESTROS SERVICIOS
               </h2>
@@ -69,21 +72,21 @@ export default function HomePage() {
               {/* Wrapper que limita el ancho del stack del slider */}
               <div className="mt-6 md:mt-4 w-full md:max-w-none">
                 <ServicesSlider />
-                {/* Contacto (tu formulario va abajo en su propia sección) */}
+                {/* Contacto (tu formulario va abajo en su propia seccion) */}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Sección de Contacto */}
+      {/* Seccion de Contacto */}
       <section id="contacto" aria-label="Contacto" className="py-12 md:py-16 scroll-mt-24">
         <div className="mx-auto max-w-5xl px-4">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-noche tracking-tight">
-            Contáctanos
+            {"Cont\u00E1ctanos"}
           </h2>
           <p className="mt-2 text-noche/80">
-            ¿Listo para impulsar tu capital humano? Escríbenos.
+            {"\u00BfListo para impulsar tu capital humano? Escr\u00EDbenos."}
           </p>
 
           <form
@@ -160,7 +163,7 @@ export default function HomePage() {
                 required
                 rows={5}
                 className="mt-2 rounded-md border border-noche/20 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-cardeno/50"
-                placeholder="Cuéntanos brevemente qué necesitas"
+                placeholder={"Cu\u00E9ntanos brevemente qu\u00E9 necesitas"}
               />
             </div>
 

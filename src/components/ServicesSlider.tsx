@@ -168,7 +168,7 @@ export default function ServicesSlider() {
   return (
     <div className="w-full overflow-visible">
       {/* ===== Desktop: stack superpuesto ===== */}
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         <div
           ref={hScroller}
           className="
@@ -274,12 +274,13 @@ export default function ServicesSlider() {
       </div>
 
       {/* ===== Mobile: “atardecer” (der → centro → izq) + flip al centrar ===== */}
-      <div className="md:hidden relative">
+      <div className="lg:hidden relative md:flex md:justify-center">
         <div
           ref={vWrapRef}
           className="
             relative w-full h-[80vh] max-h-[640px]
             overflow-y-auto px-4
+            md:w-auto md:h-[70vh] md:max-h-[580px] md:px-0
             snap-y snap-mandatory
             [perspective:1000px] [transform-style:preserve-3d]
             [-ms-overflow-style:none] [scrollbar-width:none]
@@ -296,6 +297,7 @@ export default function ServicesSlider() {
                 group
                 snap-center shrink-0 mx-auto my-6
                 w-[86vw] max-w-[340px] h-[420px]
+                md:w-[68vw] md:max-w-[420px] md:h-[460px]
                 rounded-2xl border border-black/5 shadow-xl overflow-hidden
                 transition-[transform,opacity] duration-150 will-change-transform
                 [transform-style:preserve-3d]
