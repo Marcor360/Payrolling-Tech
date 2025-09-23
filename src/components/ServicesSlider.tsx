@@ -174,9 +174,9 @@ export default function ServicesSlider() {
           className="
             relative w-full max-w-none mx-auto md:ml-0 md:mr-0 overflow-visible [contain:paint]
             md:[--card-w:220px] md:[--overlap:88px] md:[--card-h:340px] md:[--safe-w:120px] md:[--stack-offset:36px]
-            lg:[--card-w:260px] lg:[--overlap:136px] lg:[--card-h:380px] lg:[--safe-w:180px] lg:[--stack-offset:48px]
+            lg:[--card-w:300px] lg:[--overlap:145px] lg:[--card-h:400px] lg:[--safe-w:200px] lg:[--stack-offset:56px]
             xl:[--card-w:280px] xl:[--overlap:150px] xl:[--card-h:400px] xl:[--safe-w:220px] xl:[--stack-offset:60px]
-            2xl:[--card-w:300px] 2xl:[--overlap:160px] 2xl:[--card-h:420px] 2xl:[--safe-w:260px] 2xl:[--stack-offset:72px]
+            2xl:[--card-w:340px] 2xl:[--overlap:140px] 2xl:[--card-h:460px] 2xl:[--safe-w:320px] 2xl:[--stack-offset:84px]
           "
           style={{
             width:

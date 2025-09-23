@@ -1,4 +1,4 @@
-import Header from "../components/header.tsx";
+﻿import Header from "../components/header.tsx";
 import Footer from "../components/footer.tsx";
 import ServicesSlider from "../components/ServicesSlider";
 import type { FormEvent } from "react";
@@ -44,7 +44,7 @@ export default function HomePage() {
             {/* Texto principal (lado izquierdo) */}
             <div className="md:col-span-1 text-center md:text-left md:relative md:z-10 md:ml-0 md:pl-4 lg:-ml-12 lg:pl-0 xl:-ml-16 2xl:-ml-24">
               <h1 className="text-cardeno font-extrabold leading-tight text-4xl sm:text-5xl md:text-5xl lg:text-6xl">
-                {"POTENCIA, RET\u00C9N Y"}
+                {"IMPULSA, RET\u00C9N Y"}
                 <br className="hidden sm:block" />
                 DESARROLLA
               </h1>
@@ -54,12 +54,12 @@ export default function HomePage() {
                 {" m\u00E1s importante"}
                 <br className="hidden sm:block" />
                 {"para "}
-                <span className="font-extrabold">hacer negocio</span>
+                <span className="font-extrabold">fortalecer tu negocio</span>
               </p>
               <p className="mt-4 max-w-xl text-sm sm:text-base text-noche/80">
-                {"Payrolling impulsa tu "}
-                <span className="font-semibold">Gesti\u00F3n de Capital Humano</span>
-                {" en cada etapa: atracci\u00F3n, desarrollo y retenci\u00F3n del talento que hace crecer a tu empresa."}
+                {"Payrolling-tech potencia la "}
+                <span className="font-semibold">Gestión de Capital Humano</span>
+                {" en cada etapa: Atracción, Control y Retencion de talento."}
               </p>
             </div>
 
