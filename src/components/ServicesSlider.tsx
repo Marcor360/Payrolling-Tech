@@ -42,7 +42,7 @@ const CARDS: Card[] = [
     imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-1.webp",
     backTitle: "Reclutamiento",
     backText:
-      "Localizamos el mejor talento \ncon herramientas digitales y \nalcance nacional, cubriendo \ntus vacantes de forma ágil \ncon perfiles que aportan valor \na tu negocio.",
+      "Combinamos la experiencia \nde expertos locales, tecnologias \nde busquedas y procesos \nestandarizados de seleccion \npara lograr contrataciones más rapidas \nde mayor calidad y con menor rotación.",
     cta: "Conoce más",
     href: "#",
   },
@@ -53,7 +53,7 @@ const CARDS: Card[] = [
     imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-2.webp",
     backTitle: "Nómina",
     backText:
-      "Ofrecemos maquila y \nautoservicio para generar \nnómina y cumplir con \nobligaciones fiscales y de \nseguridad social con precisión \ny 0 errores",
+      "Maquila y autoservicio de nomina\nasegurando el cumplimiento de las normas fiscales y de seguridad. \nEliminando viejos erroreres \ny garantizando  tranquilidad tanto para tus empleados \ncomo para tus colaboradores.",
     cta: "Conoce más",
     href: "/nominas",
   },

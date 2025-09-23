@@ -100,7 +100,7 @@ export default function Nominas() {
                         decoding="async"
                     />
                     <p className="mt-1 md:mt-1 text-white/90 text-base sm:text-lg md:text-xl">
-                        tu <span className="font-bold text-white">activo</span> más importante para <span className="font-extrabold text-white">hacer crecer negocio</span>
+                        tu <span className="font-bold text-white">activo</span> más importante para <span className="font-extrabold text-white">fortalecer tu negocio</span>
                     </p>
 
                     <a
@@ -148,6 +148,18 @@ export default function Nominas() {
                         </li>
                         <li>
                             Atención y soporte personalizado de nuestra plataforma.
+                        </li>
+                        <li>
+                            App para colaboradores (potal del colaborador).
+                        </li>
+                        <li>
+                            Reportes personalizados.
+                        </li>
+                        <li>
+                            Integraciones STP para dispersión (ERP, SAP, oracle,).
+                        </li>
+                        <li>
+                            Alertas y notificaciones.
                         </li>
                     </ul>
                 </div>
