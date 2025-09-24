@@ -42,7 +42,7 @@ const CARDS: Card[] = [
     imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-1.webp",
     backTitle: "Reclutamiento",
     backText:
-      "Combinamos la experiencia \nde expertos locales, tecnologias \nde busquedas y procesos \nestandarizados de seleccion \npara lograr contrataciones más rapidas \nde mayor calidad y con menor rotación.",
+      "Combinamos la experiencia \nde expertos locales, tecnologías \nde búsquedas y procesos \nestandarizados de selección \npara lograr contrataciones más rápidas \nde mayor calidad y con menor rotación.",
     cta: "Conoce más",
     href: "#",
   },
@@ -53,7 +53,7 @@ const CARDS: Card[] = [
     imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-2.webp",
     backTitle: "Nómina",
     backText:
-      "Maquila y autoservicio de nomina\nasegurando el cumplimiento de las normas fiscales y de seguridad. \nEliminando viejos erroreres \ny garantizando  tranquilidad tanto para tus empleados \ncomo para tus colaboradores.",
+      "Maquila y autoservicio de nómina\nasegurando el cumplimiento de las normas fiscales y de seguridad. \nEliminando viejos errores \ny garantizando tranquilidad tanto para tus empleados \ncomo para tus colaboradores.",
     cta: "Conoce más",
     href: "/nominas",
   },
@@ -172,11 +172,11 @@ export default function ServicesSlider() {
         <div
           ref={hScroller}
           className="
-            relative w-full max-w-none mx-auto md:ml-0 md:mr-0 overflow-visible [contain:paint]
-            md:[--card-w:220px] md:[--overlap:88px] md:[--card-h:340px] md:[--safe-w:120px] md:[--stack-offset:36px]
-            lg:[--card-w:300px] lg:[--overlap:145px] lg:[--card-h:400px] lg:[--safe-w:200px] lg:[--stack-offset:56px]
-            xl:[--card-w:280px] xl:[--overlap:150px] xl:[--card-h:400px] xl:[--safe-w:220px] xl:[--stack-offset:60px]
-            2xl:[--card-w:340px] 2xl:[--overlap:140px] 2xl:[--card-h:460px] 2xl:[--safe-w:320px] 2xl:[--stack-offset:84px]
+            relative w-full max-w-none mx-auto md:mx-auto overflow-visible [contain:paint]
+            md:[--card-w:220px] md:[--overlap:140px] md:[--card-h:340px] md:[--safe-w:16px] md:[--stack-offset:16px]
+            lg:[--card-w:300px] lg:[--overlap:220px] lg:[--card-h:400px] lg:[--safe-w:28px] lg:[--stack-offset:28px]
+            xl:[--card-w:280px] xl:[--overlap:200px] xl:[--card-h:400px] xl:[--safe-w:32px] xl:[--stack-offset:32px]
+            2xl:[--card-w:340px] 2xl:[--overlap:260px] 2xl:[--card-h:460px] 2xl:[--safe-w:48px] 2xl:[--stack-offset:48px]
           "
           style={{
             width:

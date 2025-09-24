@@ -38,17 +38,23 @@ export default function HomePage() {
 
           {/* Capa sutil para legibilidad */}
           <div className="absolute inset-0 -z-10 bg-gradient-to-br from-white/40 via-fondo-cremita/40 to-white/30" />
-
           {/* Contenido */}
-          <div className="mx-auto max-w-7xl px-4 py-12 md:py-16 grid grid-cols-1 md:[grid-template-columns:1.15fr_2.1fr] gap-10 lg:gap-14">
-            {/* Texto principal (lado izquierdo) */}
-            <div className="md:col-span-1 text-center md:text-left md:relative md:z-10 md:ml-0 md:pl-4 lg:-ml-12 lg:pl-0 xl:-ml-16 2xl:-ml-24">
+          <div className="mx-auto max-w-7xl px-4 py-12 md:py-16 flex flex-col items-center">
+            <div className="w-full text-center">
               <h1 className="text-cardeno font-extrabold leading-tight text-4xl sm:text-5xl md:text-5xl lg:text-6xl">
-                {"IMPULSA, RET\u00C9N Y"}
-                <br className="hidden sm:block" />
-                DESARROLLA
+                IMPULSA, RETEN Y DESARROLLA
               </h1>
-              <p className="mt-6 text-lg sm:text-xl text-noche/90">
+              <h2 className="mt-6 text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-extrabold text-noche tracking-tight">
+                NUESTROS SERVICIOS
+              </h2>
+            </div>
+
+            <div id="servicios" className="mt-6 md:mt-8 w-full md:max-w-none scroll-mt-24 flex justify-center">
+              <ServicesSlider />
+            </div>
+
+            <div className="mt-6 w-full text-center">
+              <p className="text-lg sm:text-xl text-noche/90 mx-auto">
                 {"tu "}
                 <span className="font-bold">activo</span>
                 {" m\u00E1s importante"}
@@ -56,24 +62,11 @@ export default function HomePage() {
                 {"para "}
                 <span className="font-extrabold">fortalecer tu negocio</span>
               </p>
-              <p className="mt-4 max-w-xl text-sm sm:text-base text-noche/80">
+              <p className="mt-4 max-w-3xl text-sm sm:text-base text-cardeno md:max-w-2xl mx-auto">
                 {"Payrolling-tech potencia la "}
                 <span className="font-semibold">Gestión de Capital Humano</span>
-                {" en cada etapa: Atracción, Control y Retencion de talento."}
+                {" en cada etapa: Atracción, Control y Retención de talento."}
               </p>
-            </div>
-
-            {/* Lado derecho: encabezado de seccion para servicios */}
-            <div id="servicios" className="md:col-span-1 flex flex-col items-center md:items-center lg:items-start scroll-mt-24 md:pt-6 lg:pt-0 md:pl-0 lg:pl-8">
-              <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-extrabold text-noche tracking-tight text-center md:text-left">
-                NUESTROS SERVICIOS
-              </h2>
-
-              {/* Wrapper que limita el ancho del stack del slider */}
-              <div className="mt-6 md:mt-4 w-full md:max-w-none">
-                <ServicesSlider />
-                {/* Contacto (tu formulario va abajo en su propia seccion) */}
-              </div>
             </div>
           </div>
         </div>
