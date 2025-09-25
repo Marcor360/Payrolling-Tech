@@ -1,80 +1,57 @@
-import { useState } from "react";
 import Headers from "../../components/header.tsx";
 import Foter from "../../components/footer.tsx";
 import Text2 from "/img/textos/IngresaYfasilitaTusProcesos.webp";
-import Colient1 from "/img/img-tarjetas/Cliente1.webp";
 import Colient2 from "/img/img-tarjetas/Cliente2.webp";
-import Colab1 from "/img/img-tarjetas/Colaborador1.webp";
 import Colab2 from "/img/img-tarjetas/Colaborador2.webp";
 
 function Card({
     label,
-    imgDefault,
-    imgActive,
-    align = "left",
+    // align = "left", // removed unused prop
     href = "",
 }: {
     label: string;
-    imgDefault: string;
     imgActive: string;
     align?: "left" | "right";
     href?: string;
 }) {
-    const [hover, setHover] = useState(false);
-    const [open, setOpen] = useState(false);
-    const src = hover || open ? imgActive : imgDefault;
-
+    // Visual styles based on label
+    const isClientes = label === "Clientes";
+    const cardBg = isClientes ? "bg-cardeno" : "bg-yellow-400";
+    const pillBg = isClientes ? "bg-yellow-400 text-cardeno" : "bg-cardeno text-white";
+    const buttonBg = isClientes ? "bg-yellow-400 text-cardeno" : "bg-cardeno text-white";
+    const buttonFont = "font-bold text-lg";
     return (
-        <>
-            <div
-                className={`relative mx-auto w-full max-w-md transition-transform duration-300 ${align === "right" ? "md:rotate-3" : "md:-rotate-3"}`}
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-                onClick={() => setOpen(true)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") setOpen(true);
-                }}
-                aria-label={`${label}. Tocar o hacer clic para ingresar`}
-            >
-                <img
-                    src={src}
-                    alt={label}
-                    className="w-full h-auto rounded-2xl ring-2 ring-cardeno shadow-xl select-none"
-                    draggable={false}
-                />
-                <span
-                    className={`absolute ${align === "right" ? "right-3" : "left-3"} top-1/2 -translate-y-1/2 -rotate-90 bg-cardeno text-white px-3 py-1 rounded-md font-bold shadow`}
-                >
-                    {label}
+        <div
+            className={`relative mx-auto w-full max-w-[270px] h-[300px] rounded-[2rem] shadow-2xl flex flex-col items-center justify-between ${cardBg}`}
+            style={{
+                background:
+                  isClientes
+                    ? "repeating-radial-gradient(circle at 40% 40%, #a259e6 0px, #8f00ff 30px, #a259e6 60px)"
+                    : "repeating-radial-gradient(circle at 60% 40%, #ffd600 0px, #ffb300 30px, #ffd600 60px)",
+                boxShadow: "0 4px 32px 0 rgba(0,0,0,0.10) inset, 0 2px 8px 0 rgba(0,0,0,0.10)",
+            }}
+        >
+            {/* Decorative icon above pill label */}
+            <div className="absolute left-0 top-2 w-full flex justify-center">
+                <span className="inline-block text-3xl opacity-40">
+                    {isClientes ? "👤" : "🧑‍💼"}
                 </span>
             </div>
-
-            {open && (
-                <div
-                    className="fixed inset-0 z-[90] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
-                    onClick={() => setOpen(false)}
-                    role="dialog"
-                    aria-modal="true"
-                    aria-label={`Ingresar a ${label}`}
-                >
-                    <div className="relative" onClick={(e) => e.stopPropagation()}>
-                        <img
-                            src={imgActive}
-                            alt={`${label} ampliado`}
-                            className="w-full max-w-2xl md:max-w-3xl h-auto rounded-2xl ring-4 ring-cardeno shadow-2xl"
-                        />
-                        <a
-                            href={href}
-                            className="absolute inset-0 m-auto h-12 w-48 flex items-center justify-center rounded-xl bg-yellow-400 text-noche font-extrabold shadow hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400/60"
-                        >
-                            Ingresar
-                        </a>
-                    </div>
-                </div>
-            )}
-        </>
+            {/* Pill label centered at top */}
+            <div className="absolute left-0 top-8 w-full flex justify-center">
+                <span className={`rounded-2xl px-8 py-4 ${pillBg} ${buttonFont} shadow-md`} style={{marginTop:0}}>{label}</span>
+            </div>
+            {/* Form fields placeholder (not shown in this code) */}
+            <div className="flex-1 w-full flex flex-col justify-center items-center gap-6 pt-20">
+                {/* ...existing code for inputs if any... */}
+            </div>
+            {/* Button flush with bottom */}
+            <div className="w-full flex justify-center pb-8">
+                <a href={href} className={`w-48 py-3 rounded-md shadow ${buttonBg} ${buttonFont} hover:scale-105 transition-transform flex items-center justify-center`}>
+                    Ingresar
+                </a>
+            </div>
+        </div>
     );
 }
 
@@ -84,25 +61,19 @@ export default function Login() {
         <>
             <Headers />
             <section id="login" aria-label="Ingresar y facilitar procesos" className="relative overflow-hidden py-12 md:py-16 bg-[#f6f3ef] scroll-mt-24">
-                {/* Texto de fondo */}
-                <div className="pointer-events-none absolute inset-x-0 top-4 flex justify-center z-0">
-                    <img src={Text2} alt="¡Ingresa y facilita tus procesos!" className="w-[90%] max-w-5xl h-auto opacity-100" />
+                {/* Imagen conoce nuestros servicios arriba */}
+                <div className="flex justify-center mb-10">
+                    <img src={Text2} alt="¡Ingresa y facilita tus procesos!" className="w-[50%] max-w-xl h-auto" />
                 </div>
-
                 {/* Tarjetas */}
-                <div className="relative z-10 mx-auto max-w-7xl px-4 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-                    {/* Colaboradores */}
+                <div className="relative z-10 mx-auto max-w-7xl px-4 grid grid-cols-1 md:grid-cols-2 gap-20 items-center justify-center place-items-center min-h-[500px]">
                     <Card
                         label="Colaboradores"
-                        imgDefault={Colab1}
                         imgActive={Colab2}
                         href="http://payrolling-tech.webhop.org:9362/mn/sirele/index"
                     />
-
-                    {/* Clientes */}
                     <Card
                         label="Clientes"
-                        imgDefault={Colient1}
                         imgActive={Colient2}
                         align="right"
                         href="http://payrolling-tech.webhop.org:9362/mn/index"
