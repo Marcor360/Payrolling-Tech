@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import logoUrl from "/img/logos/1.png?url";
 
-type HeaderVariant = "default" | "darkTransparent";
+type HeaderVariant = "default" | "darkTransparent" | "dark";
 
 export default function Navbar({ variant = "default" }: { variant?: HeaderVariant }) {
     const [open, setOpen] = useState(false);
+    const [hasScrolled, setHasScrolled] = useState(false);
 
     // Lock scroll and close on Escape when the drawer is open
     useEffect(() => {
@@ -20,7 +21,27 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
         };
     }, [open]);
 
-    const isDarkTransparent = variant === "darkTransparent";
+    useEffect(() => {
+        if (variant !== "dark") return;
+
+        const handleScroll = () => {
+            const next = window.scrollY > 12;
+            setHasScrolled((prev) => (prev === next ? prev : next));
+        };
+
+        handleScroll();
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [variant]);
+
+    const effectiveVariant: HeaderVariant = variant === "dark" && hasScrolled ? "default" : variant;
+
+    const isDarkVariant = effectiveVariant === "dark" || effectiveVariant === "darkTransparent";
+    const headerBackground = effectiveVariant === "dark"
+        ? "bg-noche/90"
+        : effectiveVariant === "darkTransparent"
+        ? "bg-transparent"
+        : "bg-white/20";
 
     const links = [
         { href: "/#servicios", label: "Servicios" },
@@ -28,11 +49,11 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
         { href: "/Login", label: "Login" },
     ];
 
-    const desktopLinkClasses = `text-lg md:text-xl lg:text-2xl font-bold transition-colors ${isDarkTransparent ? "text-white hover:text-mango" : "text-black hover:text-mango"}`;
+    const desktopLinkClasses = `text-lg md:text-xl lg:text-2xl font-bold transition-colors ${isDarkVariant ? "text-white hover:text-mango" : "text-black hover:text-mango"}`;
     const mobileLinkClasses = "text-lg font-semibold text-white/95 hover:text-mango tracking-wide drop-shadow-sm transition-colors";
 
     return (
-        <header className={`sticky top-0 z-50 ${isDarkTransparent ? "bg-transparent" : "bg-white/20"} backdrop-blur`}>
+        <header className={`sticky top-0 z-50 ${headerBackground} backdrop-blur`}>
             <div className="relative mx-auto w-full max-w-screen-2xl px-4 py-3 flex items-center justify-between">
                 <a href="/" className="block">
                     <img src={logoUrl} alt="Logo" className="h-18 md:h-30 w-auto block" />
@@ -41,7 +62,7 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                 {/* Hamburger button */}
                 <button
                     onClick={() => setOpen((p) => !p)}
-                    className={`md:hidden ${isDarkTransparent ? "text-white" : "text-cardeno"} ${open ? "opacity-0 pointer-events-none" : ""}`}
+                    className={`md:hidden ${isDarkVariant ? "text-white" : "text-cardeno"} ${open ? "opacity-0 pointer-events-none" : ""}`}
                     aria-label="Toggle navigation"
                     aria-expanded={open}
                 >

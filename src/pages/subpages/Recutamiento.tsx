@@ -7,10 +7,10 @@ import BotonCosto from "/img/tarjetas/Botones/Mango.png";
 const HERO_TAGS = [
   "Tiempo de cobertura de 4 días hábiles*",
   "Modelo por vacante",
+  "Administrativos, Profesionales y Pre-Gerenciales",
 ];
 
-const HERO_DESCRIPTION =
-  "Cubrimos perfiles Técnicos, Operativos, Administrativos, Profesionales y Pre-Gerenciales.";
+const HERO_DESCRIPTION = "";
 
 type HeroMetric = {
   image: string;
@@ -77,7 +77,7 @@ const PROCESO = [
 export default function Reclutamiento() {
   return (
     <>
-      <Headers />
+      <Headers variant="dark" />
       <main className="bg-fondo-cremita text-black">
         <section className="mx-auto max-w-6xl px-4 pb-20 pt-24 sm:pt-28">
           <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
@@ -97,10 +97,10 @@ export default function Reclutamiento() {
                 {HERO_TAGS.map((tag) => (
                   <span
                     key={tag}
-                    className="inline-flex items-center gap-2 rounded-full  px-4 py-2 "
+                    className="inline-flex items-center gap-2 rounded-full px-4 py-2"
                   >
                     <span
-                      className="flex h-5 w-5 items-center justify-center rounded-full bg-black text-[11px] font-bold text-white"
+                      className="flex h-5 w-5 items-center justify-center rounded-full bg-noche text-[11px] font-bold text-white"
                       aria-hidden="true"
                     >
                       ✓
@@ -110,15 +110,17 @@ export default function Reclutamiento() {
                 ))}
               </div>
 
-              <div className="mt-3 flex max-w-2xl items-start gap-3 text-base font-medium">
-                <span
-                  className="mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-black text-[11px] font-bold text-white"
-                  aria-hidden="true"
-                >
-                  ✓
-                </span>
-                <span>{HERO_DESCRIPTION}</span>
-              </div>
+              {HERO_DESCRIPTION && (
+                <div className="mt-3 flex max-w-2xl items-start gap-3 text-base font-medium">
+                  <span
+                    className="mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-noche text-[11px] font-bold text-white"
+                    aria-hidden="true"
+                  >
+                    ✓
+                  </span>
+                  <span>{HERO_DESCRIPTION}</span>
+                </div>
+              )}
 
               <div className="mt-8 flex flex-wrap gap-4">
                 <a
