@@ -1,17 +1,39 @@
 import Headers from "../../components/header.tsx";
 import Footers from "../../components/footer.tsx";
+import BotonCobertura from "/img/tarjetas/Botones/Blanco.png";
+import BotonCandidatos from "/img/tarjetas/Botones/Cardeno.png";
+import BotonCosto from "/img/tarjetas/Botones/Mango.png";
 
 const HERO_TAGS = [
   "Tiempo de cobertura de 4 días hábiles*",
   "Modelo por vacante",
 ];
 
-const HERO_DESCRIPTION = "Cubrimos perfiles Técnicos, Operativos, Administrativos, Profesionales y Pre-Gerenciales.";
+const HERO_DESCRIPTION =
+  "Cubrimos perfiles Técnicos, Operativos, Administrativos, Profesionales y Pre-Gerenciales.";
 
-const HERO_GALLERY = [
-  "/img/tarjetas/Fondo-tarjetas/400x400/AB.png",
-  "/img/tarjetas/Fondo-tarjetas/400x400/Impuestos.png",
-  "/img/tarjetas/Fondo-tarjetas/400x400/Nomina.png",
+type HeroMetric = {
+  image: string;
+  title: string;
+  caption: string;
+};
+
+const HERO_METRICS: HeroMetric[] = [
+  {
+    image: BotonCobertura,
+    title: "≤4 días",
+    caption: "Tiempo típico de cobertura",
+  },
+  {
+    image: BotonCandidatos,
+    title: "3x",
+    caption: "Más candidatos calificados por vacante",
+  },
+  {
+    image: BotonCosto,
+    title: "30%",
+    caption: "Reducción de costo por contratación",
+  },
 ];
 
 const GARANTIAS = [
@@ -56,8 +78,8 @@ export default function Reclutamiento() {
   return (
     <>
       <Headers />
-      <main className="bg-fondo-cremita text-noche">
-        <section className="mx-auto max-w-6xl px-4 pb-24 pt-24 sm:pt-28">
+      <main className="bg-fondo-cremita text-black">
+        <section className="mx-auto max-w-6xl px-4 pb-20 pt-24 sm:pt-28">
           <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
               <h1 className="text-4xl font-black leading-tight text-cardeno sm:text-5xl lg:text-[56px] lg:leading-[1]">
@@ -67,18 +89,18 @@ export default function Reclutamiento() {
                 <br className="hidden sm:block" />
                 Personal
               </h1>
-              <p className="mt-5 text-xl font-semibold italic text-noche">
+              <p className="mt-5 text-xl font-semibold italic">
                 Eficiente, Efectivo y sin complicaciones.
               </p>
 
-              <div className="mt-6 flex flex-wrap items-center gap-4 text-sm font-semibold text-noche">
+              <div className="mt-6 flex flex-wrap items-center gap-4 text-sm font-semibold">
                 {HERO_TAGS.map((tag) => (
                   <span
                     key={tag}
-                    className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-sm shadow-cardeno/15 ring-1 ring-cardeno/30"
+                    className="inline-flex items-center gap-2 rounded-full  px-4 py-2 "
                   >
                     <span
-                      className="flex h-5 w-5 items-center justify-center rounded-full bg-cardeno text-[11px] font-bold text-white"
+                      className="flex h-5 w-5 items-center justify-center rounded-full bg-black text-[11px] font-bold text-white"
                       aria-hidden="true"
                     >
                       ✓
@@ -88,9 +110,9 @@ export default function Reclutamiento() {
                 ))}
               </div>
 
-              <div className="mt-3 flex max-w-2xl items-start gap-3 text-base font-medium text-noche">
+              <div className="mt-3 flex max-w-2xl items-start gap-3 text-base font-medium">
                 <span
-                  className="mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-cardeno text-[11px] font-bold text-white"
+                  className="mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-black text-[11px] font-bold text-white"
                   aria-hidden="true"
                 >
                   ✓
@@ -101,13 +123,13 @@ export default function Reclutamiento() {
               <div className="mt-8 flex flex-wrap gap-4">
                 <a
                   href="#contacto"
-                  className="inline-flex items-center justify-center rounded-full bg-mango px-7 py-3 text-sm font-extrabold text-noche shadow-sm transition hover:bg-mango/90 focus:outline-none focus:ring-2 focus:ring-cardeno/50"
+                  className="inline-flex items-center justify-center rounded-full bg-mango px-7 py-3 text-sm font-extrabold text-black shadow-sm transition hover:bg-mango/90 focus:outline-none focus:ring-2 focus:ring-black/40"
                 >
                   Agenda una consulta
                 </a>
                 <a
                   href="#contacto"
-                  className="inline-flex items-center justify-center rounded-full border border-noche px-7 py-3 text-sm font-semibold text-noche transition hover:bg-white/70 focus:outline-none focus:ring-2 focus:ring-cardeno/40"
+                  className="inline-flex items-center justify-center rounded-full border border-black px-7 py-3 text-sm font-semibold text-black transition hover:bg-white/70 focus:outline-none focus:ring-2 focus:ring-black/30"
                 >
                   Solicitar cotización
                 </a>
@@ -115,40 +137,40 @@ export default function Reclutamiento() {
             </div>
 
             <div className="flex flex-col items-center gap-6">
-              <div className="w-full max-w-[420px] rounded-[48px] border border-cardeno/30 bg-white/75 px-6 py-16 text-center text-xs font-semibold uppercase tracking-[0.35em] text-cardeno/70 shadow-xl shadow-cardeno/15">
+              <div className="w-full max-w-[420px] rounded-[48px] border border-black/20 bg-white/80 px-6 py-16 text-center text-xs font-semibold uppercase tracking-[0.35em] text-black shadow-xl shadow-black/10">
                 Área para fotografía
-              </div>
-              <div className="flex flex-wrap justify-center gap-4">
-                {HERO_GALLERY.map((src) => (
-                  <div
-                    key={src}
-                    className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-2xl border border-white/70 bg-white/80 shadow-md shadow-cardeno/15"
-                  >
-                    <img
-                      src={src}
-                      alt="Destacado reclutamiento"
-                      className="h-full w-full object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-                ))}
               </div>
             </div>
           </div>
         </section>
 
-        <section className="mx-auto max-w-5xl px-4 pb-16">
-          <h2 className="text-2xl font-extrabold text-cardeno">La propuesta de valor</h2>
-          <p className="mt-4 text-base leading-relaxed text-noche/85">
-            Combinamos expertos locales, tecnología de búsqueda y procesos estandarizados de selección más velocidad, mejor calidad y menor rotación por contratación.
-          </p>
+        <section className="mx-auto max-w-5xl px-4 pb-20">
+          <div className="grid gap-4 sm:grid-cols-3">
+            {HERO_METRICS.map((metric) => (
+              <article
+                key={metric.title}
+                className="relative overflow-hidden rounded-3xl shadow-lg shadow-black/15"
+              >
+                <img
+                  src={metric.image}
+                  alt={metric.title}
+                  className="h-full w-full object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-black">
+                  <p className="text-2xl font-extrabold">{metric.title}</p>
+                  <p className="mt-2 text-sm font-medium text-black/80">{metric.caption}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </section>
 
         <section className="mx-auto max-w-6xl px-4 pb-16">
           <div className="grid gap-10 lg:grid-cols-2">
-            <div className="rounded-3xl bg-white/70 p-8 shadow-sm shadow-cardeno/10">
+            <div className="rounded-3xl bg-white/80 p-8 shadow-sm shadow-black/10">
               <h3 className="text-xl font-bold text-cardeno">Garantías y diferenciales</h3>
-              <ul className="mt-4 space-y-3 text-sm text-noche/85">
+              <ul className="mt-4 space-y-3 text-sm">
                 {GARANTIAS.map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <span className="mt-1 h-2 w-2 rounded-full bg-cardeno" aria-hidden="true" />
@@ -158,18 +180,18 @@ export default function Reclutamiento() {
               </ul>
             </div>
             <div className="flex flex-col gap-6">
-              <div className="rounded-3xl bg-white/70 p-8 shadow-sm shadow-cardeno/10">
+              <div className="rounded-3xl bg-white/80 p-8 shadow-sm shadow-black/10">
                 <h3 className="text-xl font-bold text-cardeno">Listos para cubrir tus vacantes</h3>
-                <p className="mt-3 text-sm text-noche/85">
+                <p className="mt-3 text-sm">
                   Cuéntanos el perfil y la cantidad de personal que requieres. Te regresamos una propuesta y un tiempo estimado de cobertura. Sin compromiso.
                 </p>
-                <ul className="mt-4 space-y-2 text-sm text-noche/85">
+                <ul className="mt-4 space-y-2 text-sm">
                   {LISTOS.map((item) => (
                     <li key={item}>&bull; {item}</li>
                   ))}
                 </ul>
               </div>
-              <div className="rounded-3xl border border-cardeno/20 p-6 text-sm text-noche/75">
+              <div className="rounded-3xl border border-black/10 p-6 text-sm">
                 <p>Payrolling Tech© 2025 Payrolling Tech México</p>
                 <p className="mt-1">Blvd. Palmas Hills 1 Valle de las Palmas</p>
                 <p className="mt-1">52787 Naucalpan de Juárez, Mex.</p>
@@ -178,34 +200,16 @@ export default function Reclutamiento() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-5xl px-4 pb-16">
-          <div className="grid gap-6 sm:grid-cols-3">
-            {[
-              { value: "≤4 días", label: "Tiempo típico de cobertura" },
-              { value: "3x", label: "Más candidatos calificados por vacante" },
-              { value: "30%", label: "Reducción de costo por contratación" },
-            ].map((stat) => (
-              <div
-                key={stat.value}
-                className="rounded-3xl bg-cardeno text-white px-6 py-8 text-center shadow-lg shadow-cardeno/30"
-              >
-                <div className="text-3xl font-extrabold">{stat.value}</div>
-                <p className="mt-3 text-sm font-medium text-white/80">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
         <section className="mx-auto max-w-6xl px-4 pb-20">
           <h3 className="text-2xl font-extrabold text-cardeno">Proceso claro, orientado a resultados</h3>
           <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {PROCESO.map((step) => (
-              <div key={step.paso} className="rounded-3xl bg-white/80 p-6 shadow-sm shadow-cardeno/10">
+              <div key={step.paso} className="rounded-3xl bg-white/80 p-6 shadow-sm shadow-black/10">
                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-cardeno text-base font-bold text-white">
                   {step.paso}
                 </span>
-                <h4 className="mt-4 text-lg font-semibold text-noche">{step.titulo}</h4>
-                <p className="mt-2 text-sm text-noche/80">{step.detalle}</p>
+                <h4 className="mt-4 text-lg font-semibold text-black">{step.titulo}</h4>
+                <p className="mt-2 text-sm text-black/80">{step.detalle}</p>
               </div>
             ))}
           </div>
