@@ -44,7 +44,7 @@ const CARDS: Card[] = [
     backText:
       "Combinamos la experiencia \nde expertos locales, tecnologías \nde búsquedas y procesos \nestandarizados de selección \npara lograr contrataciones más rápidas \nde mayor calidad y con menor rotación.",
     cta: "Conoce más",
-    href: "#",
+    href: "/reclutamiento",
   },
   {
     title: "Nómina",
@@ -96,7 +96,7 @@ export default function ServicesSlider() {
   const vWrapRef = useRef<HTMLDivElement>(null);  // mobile "atardecer"
 
 
-  // MOBILE: efecto "atardecer" (entra de derecha→centro→izquierda) + flip al centrar
+  // MOBILE: efecto "atardecer" optimizado para scroll suave
   useEffect(() => {
     const wrap = vWrapRef.current;
     if (!wrap) return;
@@ -104,64 +104,98 @@ export default function ServicesSlider() {
     const items = Array.from(
       wrap.querySelectorAll<HTMLDivElement>("[data-vcard]")
     );
+    if (!items.length) return;
 
     // knobs (ajusta a tu gusto)
-    const MAX_SHIFT = 140;   // px → cuánto se mueve de derecha a izquierda
-    const MAX_FADE = 0.35;   // opacidad al alejarse del centro
-    const THRESHOLD = 0.12;  // qué tan cerca del centro para voltear
+    const MAX_SHIFT = 140; // px -> cuanto se mueve de derecha a izquierda
+    const MAX_FADE = 0.35; // opacidad al alejarse del centro
+    const THRESHOLD = 0.12; // que tan cerca del centro para voltear
 
+    type Metric = {
+      el: HTMLDivElement;
+      center: number;
+    };
+
+    let metrics: Metric[] = [];
     let ticking = false;
 
+    const readMetrics = () => {
+      metrics = items.map((item) => ({
+        el: item,
+        center: item.offsetTop + item.offsetHeight / 2,
+      }));
+    };
+
+    const applyShadow = (cb: () => void) => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        cb();
+        ticking = false;
+      });
+    };
+
     const update = () => {
-      const wRect = wrap.getBoundingClientRect();
-      const centerY = wRect.top + wRect.height / 2;
+      if (!metrics.length) {
+        readMetrics();
+      }
 
-      items.forEach((item) => {
-        const r = item.getBoundingClientRect();
-        const itemCenter = r.top + r.height / 2;
+      const halfViewport = wrap.clientHeight / 2 || 1;
+      const viewportCenter = wrap.scrollTop + halfViewport;
 
-        // d ∈ [-1, 1] relativo al centro del contenedor
-        let d = (itemCenter - centerY) / (wRect.height / 2);
+      metrics.forEach(({ el, center }) => {
+        let d = (center - viewportCenter) / halfViewport;
         if (d > 1) d = 1;
         if (d < -1) d = -1;
 
-        // Atardecer: entra desde la derecha (d=+1 => +MAX_SHIFT),
-        // en el centro (d=0 => 0), sale a la izquierda (d=-1 => -MAX_SHIFT)
         const shiftX = d * MAX_SHIFT;
-        const rotZ = d * -2;          // leve inclinación
+        const rotZ = d * -2;
         const scale = 1 - 0.08 * Math.abs(d);
         const opacity = 1 - MAX_FADE * Math.abs(d);
 
-        item.style.transform = `
+        el.style.transform = `
           translateX(${shiftX}px)
           rotateZ(${rotZ}deg)
           scale(${scale})
         `;
-        item.style.opacity = `${opacity}`;
+        el.style.opacity = `${opacity}`;
 
-        // Flip cuando está centrada
-        const centered = Math.abs(d) < THRESHOLD;
-        if (centered) item.classList.add("is-centered");
-        else item.classList.remove("is-centered");
+        if (Math.abs(d) < THRESHOLD) {
+          el.classList.add("is-centered");
+        } else {
+          el.classList.remove("is-centered");
+        }
       });
     };
 
-    const onScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(() => {
-          update();
-          ticking = false;
-        });
-      }
+    const recompute = () => {
+      readMetrics();
+      update();
     };
 
+    const onScroll = () => applyShadow(update);
+
+    const handleResize = () => applyShadow(recompute);
+
     wrap.addEventListener("scroll", onScroll, { passive: true });
-    // inicial
-    update();
+
+    const resizeObserver = (typeof ResizeObserver !== "undefined"
+      ? new ResizeObserver(() => recompute())
+      : null);
+
+    resizeObserver?.observe(wrap);
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+
+    recompute();
+    const rafId = requestAnimationFrame(recompute);
 
     return () => {
       wrap.removeEventListener("scroll", onScroll as any);
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+      cancelAnimationFrame(rafId);
     };
   }, []);
 
