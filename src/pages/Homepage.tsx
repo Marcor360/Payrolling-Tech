@@ -5,6 +5,15 @@ import type { FormEvent } from "react";
 
 import HeaderFondoWeb from "/img/tarjetas/web/Header fondo.webp?url";
 import HeaderFondoMovil from "/img/tarjetas/mobile/fondo tarjetas.webp?url";
+const CONTACT_SERVICES = [
+  { id: "reclutamiento", label: "Reclutamiento" },
+  { id: "nomina", label: "Nómina" },
+  { id: "vales", label: "Vales" },
+  { id: "seguros-nom-35", label: "Seguros NOM. 35" },
+  { id: "beneficios", label: "Beneficios" },
+];
+
+
 
 export default function HomePage() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -57,7 +66,7 @@ export default function HomePage() {
               <p className="text-lg sm:text-xl text-noche/90 mx-auto">
                 {"tu "}
                 <span className="font-bold">activo</span>
-                {" m\u00E1s importante"}
+                {" más importante"}
                 <br className="hidden sm:block" />
                 {"para "}
                 <span className="font-extrabold">fortalecer tu negocio</span>
@@ -79,7 +88,7 @@ export default function HomePage() {
             {"Cont\u00E1ctanos"}
           </h2>
           <p className="mt-2 text-noche/80">
-            {"\u00BfListo para impulsar tu capital humano? Escr\u00EDbenos."}
+            {"\u00BfListo para impulsar tu capital humano? Escríbenos."}
           </p>
 
           <form
@@ -145,7 +154,32 @@ export default function HomePage() {
                 placeholder="tu@empresa.com"
               />
             </div>
-
+            <div className="md:col-span-2 flex flex-col">
+              <label htmlFor="servicio" className="text-sm font-medium text-noche">
+                Servicio de interés
+              </label>
+              <span className="text-xs text-noche/70">
+                Selecciona la solución que mejor se ajuste a tus necesidades.
+              </span>
+              <div className="mt-2 rounded-2xl border border-white/10 bg-white/10 backdrop-blur-md shadow-lg shadow-black/10 transition-all focus-within:border-cardeno/60 focus-within:shadow-xl">
+                <select
+                  id="servicio"
+                  name="servicio"
+                  required
+                  defaultValue=""
+                  className="w-full rounded-2xl bg-transparent px-4 py-2 text-noche focus:outline-none focus:ring-2 focus:ring-cardeno/60"
+                >
+                  <option value="" disabled>
+                    Selecciona una opción
+                  </option>
+                  {CONTACT_SERVICES.map((service) => (
+                    <option key={service.id} value={service.label}>
+                      {service.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
             <div className="md:col-span-2 flex flex-col">
               <label htmlFor="mensaje" className="text-sm font-medium text-noche">
                 Mensaje
@@ -156,7 +190,7 @@ export default function HomePage() {
                 required
                 rows={5}
                 className="mt-2 rounded-md border border-noche/20 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-cardeno/50"
-                placeholder={"Cu\u00E9ntanos brevemente qu\u00E9 necesitas"}
+                placeholder={"Cuéntanos brevemente qué necesitas"}
               />
             </div>
 
