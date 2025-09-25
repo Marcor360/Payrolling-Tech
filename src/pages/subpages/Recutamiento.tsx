@@ -136,6 +136,13 @@ export default function Reclutamiento() {
                   Solicitar cotización
                 </a>
               </div>
+
+              <div className="mt-10 max-w-2xl">
+                <h2 className="text-2xl font-extrabold text-cardeno">La propuesta de valor</h2>
+                <p className="mt-3 text-base leading-relaxed text-black">
+                  Combinamos expertos locales, tecnología de búsqueda y procesos estandarizados de selección para darte más velocidad, mejor calidad y menor rotación por contratación.
+                </p>
+              </div>
             </div>
 
             <div className="flex flex-col items-center gap-6">
@@ -193,11 +200,6 @@ export default function Reclutamiento() {
                   ))}
                 </ul>
               </div>
-              <div className="rounded-3xl border border-black/10 p-6 text-sm">
-                <p>Payrolling Tech© 2025 Payrolling Tech México</p>
-                <p className="mt-1">Blvd. Palmas Hills 1 Valle de las Palmas</p>
-                <p className="mt-1">52787 Naucalpan de Juárez, Mex.</p>
-              </div>
             </div>
           </div>
         </section>
@@ -217,20 +219,130 @@ export default function Reclutamiento() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-4xl px-4 pb-24">
-          <div className="rounded-3xl bg-cardeno px-8 py-10 text-white shadow-lg shadow-cardeno/30">
-            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white/80">
-              ¿COSTO?
-            </p>
-            <h3 className="mt-4 text-2xl font-extrabold">Pagas sólo por vacantes cubiertas.</h3>
-            <p className="mt-3 text-sm text-white/90">Transparencia total y sin sorpresas.</p>
-            <div className="mt-6 flex flex-wrap gap-4">
-              <a
-                href="#contacto"
-                className="inline-flex items-center justify-center rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-cardeno shadow-sm hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white/70"
+        <section className="bg-noche py-20 text-white">
+          <div className="mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-[minmax(0,420px)_1fr]">
+            <form className="rounded-3xl bg-fondo-cremita p-8 text-black shadow-2xl shadow-black/30">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <label className="flex flex-col gap-2 text-sm font-semibold">
+                  Nombre*
+                  <input
+                    type="text"
+                    name="nombre"
+                    placeholder="María López"
+                    required
+                    className="rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm font-medium text-black placeholder:text-black/40 focus:border-cardeno focus:outline-none focus:ring-2 focus:ring-cardeno/40"
+                  />
+                </label>
+                <label className="flex flex-col gap-2 text-sm font-semibold">
+                  Empresa*
+                  <input
+                    type="text"
+                    name="empresa"
+                    placeholder="Tu compañía SA de CV"
+                    required
+                    className="rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm font-medium text-black placeholder:text-black/40 focus:border-cardeno focus:outline-none focus:ring-2 focus:ring-cardeno/40"
+                  />
+                </label>
+                <label className="flex flex-col gap-2 text-sm font-semibold">
+                  Correo*
+                  <input
+                    type="email"
+                    name="correo"
+                    placeholder="nombre@empresa.com"
+                    required
+                    className="rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm font-medium text-black placeholder:text-black/40 focus:border-cardeno focus:outline-none focus:ring-2 focus:ring-cardeno/40"
+                  />
+                </label>
+                <label className="flex flex-col gap-2 text-sm font-semibold">
+                  WhatsApp*
+                  <input
+                    type="tel"
+                    name="whatsapp"
+                    placeholder="+52 55 0000 0000"
+                    required
+                    className="rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm font-medium text-black placeholder:text-black/40 focus:border-cardeno focus:outline-none focus:ring-2 focus:ring-cardeno/40"
+                  />
+                </label>
+              </div>
+
+              <div className="mt-5 grid gap-5 sm:grid-cols-2">
+                <label className="flex flex-col gap-2 text-sm font-semibold sm:col-span-2">
+                  Perfiles a cubrir*
+                  <input
+                    type="text"
+                    name="perfiles"
+                    placeholder="Ej. Ejecutivo de ventas senior en Monterrey"
+                    required
+                    className="rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm font-medium text-black placeholder:text-black/40 focus:border-cardeno focus:outline-none focus:ring-2 focus:ring-cardeno/40"
+                  />
+                </label>
+                <label className="flex flex-col gap-2 text-sm font-semibold">
+                  Volumen estimado*
+                  <select
+                    name="volumen"
+                    defaultValue=""
+                    required
+                    className="rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm font-medium text-black placeholder:text-black/40 focus:border-cardeno focus:outline-none focus:ring-2 focus:ring-cardeno/40"
+                  >
+                    <option value="" disabled>
+                      Selecciona una opción
+                    </option>
+                    <option value="1-3">1-3</option>
+                    <option value="3-10">3-10</option>
+                    <option value="mas-10">Más de 10</option>
+                  </select>
+                </label>
+                <label className="flex flex-col gap-2 text-sm font-semibold">
+                  Modalidad*
+                  <select
+                    name="modalidad"
+                    defaultValue=""
+                    required
+                    className="rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm font-medium text-black placeholder:text-black/40 focus:border-cardeno focus:outline-none focus:ring-2 focus:ring-cardeno/40"
+                  >
+                    <option value="" disabled>
+                      Selecciona una opción
+                    </option>
+                    <option value="por-vacante">Por vacante</option>
+                    <option value="competencias">Competencias</option>
+                  </select>
+                </label>
+                <label className="flex flex-col gap-2 text-sm font-semibold sm:col-span-2">
+                  Mensaje
+                  <textarea
+                    name="mensaje"
+                    rows={3}
+                    placeholder="Cuéntanos detalles, tiempos, seniority, etc."
+                    className="rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm font-medium text-black placeholder:text-black/40 focus:border-cardeno focus:outline-none focus:ring-2 focus:ring-cardeno/40"
+                  />
+                </label>
+              </div>
+
+              <button
+                type="submit"
+                className="mt-6 w-full rounded-full bg-mango px-6 py-3 text-base font-extrabold text-black shadow-md transition hover:bg-mango/90 focus:outline-none focus:ring-2 focus:ring-mango/60"
               >
                 Solicitar cotización
-              </a>
+              </button>
+              <p className="mt-3 text-center text-xs text-black/60">
+                Al enviar aceptas el tratamiento de datos conforme a nuestro Aviso de Privacidad.
+              </p>
+            </form>
+
+            <div className="flex flex-col justify-center gap-6">
+              <div>
+                <h3 className="mt-4 text-3xl font-black text-mango">
+                  Listos para cubrir tus vacantes
+                </h3>
+                <p className="mt-4 text-base leading-relaxed text-white/90">
+                  Cuéntanos el perfil y la cantidad de personal que requieres. Te regresamos una propuesta y un tiempo estimado de cobertura. Sin compromiso.
+                </p>
+              </div>
+              <ul className="space-y-3 text-base text-white/90">
+                {LISTOS.map((item) => (
+                  <li key={item}>&bull; {item}</li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
