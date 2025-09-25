@@ -22,7 +22,7 @@ function Card({
     const buttonFont = "font-bold text-lg";
     return (
         <div
-            className={`relative mx-auto w-full max-w-[270px] h-[300px] rounded-[2rem] shadow-2xl flex flex-col items-center justify-between ${cardBg}`}
+            className={`relative mx-auto w-full max-w-[270px] h-[400px] rounded-[2rem] shadow-2xl flex flex-col items-center justify-between ${cardBg}`}
             style={{
                 background:
                   isClientes
@@ -31,12 +31,7 @@ function Card({
                 boxShadow: "0 4px 32px 0 rgba(0,0,0,0.10) inset, 0 2px 8px 0 rgba(0,0,0,0.10)",
             }}
         >
-            {/* Decorative icon above pill label */}
-            <div className="absolute left-0 top-2 w-full flex justify-center">
-                <span className="inline-block text-3xl opacity-40">
-                    {isClientes ? "👤" : "🧑‍💼"}
-                </span>
-            </div>
+            {/* Pill label centered at top */}
             {/* Pill label centered at top */}
             <div className="absolute left-0 top-8 w-full flex justify-center">
                 <span className={`rounded-2xl px-8 py-4 ${pillBg} ${buttonFont} shadow-md`} style={{marginTop:0}}>{label}</span>
@@ -60,9 +55,9 @@ export default function Login() {
     return (
         <>
             <Headers />
-            <section id="login" aria-label="Ingresar y facilitar procesos" className="relative overflow-hidden py-12 md:py-16 bg-[#f6f3ef] scroll-mt-24">
+            <section id="login" aria-label="Ingresar y facilitar procesos" className="relative overflow-hidden py-4 md:py-8 bg-[#f6f3ef] scroll-mt-24">
                 {/* Imagen conoce nuestros servicios arriba */}
-                <div className="flex justify-center mb-10">
+                <div className="flex justify-center mb-2">
                     <img src={Text2} alt="¡Ingresa y facilita tus procesos!" className="w-[50%] max-w-xl h-auto" />
                 </div>
                 {/* Tarjetas */}
