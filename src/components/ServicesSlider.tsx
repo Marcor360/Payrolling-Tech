@@ -165,10 +165,12 @@ export default function ServicesSlider() {
     };
   }, []);
 
+  const desktopTrackWidth = "calc(var(--stack-offset, 0px) + var(--card-w) + 4 * var(--overlap) + var(--safe-w, 0px))";
+
   return (
     <div className="w-full overflow-visible">
       {/* ===== Desktop: stack superpuesto ===== */}
-      <div className="hidden lg:block">
+      <div className="hidden lg:flex flex-col items-center">
         <div
           ref={hScroller}
           className="
@@ -179,8 +181,7 @@ export default function ServicesSlider() {
             2xl:[--card-w:340px] 2xl:[--overlap:260px] 2xl:[--card-h:460px] 2xl:[--safe-w:48px] 2xl:[--stack-offset:48px]
           "
           style={{
-            width:
-              "calc(var(--stack-offset, 0px) + var(--card-w) + 4 * var(--overlap) + var(--safe-w, 0px))",
+            width: desktopTrackWidth,
             height: "calc(var(--card-h) + 28px)",
           }}
         >
@@ -271,6 +272,7 @@ export default function ServicesSlider() {
             </div>
           ))}
         </div>
+
       </div>
 
       {/* ===== Mobile: “atardecer” (der → centro → izq) + flip al centrar ===== */}
