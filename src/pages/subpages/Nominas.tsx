@@ -1,7 +1,146 @@
+import { useEffect, useRef, useState } from "react";
 import Headers from "../../components/header.tsx";
 import Foter from "../../components/footer.tsx";
 import FondoHeadBubles from "/img/tarjetas/Fondo-tarjetas/FondoNomina.webp";
 import Text1 from "/img/textos/TuNominaRapidoySinErrores.webp";
+
+// Componente reutilizable para el slider de servicios en móvil
+function SliderServicios() {
+    // Data centralizada: fácil de editar / reordenar / agregar
+    const servicios: { texto: string; fondo: 'Mango' | 'Blanco' | 'Cardeno' }[] = [
+        { texto: 'Cálculo de nómina y timbrado de recibos mensual, quincenal o semanal.', fondo: 'Mango' },
+        { texto: 'Control de asistencias, vacaciones, aguinaldo, finiquitos y liquidaciones.', fondo: 'Blanco' },
+        { texto: 'Determinación de impuestos y retenciones (ISR, IMSS, INFONAVIT).', fondo: 'Cardeno' },
+        { texto: 'Asesoría personalizada en materia Fiscal, Laboral y RR HH.', fondo: 'Mango' },
+        { texto: 'Altas y bajas de empleados ante el IMSS y plataformas fiscales.', fondo: 'Blanco' },
+        { texto: 'Atención y soporte personalizado de nuestra plataforma.', fondo: 'Cardeno' },
+        { texto: 'Alertas y notificaciones.', fondo: 'Mango' },
+        { texto: 'App para colaboradores (portal del colaborador).', fondo: 'Blanco' },
+        { texto: 'Reportes personalizados.', fondo: 'Cardeno' },
+        { texto: 'Integraciones STP para dispersión (ERP, SAP, Oracle).', fondo: 'Mango' },
+    ];
+
+    const sliderRef = useRef<HTMLDivElement | null>(null);
+    const cardRefs = useRef<HTMLElement[]>([]);
+    const [activo, setActivo] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
+    const supportsSmooth = typeof document !== 'undefined' && 'scrollBehavior' in document.documentElement.style;
+
+    // Detecta si está en móvil (<= 640px) y escucha cambios de tamaño
+    useEffect(() => {
+        const mq = window.matchMedia('(max-width: 639px)');
+        const set = () => setIsMobile(mq.matches);
+        set();
+        mq.addEventListener('change', set);
+        return () => mq.removeEventListener('change', set);
+    }, []);
+
+    // Sincroniza índice usando IntersectionObserver para mayor precisión
+    useEffect(() => {
+        const slider = sliderRef.current;
+        if (!slider) return;
+        if (!isMobile) { // en desktop simplemente fija el primero
+            setActivo(0);
+            return;
+        }
+        const options: IntersectionObserverInit = {
+            root: slider,
+            rootMargin: '0px',
+            threshold: Array.from({ length: 11 }, (_, i) => i / 10) // 0.0 ... 1.0
+        };
+        let frame: number | null = null;
+        const observer = new IntersectionObserver(entries => {
+            // Filtrar solo visibles
+            const visibles = entries.filter(e => e.isIntersecting);
+            if (!visibles.length) return;
+            // Elegir la card con mayor ratio; si empate, la más cercana al centro
+            const sliderCenter = slider.scrollLeft + slider.clientWidth / 2;
+            let bestIdx = activosRef.current; // fallback al actual
+            let bestScore = -1;
+            visibles.forEach(e => {
+                const el = e.target as HTMLElement;
+                const idx = cardRefs.current.indexOf(el);
+                if (idx === -1) return;
+                const center = el.offsetLeft + el.offsetWidth / 2;
+                const centerDist = Math.abs(center - sliderCenter);
+                // Score: ratio principal, penalización ligera por distancia al centro
+                const score = e.intersectionRatio - (centerDist / slider.clientWidth) * 0.1;
+                if (score > bestScore) { bestScore = score; bestIdx = idx; }
+            });
+            if (frame) cancelAnimationFrame(frame);
+            frame = requestAnimationFrame(() => {
+                if (activosRef.current !== bestIdx) {
+                    setActivo(bestIdx);
+                    activosRef.current = bestIdx;
+                }
+            });
+        }, options);
+
+        // Ref para evitar setState redundante
+        const activosRef = { current: activo } as { current: number };
+        activosRef.current = activo;
+        cardRefs.current.forEach(el => el && observer.observe(el));
+        return () => {
+            if (frame) cancelAnimationFrame(frame);
+            observer.disconnect();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isMobile, servicios.length]);
+
+    const irA = (idx: number) => {
+        const slider = sliderRef.current; if (!slider) return;
+        const target = slider.children[idx] as HTMLElement | undefined; if (!target) return;
+        setActivo(idx);
+        if (supportsSmooth) {
+            slider.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+        } else {
+            slider.scrollLeft = target.offsetLeft;
+        }
+    };
+
+    // Auto avance cada 3s (loop) solo en móvil y si usuario no arrastra
+    // Auto-scroll eliminado
+
+    useEffect(() => {
+    // Sin auto-scroll
+    }, [isMobile]);
+
+    return (
+        <div className="mt-6 flex flex-col items-center w-full">
+            <div
+                id="slider-servicios"
+                ref={sliderRef}
+                className="flex w-full overflow-x-auto pb-3 pl-4 pr-4 gap-4 snap-x snap-mandatory scroll-smooth sm:grid sm:pl-0 sm:pr-0 sm:overflow-visible sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 sm:gap-6"
+            >
+                {servicios.map((s, i) => (
+                    <div
+                        key={i}
+                        ref={el => { if (el) cardRefs.current[i] = el; }}
+                        className="relative shrink-0 snap-start rounded-2xl shadow-lg flex items-center justify-center aspect-[4/3] min-h-[120px] w-[90vw] min-w-[90vw] sm:w-full sm:min-w-0 md:min-h-[140px] lg:min-h-[160px] px-3 sm:px-4 md:px-5 text-center bg-cover bg-right-bottom"
+                        style={{ backgroundImage: `url(/img/tarjetas/Botones/${s.fondo}.png)` }}
+                    >
+                        <span className="font-bold text-xs sm:text-sm md:text-base text-noche drop-shadow leading-snug break-words">
+                            {s.texto}
+                        </span>
+                    </div>
+                ))}
+            </div>
+            {/* Dots solo móvil */}
+            <div className="flex justify-center items-center gap-2 mt-3 sm:hidden z-10">
+                {servicios.map((_, idx) => (
+                    <button
+                        key={idx}
+                        aria-label={`Ver servicio ${idx + 1}`}
+                        onClick={() => irA(idx)}
+                        className={`w-3 h-3 rounded-full transition-colors ${
+                            idx === activo ? 'bg-cardeno scale-110' : 'bg-gray-300'
+                        }`}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+}
 
 export default function Nominas() {
 
@@ -52,38 +191,7 @@ export default function Nominas() {
                     <h2 className="text-cardeno font-extrabold tracking-tight text-3xl sm:text-4xl md:text-5xl text-center md:text-left">
                         ¿QUE INCLUYE NUESTRO SERVICIO?
                     </h2>
-                    <ul className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 text-noche/90 text-sm sm:text-base md:text-lg list-disc list-inside md:list-outside md:pl-6 text-center md:text-left">
-                        <li>
-                            Cálculo de nómina y timbrado de recibos mensual, quincenal o semanal.
-                        </li>
-                        <li>
-                            Control de asistencias, vacaciones, aguinaldo, finiquitos y liquidaciones.
-                        </li>
-                        <li>
-                            Determinación de impuestos y retenciones (ISR, IMSS, INFONAVIT).
-                        </li>
-                        <li>
-                            Asesoría personalizada en materia Fiscal, Laboral y RR HH.
-                        </li>
-                        <li>
-                            Altas y bajas de empleados ante el IMSS y plataformas fiscales.
-                        </li>
-                        <li>
-                            Atención y soporte personalizado de nuestra plataforma.
-                        </li>
-                        <li>
-                            Alertas y notificaciones.
-                        </li>
-                        <li>
-                            App para colaboradores (potal del colaborador).
-                        </li>
-                        <li>
-                            Reportes personalizados.
-                        </li>
-                        <li>
-                            Integraciones STP para dispersión (ERP, SAP, oracle,).
-                        </li>
-                    </ul>
+                    <SliderServicios />
                 </div>
             </section>
             <section className="bg-cardeno py-10">
@@ -111,3 +219,6 @@ export default function Nominas() {
         </>
     )
 }
+
+
+
