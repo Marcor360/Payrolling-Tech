@@ -3,6 +3,7 @@ import Footers from "../../components/footer.tsx";
 import BotonCobertura from "/img/tarjetas/Botones/Blanco.png";
 import BotonCandidatos from "/img/tarjetas/Botones/Cardeno.png";
 import BotonCosto from "/img/tarjetas/Botones/Mango.png";
+import Costotext from "/img/textos/Costostext.png";
 
 const HERO_TAGS = [
   "Tiempo de cobertura de 4 días hábiles*",
@@ -152,13 +153,12 @@ export default function Reclutamiento() {
             </div>
           </div>
         </section>
-
         <section className="mx-auto max-w-5xl px-4 pb-20">
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 scroll-px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:pb-0 sm:scroll-px-0">
             {HERO_METRICS.map((metric) => (
               <article
                 key={metric.title}
-                className="relative overflow-hidden rounded-3xl shadow-lg shadow-black/15"
+                className="relative min-w-[85vw] flex-shrink-0 snap-center overflow-hidden rounded-3xl shadow-lg shadow-black/15 sm:min-w-0 sm:flex-auto"
               >
                 <img
                   src={metric.image}
@@ -204,24 +204,36 @@ export default function Reclutamiento() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-6xl px-4 pb-20">
-          <h3 className="text-2xl font-extrabold text-cardeno">Proceso claro, orientado a resultados</h3>
-          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {PROCESO.map((step) => (
-              <div key={step.paso} className="rounded-3xl bg-white/80 p-6 shadow-sm shadow-black/10">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-cardeno text-base font-bold text-white">
-                  {step.paso}
-                </span>
-                <h4 className="mt-4 text-lg font-semibold text-black">{step.titulo}</h4>
-                <p className="mt-2 text-sm text-black/80">{step.detalle}</p>
-              </div>
-            ))}
+        <section className="bg-cardeno text-white">
+          <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 lg:grid-cols-[minmax(0,360px)_1fr] lg:items-center lg:gap-20">
+            <div className="max-w-sm lg:max-w-none lg:justify-self-start lg:pl-4">
+              <h3 className="text-3xl font-black leading-tight text-white sm:text-[34px]">Proceso claro, orientado a resultados</h3>
+              <ol className="mt-10 list-none space-y-5 sm:space-y-6">
+                {PROCESO.map((step) => (
+                  <li key={step.paso} className="flex items-start gap-4">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-lg font-extrabold text-cardeno shadow-lg shadow-black/10">
+                      {step.paso}
+                    </span>
+                    <div className="max-w-xs sm:max-w-sm lg:max-w-md">
+                      <h4 className="text-lg font-semibold text-white">{step.titulo}</h4>
+                      <p className="mt-1 text-sm text-white/90">{step.detalle}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <div className="flex justify-center lg:justify-center">
+              <img
+                src={Costotext}
+                alt="Costo? Pagas solo por vacantes cubiertas."
+                className="w-full max-w-[480px] sm:max-w-[620px] lg:max-w-[760px] xl:max-w-[820px]"
+              />
+            </div>
           </div>
         </section>
-
         <section className="bg-noche py-20 text-white">
-          <div className="mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-[minmax(0,420px)_1fr]">
-            <form className="rounded-3xl bg-fondo-cremita p-8 text-black shadow-2xl shadow-black/30">
+          <div className="mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-[minmax(0,560px)_1fr] lg:gap-16">
+            <form className="w-full max-w-[560px] rounded-3xl bg-fondo-cremita p-8 text-black shadow-2xl shadow-black/30">
               <div className="grid gap-5 sm:grid-cols-2">
                 <label className="flex flex-col gap-2 text-sm font-semibold">
                   Nombre*
