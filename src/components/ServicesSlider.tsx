@@ -107,9 +107,9 @@ export default function ServicesSlider() {
     if (!items.length) return;
 
     // knobs (ajusta a tu gusto)
-    const MAX_SHIFT = 140; // px -> cuanto se mueve de derecha a izquierda
-    const MAX_FADE = 0.35; // opacidad al alejarse del centro
-    const THRESHOLD = 0.12; // que tan cerca del centro para voltear
+    const MAX_SHIFT = 120; // px -> cuanto se mueve de derecha a izquierda
+    const MAX_FADE = 0.28; // opacidad al alejarse del centro
+    const THRESHOLD = 0.18; // que tan cerca del centro para voltear
 
     type Metric = {
       el: HTMLDivElement;
@@ -144,14 +144,14 @@ export default function ServicesSlider() {
       const viewportCenter = wrap.scrollTop + halfViewport;
 
       metrics.forEach(({ el, center }) => {
-        let d = (center - viewportCenter) / halfViewport;
-        if (d > 1) d = 1;
-        if (d < -1) d = -1;
+        const raw = (center - viewportCenter) / halfViewport;
+        const clamped = Math.max(-1, Math.min(1, raw));
+        const eased = Math.sign(clamped) * Math.pow(Math.abs(clamped), 0.75);
 
-        const shiftX = d * MAX_SHIFT;
-        const rotZ = d * -2;
-        const scale = 1 - 0.08 * Math.abs(d);
-        const opacity = 1 - MAX_FADE * Math.abs(d);
+        const shiftX = eased * MAX_SHIFT;
+        const rotZ = eased * -1.6;
+        const scale = 1 - 0.06 * Math.abs(eased);
+        const opacity = 1 - MAX_FADE * Math.abs(eased);
 
         el.style.transform = `
           translateX(${shiftX}px)
@@ -160,7 +160,7 @@ export default function ServicesSlider() {
         `;
         el.style.opacity = `${opacity}`;
 
-        if (Math.abs(d) < THRESHOLD) {
+        if (Math.abs(clamped) < THRESHOLD) {
           el.classList.add("is-centered");
         } else {
           el.classList.remove("is-centered");
@@ -335,7 +335,7 @@ export default function ServicesSlider() {
                 w-[86vw] max-w-[340px] h-[420px]
                 md:w-[68vw] md:max-w-[420px] md:h-[460px]
                 rounded-2xl border border-black/5 shadow-xl overflow-hidden
-                transition-[transform,opacity] duration-150 will-change-transform
+                transition-[transform,opacity] duration-300 ease-out will-change-transform
                 [transform-style:preserve-3d]
               "
               style={{
