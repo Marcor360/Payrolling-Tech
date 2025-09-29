@@ -1,9 +1,8 @@
 @import "tailwindcss";
 
 
-/* Custom theme colors */
-
-@theme {
+/* Custom theme colors (convert @theme to :root variables) */
+:root {
     --color-cardeno: #8f07fd;
     --color-fondo-cremita: #f4f3e9;
     --color-mango: #febe0b;
@@ -44,3 +43,106 @@ html {
 a {
     text-decoration: none;
 }
+
+/* Faux extra-bold effect for rotating hero words */
+.hero-rot-word {
+    font-weight: 900; /* fallback if heavier weight exists */
+    /* Simulated bold using layered shadows (since only Regular weight is loaded) */
+    text-shadow:
+        0 0 0 #fff,
+        0 0.5px 0 #fff,
+        0 -0.5px 0 #fff,
+        0.5px 0 0 #fff,
+        -0.5px 0 0 #fff,
+        0.5px 0.5px 0 #fff,
+        -0.5px -0.5px 0 #fff;
+    -webkit-text-stroke: 0.3px #fff; /* subtle stroke for crisper edges */
+    paint-order: stroke fill;
+}
+
+@media (min-width: 768px) {
+  .hero-rot-word { -webkit-text-stroke: 0.4px #fff; }
+}
+
+/* Diagonal hero chips */
+.hero-chip {
+    position: relative;
+    display: inline-block;
+    line-height: 1;
+    padding: 0; /* padding handled in inner */
+    isolation: isolate;
+}
+.hero-chip::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--chip-bg, #8300ff);
+    /* Diagonal ends */
+    clip-path: polygon(8% 0,100% 0,92% 100%,0 100%);
+    border-radius: 4px;
+    z-index: -1;
+}
+.hero-chip--anim::before { background: var(--chip-bg, #6200d9); }
+.hero-chip--rect::before { clip-path: none; border-radius: 3px; }
+.hero-chip__inner {
+    display: inline-block;
+    padding: .28em .9em .34em 1.05em; /* left a bit wider to compensate diagonal */
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+}
+.rot-mango {
+    color: var(--color-mango);
+    font-weight: 900;
+    text-shadow:
+        0 0 0 var(--color-mango),
+        0 0.5px 0 var(--color-mango),
+        0 -0.5px 0 var(--color-mango),
+        0.5px 0 0 var(--color-mango),
+        -0.5px 0 0 var(--color-mango),
+        0.5px 0.5px 0 var(--color-mango),
+        -0.5px -0.5px 0 var(--color-mango);
+    -webkit-text-stroke: 0.28px var(--color-mango);
+    paint-order: stroke fill;
+}
+@media (min-width:768px){
+    .rot-mango { -webkit-text-stroke: 0.35px var(--color-mango); }
+}
+.hero-chip--tight .hero-chip__inner {
+    padding: .16em .55em .22em .70em;
+    line-height: 1;
+}
+/* Adjust diagonals on very small screens so they don't eat too much space */
+@media (max-width:480px) {
+    .hero-chip::before { clip-path: polygon(10% 0,100% 0,90% 100%,0 100%); }
+    .hero-chip__inner { padding: .26em .75em .32em .95em; }
+}
+/* Larger screens: slightly subtler angle */
+@media (min-width:1024px) {
+    .hero-chip::before { clip-path: polygon(6% 0,100% 0,94% 100%,0 100%); }
+}
+
+/* Hero single-line handling */
+.hero-line {
+    display:flex;
+    flex-wrap:nowrap;
+    align-items:baseline;
+    gap:.55rem;
+    white-space:nowrap;
+}
+.hero-line > * { white-space:nowrap; }
+.hero-line-wrapper .hero-line {
+    font-size: clamp(2.2rem,6vw,3.6rem);
+    transition:transform .18s ease;
+}
+
+/* Mobile: forzar salto de línea sólo antes del último chip (sin + animado) */
+@media (max-width:639px){
+    .hero-line { flex-wrap:wrap; }
+    .hero-line .hero-chip--break-mobile { flex-basis:100%; margin-top:.35rem; }
+    .hero-line .hero-chip--break-mobile .hero-chip__inner { display:inline-block; }
+}
+
+/* Fallback utilities if Tailwind purged custom color */
+.bg-cardeno { background-color: var(--color-cardeno) !important; }
+.text-cardeno { color: var(--color-cardeno) !important; }

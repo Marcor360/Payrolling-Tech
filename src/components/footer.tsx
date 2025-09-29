@@ -1,7 +1,7 @@
 export default function Footer() {
     return (
-        <footer className="bg-cardeno text-mango py-6 px-4">
-            <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-stretch justify-between gap-8">
+        <footer className="py-6 px-4" style={{ backgroundColor: 'var(--color-cardeno)' }}>
+            <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-stretch justify-between gap-8 text-[var(--color-mango)]">
                 {/* Logo en el footer */}
                 <div className="flex items-center gap-3 mb-4 md:mb-0 md:w-1/3 justify-center md:justify-start">
                     <a href="/">
@@ -15,7 +15,7 @@ export default function Footer() {
                 </div>
 
                 {/* Dirección y derechos */}
-                <div className="text-center text-blanco text-sm md:flex-1 md:flex md:flex-col md:justify-center">
+                <div className="text-center text-sm md:flex-1 md:flex md:flex-col md:justify-center text-[var(--color-blanco)]">
                     <div className="mb-1">&copy; 2025 Payrolling Tech México</div>
                     <div>
                         Blvd. Palmas Hills 1 Valle de las Palmas<br />
@@ -25,7 +25,7 @@ export default function Footer() {
 
                 {/* Iconos sociales */}
                 <div className="flex items-center gap-3 mt-4 md:mt-0 md:w-1/3 justify-center md:justify-end">
-                    <div className="hidden md:block h-9 border-l-2 border-blanco mx-3"></div>
+                    <div className="hidden md:block h-9 border-l-2 mx-3" style={{ borderColor: 'var(--color-blanco)' }}></div>
                     <div className="flex gap-2">
                         {/* Facebook */}
                         <a
@@ -33,7 +33,8 @@ export default function Footer() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Facebook"
-                            className="w-9 h-9 rounded-full bg-blanco text-cardeno flex items-center justify-center hover:opacity-90 transition-colors"
+                            className="w-9 h-9 rounded-full flex items-center justify-center hover:opacity-90 transition-colors"
+                            style={{ backgroundColor: 'var(--color-blanco)', color: 'var(--color-cardeno)' }}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +56,8 @@ export default function Footer() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="WhatsApp"
-                            className="w-9 h-9 rounded-full bg-blanco text-cardeno flex items-center justify-center hover:opacity-90 transition-colors"
+                            className="w-9 h-9 rounded-full flex items-center justify-center hover:opacity-90 transition-colors"
+                            style={{ backgroundColor: 'var(--color-blanco)', color: 'var(--color-cardeno)' }}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -78,7 +80,8 @@ export default function Footer() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Instagram"
-                            className="w-9 h-9 rounded-full bg-blanco text-cardeno flex items-center justify-center hover:opacity-90 transition-colors"
+                            className="w-9 h-9 rounded-full flex items-center justify-center hover:opacity-90 transition-colors"
+                            style={{ backgroundColor: 'var(--color-blanco)', color: 'var(--color-cardeno)' }}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +105,8 @@ export default function Footer() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Correo electrónico"
-                            className="w-9 h-9 rounded-full bg-blanco text-cardeno flex items-center justify-center hover:opacity-90 transition-colors"
+                            className="w-9 h-9 rounded-full flex items-center justify-center hover:opacity-90 transition-colors"
+                            style={{ backgroundColor: 'var(--color-blanco)', color: 'var(--color-cardeno)' }}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
