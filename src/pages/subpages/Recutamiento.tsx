@@ -1,9 +1,11 @@
+﻿import { useEffect, useRef, useState } from "react";
 import Headers from "../../components/header.tsx";
 import Footers from "../../components/footer.tsx";
 import BotonCobertura from "/img/tarjetas/Botones/Blanco.png";
 import BotonCandidatos from "/img/tarjetas/Botones/Cardeno.png";
 import BotonCosto from "/img/tarjetas/Botones/Mango.png";
 import Costotext from "/img/textos/Costostext.png";
+import Reclutamiento1 from "/img/img-tarjetas/Reclutamiento1.png";
 
 const HERO_TAGS = [
   "Tiempo de cobertura de 4 días hábiles*",
@@ -76,25 +78,49 @@ const PROCESO = [
 ];
 
 export default function Reclutamiento() {
+  const procesoRef = useRef<HTMLOListElement | null>(null);
+  const [procesoVisible, setProcesoVisible] = useState(false);
+
+  useEffect(() => {
+    const target = procesoRef.current;
+    if (!target) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setProcesoVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(target);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       <Headers variant="dark" />
       <main className="bg-fondo-cremita text-black">
-        <section className="mx-auto max-w-6xl px-4 pb-20 pt-24 sm:pt-28">
+        <section className="mx-auto max-w-6xl px-4 pb-32 pt-24 sm:pt-28 lg:pb-36">
           <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-            <div>
-              <h1 className="text-4xl font-black leading-tight text-cardeno sm:text-5xl lg:text-[56px] lg:leading-[1]">
-                Reclutamiento y
+            <div className="text-center lg:text-left">
+              <h1 className="text-4xl font-black leading-tight text-cardeno sm:text-5xl lg:text-[56px] lg:leading-[1] text-center lg:text-left">
+                Reclutamiento y{" "}
                 <br className="hidden sm:block" />
-                Selección de
+                Selección de{" "}
                 <br className="hidden sm:block" />
                 Personal
               </h1>
-              <p className="mt-5 text-xl font-semibold italic">
+              <p className="mt-5 text-xl font-semibold italic text-center lg:text-left">
                 Eficiente, Efectivo y sin complicaciones.
               </p>
 
-              <div className="mt-6 flex flex-wrap items-center gap-4 text-sm font-semibold">
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-sm font-semibold lg:justify-start">
                 {HERO_TAGS.map((tag) => (
                   <span
                     key={tag}
@@ -112,7 +138,7 @@ export default function Reclutamiento() {
               </div>
 
               {HERO_DESCRIPTION && (
-                <div className="mt-3 flex max-w-2xl items-start gap-3 text-base font-medium">
+                <div className="mt-3 flex max-w-2xl items-start justify-center gap-3 text-base font-medium lg:justify-start">
                   <span
                     className="mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-noche text-[11px] font-bold text-white"
                     aria-hidden="true"
@@ -123,7 +149,7 @@ export default function Reclutamiento() {
                 </div>
               )}
 
-              <div className="mt-8 flex flex-wrap gap-4">
+              <div className="mt-8 flex flex-wrap justify-center gap-4 lg:justify-start">
                 <a
                   href="#contacto"
                   className="inline-flex items-center justify-center rounded-full bg-mango px-7 py-3 text-sm font-extrabold text-black shadow-sm transition hover:bg-mango/90 focus:outline-none focus:ring-2 focus:ring-black/40"
@@ -138,7 +164,7 @@ export default function Reclutamiento() {
                 </a>
               </div>
 
-              <div className="mt-10 max-w-2xl">
+              <div className="mt-10 max-w-2xl text-center lg:mx-0 lg:text-left">
                 <h2 className="text-2xl font-extrabold text-cardeno">La propuesta de valor</h2>
                 <p className="mt-3 text-base leading-relaxed text-black">
                   Combinamos expertos locales, tecnología de búsqueda y procesos estandarizados de selección para darte más velocidad, mejor calidad y menor rotación por contratación.
@@ -146,35 +172,41 @@ export default function Reclutamiento() {
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-6">
-              <div className="w-full max-w-[420px] rounded-[48px] border border-black/20 bg-white/80 px-6 py-16 text-center text-xs font-semibold uppercase tracking-[0.35em] text-black shadow-xl shadow-black/10">
-                Área para fotografía
+            <div className="flex justify-center lg:justify-end">
+              <div className="relative w-full max-w-[540px]">
+                <div className="overflow-hidden rounded-[48px] shadow-xl shadow-black/10">
+                  <img
+                    src={Reclutamiento1}
+                    alt="Equipo colaborando"
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="relative z-10 -mt-20 flex flex-col items-center gap-3 px-4 sm:-mt-16 sm:flex-row sm:items-stretch sm:justify-center lg:-mt-24 lg:gap-6 lg:justify-between">
+                  {HERO_METRICS.map((metric) => (
+                    <article
+                      key={metric.title}
+                      className="relative w-full max-w-[220px] overflow-hidden rounded-3xl shadow-lg shadow-black/15 sm:flex-1 sm:max-w-none md:max-w-[240px] lg:max-w-[300px] min-h-[140px] sm:min-h-[160px] lg:min-h-[190px]"
+                    >
+                      <img
+                        src={metric.image}
+                        alt={metric.title}
+                        className="h-full w-full object-cover"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 py-4 text-center text-black sm:gap-3 sm:px-7 sm:py-5 lg:gap-2 lg:px-8 lg:py-5">
+                        <p className="text-xl font-extrabold lg:text-lg">{metric.title}</p>
+                        <p className="mt-2 text-sm font-medium text-black/80 sm:mt-3 sm:text-sm lg:mt-3 lg:text-xs">
+                          {metric.caption}
+                        </p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </section>
-        <section className="mx-auto max-w-5xl px-4 pb-20">
-          <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 scroll-px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:pb-0 sm:scroll-px-0">
-            {HERO_METRICS.map((metric) => (
-              <article
-                key={metric.title}
-                className="relative min-w-[85vw] flex-shrink-0 snap-center overflow-hidden rounded-3xl shadow-lg shadow-black/15 sm:min-w-0 sm:flex-auto"
-              >
-                <img
-                  src={metric.image}
-                  alt={metric.title}
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-black">
-                  <p className="text-2xl font-extrabold">{metric.title}</p>
-                  <p className="mt-2 text-sm font-medium text-black/80">{metric.caption}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
         <section className="mx-auto max-w-6xl px-4 pb-16">
           <div className="grid gap-10 lg:grid-cols-2">
             <div className="rounded-3xl bg-white/80 p-8 shadow-sm shadow-black/10">
@@ -206,15 +238,18 @@ export default function Reclutamiento() {
 
         <section className="bg-cardeno text-white">
           <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 lg:grid-cols-[minmax(0,360px)_1fr] lg:items-center lg:gap-20">
-            <div className="max-w-sm lg:max-w-none lg:justify-self-start lg:pl-4">
-              <h3 className="text-3xl font-black leading-tight text-white sm:text-[34px]">Proceso claro, orientado a resultados</h3>
-              <ol className="mt-10 list-none space-y-5 sm:space-y-6">
+            <div className="max-w-sm md:mx-auto md:text-center lg:mx-0 lg:max-w-none lg:justify-self-start lg:pl-4 lg:text-left">
+              <h3 className="text-3xl font-black leading-tight text-white sm:text-[34px] md:text-center lg:text-left">Proceso claro, orientado a resultados</h3>
+              <ol
+                ref={procesoRef}
+                className={`mt-10 list-none space-y-5 sm:space-y-6 md:mx-auto md:max-w-xl lg:mx-0 proceso-list ${procesoVisible ? "proceso-list--visible" : ""}`}
+              >
                 {PROCESO.map((step) => (
-                  <li key={step.paso} className="flex items-start gap-4">
-                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-lg font-extrabold text-cardeno shadow-lg shadow-black/10">
+                  <li key={step.paso} className="flex items-start gap-4 md:flex-col md:items-center md:gap-3 md:text-center lg:flex-row lg:text-left">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-lg font-extrabold text-cardeno shadow-lg shadow-black/10 md:mb-2">
                       {step.paso}
                     </span>
-                    <div className="max-w-xs sm:max-w-sm lg:max-w-md">
+                    <div className="max-w-xs sm:max-w-sm md:max-w-lg md:text-center lg:max-w-md lg:text-left">
                       <h4 className="text-lg font-semibold text-white">{step.titulo}</h4>
                       <p className="mt-1 text-sm text-white/90">{step.detalle}</p>
                     </div>
@@ -232,8 +267,8 @@ export default function Reclutamiento() {
           </div>
         </section>
         <section className="bg-noche py-20 text-white">
-          <div className="mx-auto grid max-w-6xl gap-12 px-4 lg:grid-cols-[minmax(0,560px)_1fr] lg:gap-16">
-            <form className="w-full max-w-[560px] rounded-3xl bg-fondo-cremita p-8 text-black shadow-2xl shadow-black/30">
+          <div className="mx-auto grid max-w-6xl gap-12 px-4 justify-items-center lg:grid-cols-[minmax(0,560px)_1fr] lg:gap-16 lg:justify-items-start">
+            <form className="order-2 w-full max-w-[560px] rounded-3xl bg-fondo-cremita p-8 text-black shadow-2xl shadow-black/30 lg:order-1">
               <div className="grid gap-5 sm:grid-cols-2">
                 <label className="flex flex-col gap-2 text-sm font-semibold">
                   Nombre*
@@ -341,16 +376,16 @@ export default function Reclutamiento() {
               </p>
             </form>
 
-            <div className="flex flex-col justify-center gap-6">
+            <div className="order-1 flex flex-col items-center justify-center gap-6 text-center md:order-1 md:text-center lg:order-2 lg:items-start lg:text-left">
               <div>
-                <h3 className="mt-4 text-3xl font-black text-mango">
+                <h3 className="mt-4 text-4xl font-black text-mango">
                   Listos para cubrir tus vacantes
                 </h3>
-                <p className="mt-4 text-base leading-relaxed text-white/90">
+                <p className="mt-4 text-lg leading-relaxed text-white/90 text-center md:text-center lg:text-left">
                   Cuéntanos el perfil y la cantidad de personal que requieres. Te regresamos una propuesta y un tiempo estimado de cobertura. Sin compromiso.
                 </p>
               </div>
-              <ul className="space-y-3 text-base text-white/90">
+              <ul className="space-y-3 text-lg text-white/90 text-center md:text-center lg:text-left">
                 {LISTOS.map((item) => (
                   <li key={item}>&bull; {item}</li>
                 ))}

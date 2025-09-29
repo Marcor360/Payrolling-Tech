@@ -44,3 +44,28 @@ html {
 a {
     text-decoration: none;
 }
+
+/* Reclutamiento proceso animation */
+.proceso-list li {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.proceso-list--visible li {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.proceso-list--visible li:nth-child(2) {
+    transition-delay: 0.1s;
+}
+
+.proceso-list--visible li:nth-child(3) {
+    transition-delay: 0.2s;
+}
+
+.proceso-list--visible li:nth-child(4) {
+    transition-delay: 0.3s;
+}
+
