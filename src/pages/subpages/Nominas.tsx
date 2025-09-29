@@ -1,8 +1,38 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useLayoutEffect, useCallback } from "react";
 import Headers from "../../components/header.tsx";
-import Foter from "../../components/footer.tsx";
+import Footer from "../../components/footer.tsx";
 import FondoHeadBubles from "/img/tarjetas/Fondo-tarjetas/FondoNomina.webp";
-import Text1 from "/img/textos/TuNominaRapidoySinErrores.webp";
+
+// Texto animado rotando sinónimos de "errores" 
+const palabrasAnimadas = ["errores","fallos","frenos","deslices","desaciertos"]; // versión estable corta
+
+function TextoAnimado({ className = "", onWordChange }: { className?: string; onWordChange?: () => void }) {
+  const [indice, setIndice] = useState(0);
+  const [fadeIn, setFadeIn] = useState(true);
+  const timeoutRef = useRef<number | null>(null);
+
+  useEffect(() => { onWordChange?.(); }, [onWordChange]);
+
+  useEffect(() => {
+    let mounted = true;
+    const ciclo = () => {
+      timeoutRef.current = window.setTimeout(() => {
+        setFadeIn(false);
+        timeoutRef.current = window.setTimeout(() => {
+          if (!mounted) return;
+          setIndice(p => (p + 1) % palabrasAnimadas.length);
+          setFadeIn(true);
+          requestAnimationFrame(() => requestAnimationFrame(() => onWordChange?.()));
+          ciclo();
+        }, 500);
+      }, 2200);
+    };
+    ciclo();
+    return () => { mounted = false; if (timeoutRef.current) clearTimeout(timeoutRef.current); };
+  }, [onWordChange]);
+
+        return <span className={`inline-block transition-opacity duration-500 ${fadeIn ? 'opacity-100':'opacity-0'} font-extrabold ${className}`}>{palabrasAnimadas[indice]}</span>
+}
 
 // Componente reutilizable para el slider de servicios en móvil
 function SliderServicios() {
@@ -143,33 +173,153 @@ function SliderServicios() {
 }
 
 export default function Nominas() {
+    // Calcular altura del header para centrar verticalmente sin que lo tape
+    const [headerH, setHeaderH] = useState(0);
+    useEffect(() => {
+        const actualizar = () => {
+            const h = document.querySelector('header')?.offsetHeight || 0;
+            setHeaderH(h);
+        };
+        actualizar();
+        window.addEventListener('resize', actualizar);
+        return () => window.removeEventListener('resize', actualizar);
+    }, []);
+
+    // Nueva lógica responsiva: font-size fluido + escala si no cabe (mantener una sola línea en móviles pequeños)
+    const heroLineRef = useRef<HTMLDivElement | null>(null);
+    const heroWrapperRef = useRef<HTMLDivElement | null>(null);
+    const originalFontSizeRef = useRef<string | null>(null);
+    const rafRef = useRef<number | null>(null);
+
+    const recalcularHero = useCallback(() => {
+        const line = heroLineRef.current;
+        const wrap = heroWrapperRef.current;
+        if (!line || !wrap) return;
+
+    // Reset transform y letter-spacing para medir correctamente
+        line.style.transform = 'none';
+    line.style.letterSpacing = '';
+
+        // Guardar font-size original sólo una vez
+        if (!originalFontSizeRef.current) {
+            originalFontSizeRef.current = getComputedStyle(line).fontSize; // ej: "54.4px"
+        }
+        // Reiniciar font-size a original antes de cálculos
+        if (originalFontSizeRef.current) {
+            line.style.fontSize = originalFontSizeRef.current;
+        }
+
+        const available = wrap.clientWidth;
+
+        // Paso 1: intentar reducir font-size (sin transform) hasta cierto límite
+        let needed = line.scrollWidth;
+        // minPx dinámico: teléfonos muy pequeños permiten bajar un poco más
+        const viewportW = window.innerWidth || available;
+        const minPx = viewportW < 350 ? 20 : viewportW < 400 ? 22 : 26; // nunca menos de 20px
+        let loops = 0;
+        while (needed > available && loops < 12) {
+            const currentSizePx = parseFloat(getComputedStyle(line).fontSize);
+            if (currentSizePx <= minPx) break; // no reduzcas más
+            const nextSize = Math.max(minPx, currentSizePx * 0.94); // reduce ~6%
+            line.style.fontSize = nextSize + 'px';
+            needed = line.scrollWidth;
+            loops++;
+        }
+
+        // Paso 2: si todavía no cabe, aplicar scale como último recurso
+        needed = line.scrollWidth;
+        if (needed > available) {
+            // Paso 2.1 micro-compresión de letter-spacing antes de escalar
+            let lsSteps = 0;
+            while (needed > available && lsSteps < 4) { // hasta -2px total (4 * -0.5)
+                line.style.letterSpacing = `${-(lsSteps + 1) * 0.5}px`;
+                needed = line.scrollWidth;
+                lsSteps++;
+            }
+            // Paso 2.2 si aún no cabe -> scale final
+            if (needed > available) {
+                const safety = 1;
+                const scale = Math.max((available - safety) / needed, 0.45);
+                line.style.transformOrigin = 'left center';
+                line.style.transform = `scale(${scale})`;
+            } else {
+                // Mantén compresión aplicada
+                line.style.transform = 'none';
+            }
+        } else {
+            line.style.transform = 'none';
+        }
+
+        // Ajustar wrapper height para evitar saltos
+        wrap.style.height = line.getBoundingClientRect().height + 'px';
+    }, []);
+
+    // Throttle / schedule recalculation to evitar múltiples cálculos en el mismo frame
+    const programarRecalc = useCallback(() => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(() => { rafRef.current = null; recalcularHero(); });
+    }, [recalcularHero]);
+
+    useLayoutEffect(() => { recalcularHero(); }, [recalcularHero]);
+
+    useEffect(() => {
+        const r = new ResizeObserver(() => programarRecalc());
+        if (heroWrapperRef.current) r.observe(heroWrapperRef.current);
+        window.addEventListener('resize', programarRecalc);
+        window.addEventListener('orientationchange', programarRecalc);
+        return () => {
+            r.disconnect();
+            window.removeEventListener('resize', programarRecalc);
+            window.removeEventListener('orientationchange', programarRecalc);
+        };
+    }, [programarRecalc]);
 
     return (
         <>
             <section
                 aria-label="Hero Nóminas"
-                className="relative overflow-hidden text-white bg-cover bg-bottom min-h-[680px] md:min-h-[760px] lg:min-h-[840px]"
+                className="hero-section relative overflow-hidden text-white bg-cover bg-bottom min-h-[680px] md:min-h-[760px] lg:min-h-[840px]"
                 style={{ backgroundImage: `url(${FondoHeadBubles})` }}
             >
                 <Headers variant="darkTransparent" />
-                <div className="mx-auto max-w-7xl px-4 pt-0 md:pt-1 lg:pt-2 pb-6 md:pb-6 text-center -mt-4 md:-mt-6 lg:-mt-8">
-                    <img
-                        src={Text1}
-                        alt="Tu nómina rápido y sin errores"
-                        className="mx-auto w-full max-w-3xl h-auto"
-                        loading="eager"
-                        decoding="async"
-                    />
-                    <p className="mt-1 md:mt-1 text-white/90 text-base sm:text-lg md:text-xl">
+                    <div
+                        className="mx-auto max-w-7xl px-4 flex flex-col items-center justify-center text-center gap-6 transform -translate-y-4 md:-translate-y-6"
+                        style={{ minHeight: `calc(100vh - ${headerH}px)` }}
+                    >
+                    {/* Hero textual recreado (sin imagen) para responsividad completa */}
+                    <div className="w-full max-w-5xl flex flex-col items-center md:items-start">
+                        <div className="relative w-full">
+                            <h1 aria-label="Tu nómina rápido y sin errores" className="sr-only">Tu nómina rápido y sin errores</h1>
+                            <div ref={heroWrapperRef} className="w-full overflow-visible hero-line-wrapper">
+                                <div ref={heroLineRef} id="heroLine" className="hero-line justify-center md:justify-start font-extrabold leading-tight tracking-tight select-none text-white">
+                                    <span className="hero-rot-word">Tu</span>
+                                    <span className="hero-chip hero-chip--rect hero-chip--tight" style={{ ['--chip-bg' as any]:'#6f00ff' }}>
+                                        <span className="hero-chip__inner hero-rot-word text-white">nómina</span>
+                                    </span>
+                                    <span className="hero-chip hero-chip--rect hero-chip--tight" style={{ ['--chip-bg' as any]:'#6f00ff' }}>
+                                        <span className="hero-chip__inner hero-rot-word text-white">rápido</span>
+                                    </span>
+                                    <span className="hero-rot-word">y</span>
+                                    <span className="hero-chip hero-chip--rect hero-chip--tight hero-chip--break-mobile" style={{ ['--chip-bg' as any]:'#6f00ff' }}>
+                                        <span className="hero-chip__inner hero-rot-word text-white">sin <TextoAnimado className="rot-mango ml-2" onWordChange={programarRecalc} /></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Heading accesible oculto adicional con variantes semánticas */}
+                    <h2 className="sr-only">Tu nómina rápido y sin errores, fallos y frenos</h2>
+                    <p className="text-white/90 text-lg sm:text-xl md:text-2xl leading-snug">
                         tu <span className="font-bold text-white">activo</span> más importante para <span className="font-extrabold text-white">fortalecer tu negocio</span>
                     </p>
-
                     <a
                         href="https://api.whatsapp.com/send/?phone=528138646238&text=%C2%A1Hola%21+Quiero+m%C3%A1s+info+del+servicio+de+%2APayrolling+Tech%2A&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer"
-                        className="mt-1 md:mt-2 inline-block rounded-md bg-yellow-400 px-6 py-3 font-semibold text-noche shadow hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400/60"
+                        className="inline-block rounded-md bg-yellow-400 px-6 py-3 font-semibold text-noche shadow hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-400/60 transition-colors"
                     >
                         Conoce nuestro servicio
                     </a>
+                    {/* Imagen original opcional debajo (descomenta si quieres mostrarla) */}
+                    {/* <img src={Text1} alt="Tu nómina rápido y sin errores" className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl h-auto opacity-70" /> */}
                 </div>
             </section>
             <section>
@@ -215,7 +365,7 @@ export default function Nominas() {
                     </div>
                 </div>
             </section>
-            <Foter />
+            <Footer />
         </>
     )
 }
