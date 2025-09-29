@@ -142,18 +142,21 @@ function SliderServicios() {
                 ref={sliderRef}
                 className="flex w-full overflow-x-auto pb-3 pl-4 pr-4 gap-4 snap-x snap-mandatory scroll-smooth sm:grid sm:pl-0 sm:pr-0 sm:overflow-visible sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 sm:gap-6"
             >
-                {servicios.map((s, i) => (
-                    <div
-                        key={i}
-                        ref={el => { if (el) cardRefs.current[i] = el; }}
-                        className="relative shrink-0 snap-start rounded-2xl shadow-lg flex items-center justify-center aspect-[4/3] min-h-[120px] w-[90vw] min-w-[90vw] sm:w-full sm:min-w-0 md:min-h-[140px] lg:min-h-[160px] px-3 sm:px-4 md:px-5 text-center bg-cover bg-right-bottom"
-                        style={{ backgroundImage: `url(/img/tarjetas/Botones/${s.fondo}.png)` }}
-                    >
-                        <span className="font-bold text-xs sm:text-sm md:text-base text-noche drop-shadow leading-snug break-words">
-                            {s.texto}
-                        </span>
-                    </div>
-                ))}
+                {servicios.map((s, i) => {
+                    const color = s.fondo === 'Blanco' ? 'var(--color-noche)' : 'var(--color-blanco)';
+                    return (
+                        <div
+                            key={i}
+                            ref={el => { if (el) cardRefs.current[i] = el; }}
+                            className="relative shrink-0 snap-start rounded-2xl shadow-lg flex items-center justify-center aspect-[4/3] min-h-[120px] w-[90vw] min-w-[90vw] sm:w-full sm:min-w-0 md:min-h-[140px] lg:min-h-[160px] px-3 sm:px-4 md:px-5 text-center bg-cover bg-right-bottom transform-gpu md:transition md:duration-300 md:ease-out md:hover:-translate-y-2 md:hover:shadow-xl md:hover:scale-[1.03]"
+                            style={{ backgroundImage: `url(/img/tarjetas/Botones/${s.fondo}.png)` }}
+                        >
+                            <span className="font-bold text-xs sm:text-sm md:text-base drop-shadow leading-snug break-words" style={{ color }}>
+                                {s.texto}
+                            </span>
+                        </div>
+                    );
+                })}
             </div>
             {/* Dots solo móvil */}
             <div className="flex justify-center items-center gap-2 mt-3 sm:hidden z-10">
@@ -275,15 +278,15 @@ export default function Nominas() {
     }, [programarRecalc]);
 
     return (
-        <>
+        <div className="flex flex-col min-h-screen">
             <section
                 aria-label="Hero Nóminas"
-                className="hero-section relative overflow-hidden text-white bg-cover bg-bottom min-h-[680px] md:min-h-[760px] lg:min-h-[840px]"
+                className="hero-section relative overflow-hidden text-white bg-cover bg-bottom"
                 style={{ backgroundImage: `url(${FondoHeadBubles})` }}
             >
                 <Headers variant="darkTransparent" />
                     <div
-                        className="mx-auto max-w-7xl px-4 flex flex-col items-center justify-center text-center gap-6 transform -translate-y-4 md:-translate-y-6"
+                        className="mx-auto max-w-7xl px-4 flex flex-col items-center justify-center text-center gap-6 py-10 md:py-14"
                         style={{ minHeight: `calc(100vh - ${headerH}px)` }}
                     >
                     {/* Hero textual recreado (sin imagen) para responsividad completa */}
@@ -322,8 +325,8 @@ export default function Nominas() {
                     {/* <img src={Text1} alt="Tu nómina rápido y sin errores" className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl h-auto opacity-70" /> */}
                 </div>
             </section>
-            <section>
-                <div className="mx-auto w-full max-w-5xl px-4 pt-15">
+            <section className="grow">
+                <div className="mx-auto w-full max-w-5xl px-4 pt-16">
                     {/* aqui va el video */}
                     <video
                         className="w-full h-auto rounded-md shadow-sm"
@@ -366,7 +369,7 @@ export default function Nominas() {
                 </div>
             </section>
             <Footer />
-        </>
+        </div>
     )
 }
 
