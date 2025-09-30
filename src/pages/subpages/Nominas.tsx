@@ -1,46 +1,79 @@
+// ==============================================
+// Página: Nóminas
+// Descripción general:
+//  - Hero con frase principal y palabra rotatoria (sinónimos de "errores")
+//  - Slider / grilla de servicios (horizontal en móvil, grid en desktop)
+//  - Video demostrativo
+//  - CTA final
+// Principios adoptados:
+//  - Mantener animaciones simples (timers + transiciones CSS) para evitar jank.
+//  - Evitar recálculos costosos del layout (no escalado dinámico de fuente).
+//  - Separar responsabilidades: TextoAnimado sólo controla rotación de palabra.
+//  - Accesibilidad: se usan etiquetas aria y texto oculto (sr-only) para lectores.
+//  - Responsivo: salto de línea antes del último chip sólo en <= 1023px.
+// NOTA: Si agregas más palabras largas, la lógica actual sigue funcionando; sólo revisar que no rompa el ancho en desktop.
+// ==============================================
 import { useEffect, useRef, useState, useLayoutEffect, useCallback } from "react";
 import Headers from "../../components/header.tsx";
 import Footer from "../../components/footer.tsx";
 import FondoHeadBubles from "/img/tarjetas/Fondo-tarjetas/FondoNomina.webp";
 
-// Texto animado rotando sinónimos de "errores" 
-const palabrasAnimadas = ["errores","fallos","frenos","deslices","desaciertos"]; // versión estable corta
+// Palabras rotatorias del hero. Mantener relativamente homogéneas en longitud para transiciones fluidas.
+const palabrasAnimadas = ["errores","fallos","frenos","deslices"]; // puedes agregar más: ej. "inexactitudes"
 
+// --------------------------------------------------
+// Componente: TextoAnimado
+// - Rota la palabra mostrada usando fade in/out.
+// - El hero recalcula altura tras cada cambio (onWordChange) para evitar saltos.
+// - Cambios temporales controlados por setTimeout.
+// - Si se necesita pausar (ej: en hover) se puede añadir lógica futura.
+// --------------------------------------------------
 function TextoAnimado({ className = "", onWordChange }: { className?: string; onWordChange?: () => void }) {
-  const [indice, setIndice] = useState(0);
-  const [fadeIn, setFadeIn] = useState(true);
+    const [indice, setIndice] = useState(0);      // índice actual
+    const [fadeIn, setFadeIn] = useState(true);   // estado de opacidad (fade control)
   const timeoutRef = useRef<number | null>(null);
 
-  // Notify parent as soon as we render the first word.
-  useEffect(() => { onWordChange?.(); }, [onWordChange]);
+    useEffect(() => { onWordChange?.(); }, [onWordChange]); // notifica al hero que puede recalcular altura
 
   useEffect(() => {
-    let mounted = true;
-    // Loop that fades out, swaps the word and fades in again.
-    const ciclo = () => {
+    let mounted = true; // bandera para evitar setState tras unmount
+    const ciclo = () => { // bucle recursivo de cambios
       timeoutRef.current = window.setTimeout(() => {
-        setFadeIn(false);
+    setFadeIn(false); // iniciar fade out
         timeoutRef.current = window.setTimeout(() => {
           if (!mounted) return;
-          setIndice(p => (p + 1) % palabrasAnimadas.length);
-          setFadeIn(true);
-          // Double rAF to ensure layout is ready before recalculating hero width.
+          setIndice(p => (p + 1) % palabrasAnimadas.length); // siguiente palabra
+          setFadeIn(true); // fade in nueva palabra
           requestAnimationFrame(() => requestAnimationFrame(() => onWordChange?.()));
           ciclo();
         }, 500);
       }, 2200);
     };
     ciclo();
+    // Limpieza al desmontar: evita memory leaks de timeouts
     return () => { mounted = false; if (timeoutRef.current) clearTimeout(timeoutRef.current); };
   }, [onWordChange]);
 
-        return <span className={`inline-block transition-opacity duration-500 ${fadeIn ? 'opacity-100':'opacity-0'} font-extrabold ${className}`}>{palabrasAnimadas[indice]}</span>
+                return (
+                    <span
+                        className={`inline-block transition-opacity duration-500 ${fadeIn ? 'opacity-100':'opacity-0'} font-extrabold ${className}`}
+                    >
+                        {palabrasAnimadas[indice]}
+                    </span>
+                );
 }
 
 // Componente reutilizable para el slider de servicios en móvil
+// --------------------------------------------------
+// Componente: SliderServicios
+// - Lista centralizada de servicios.
+// - Mobile: scroll horizontal con snap + dots.
+// - Desktop: grilla (CSS grid) sin scroll horizontal.
+// - IntersectionObserver: sólo activo en mobile para indicar card activa.
+// --------------------------------------------------
 function SliderServicios() {
     // Data centralizada: fácil de editar / reordenar / agregar
-    const servicios: { texto: string; fondo: 'Mango' | 'Blanco' | 'Cardeno' }[] = [
+    const servicios: { texto: string; fondo: 'Mango' | 'Blanco' | 'Cardeno' }[] = [ // Ajustar orden / textos libremente
         { texto: 'Cálculo de nómina y timbrado de recibos mensual, quincenal o semanal.', fondo: 'Mango' },
         { texto: 'Control de asistencias, vacaciones, aguinaldo, finiquitos y liquidaciones.', fondo: 'Blanco' },
         { texto: 'Determinación de impuestos y retenciones (ISR, IMSS, INFONAVIT).', fondo: 'Cardeno' },
@@ -53,14 +86,14 @@ function SliderServicios() {
         { texto: 'Integraciones STP para dispersión (ERP, SAP, Oracle).', fondo: 'Mango' },
     ];
 
-    const sliderRef = useRef<HTMLDivElement | null>(null);
-    const cardRefs = useRef<HTMLElement[]>([]);
-    const [activo, setActivo] = useState(0);
-    const [isMobile, setIsMobile] = useState(false);
-    const supportsSmooth = typeof document !== 'undefined' && 'scrollBehavior' in document.documentElement.style;
+    const sliderRef = useRef<HTMLDivElement | null>(null); // contenedor scrollable
+    const cardRefs = useRef<HTMLElement[]>([]);            // refs a cada card (observación)
+    const [activo, setActivo] = useState(0);               // índice activo (para dots)
+    const [isMobile, setIsMobile] = useState(false);       // flag responsive
+    const supportsSmooth = typeof document !== 'undefined' && 'scrollBehavior' in document.documentElement.style; // feature detection
 
     // Detecta si está en móvil (<= 640px) y escucha cambios de tamaño
-    useEffect(() => {
+    useEffect(() => { // escucha cambios de ancho para activar/desactivar modo slider
         const mq = window.matchMedia('(max-width: 639px)');
         const set = () => setIsMobile(mq.matches);
         set();
@@ -69,7 +102,7 @@ function SliderServicios() {
     }, []);
 
     // Sincroniza índice usando IntersectionObserver para mayor precisión
-    useEffect(() => {
+    useEffect(() => { // observa visibilidad de tarjetas sólo en mobile
         const slider = sliderRef.current;
         if (!slider) return;
         if (!isMobile) { // en desktop simplemente fija el primero
@@ -83,7 +116,6 @@ function SliderServicios() {
         };
         let frame: number | null = null;
         const observer = new IntersectionObserver(entries => {
-            // Track the card that is most visible so the dots and text stay in sync.
             // Filtrar solo visibles
             const visibles = entries.filter(e => e.isIntersecting);
             if (!visibles.length) return;
@@ -92,7 +124,6 @@ function SliderServicios() {
             let bestIdx = activosRef.current; // fallback al actual
             let bestScore = -1;
             visibles.forEach(e => {
-                // Score combines visibility ratio with distance to center for stability.
                 const el = e.target as HTMLElement;
                 const idx = cardRefs.current.indexOf(el);
                 if (idx === -1) return;
@@ -104,7 +135,6 @@ function SliderServicios() {
             });
             if (frame) cancelAnimationFrame(frame);
             frame = requestAnimationFrame(() => {
-
                 if (activosRef.current !== bestIdx) {
                     setActivo(bestIdx);
                     activosRef.current = bestIdx;
@@ -123,7 +153,7 @@ function SliderServicios() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isMobile, servicios.length]);
 
-    const irA = (idx: number) => {
+    const irA = (idx: number) => { // scroll programado a card
         const slider = sliderRef.current; if (!slider) return;
         const target = slider.children[idx] as HTMLElement | undefined; if (!target) return;
         setActivo(idx);
@@ -149,7 +179,12 @@ function SliderServicios() {
                 className="flex w-full overflow-x-auto pb-3 pl-4 pr-4 gap-4 snap-x snap-mandatory scroll-smooth sm:grid sm:pl-0 sm:pr-0 sm:overflow-visible sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 sm:gap-6"
             >
                 {servicios.map((s, i) => {
-                    const color = s.fondo === 'Blanco' ? 'var(--color-noche)' : 'var(--color-blanco)';
+                    // Color de texto según fondo (contraste)
+                    const color = s.fondo === 'Blanco'
+                        ? 'var(--color-noche)'
+                        : s.fondo === 'Mango'
+                            ? 'var(--color-noche)'
+                            : 'var(--color-blanco)';
                     return (
                         <div
                             key={i}
@@ -157,7 +192,7 @@ function SliderServicios() {
                             className="relative shrink-0 snap-start rounded-2xl shadow-lg flex items-center justify-center aspect-[4/3] min-h-[120px] w-[90vw] min-w-[90vw] sm:w-full sm:min-w-0 md:min-h-[140px] lg:min-h-[160px] px-3 sm:px-4 md:px-5 text-center bg-cover bg-right-bottom transform-gpu md:transition md:duration-300 md:ease-out md:hover:-translate-y-2 md:hover:shadow-xl md:hover:scale-[1.03]"
                             style={{ backgroundImage: `url(/img/tarjetas/Botones/${s.fondo}.png)` }}
                         >
-                            <span className="font-bold text-xs sm:text-sm md:text-base drop-shadow leading-snug break-words" style={{ color }}>
+                            <span className="font-semibold text-xs sm:text-sm md:text-base leading-snug break-words" style={{ color }}>
                                 {s.texto}
                             </span>
                         </div>
@@ -181,9 +216,12 @@ function SliderServicios() {
     );
 }
 
+// --------------------------------------------------
+// Página principal: Nominas
+// --------------------------------------------------
 export default function Nominas() {
     // Calcular altura del header para centrar verticalmente sin que lo tape
-    const [headerH, setHeaderH] = useState(0);
+    const [headerH, setHeaderH] = useState(0); // altura dinámica del header para centrar el hero
     useEffect(() => {
         const actualizar = () => {
             const h = document.querySelector('header')?.offsetHeight || 0;
@@ -195,84 +233,35 @@ export default function Nominas() {
     }, []);
 
     // Nueva lógica responsiva: font-size fluido + escala si no cabe (mantener una sola línea en móviles pequeños)
-    const heroLineRef = useRef<HTMLDivElement | null>(null);
-    const heroWrapperRef = useRef<HTMLDivElement | null>(null);
-    const originalFontSizeRef = useRef<string | null>(null);
-    const rafRef = useRef<number | null>(null);
+    const heroLineRef = useRef<HTMLDivElement | null>(null);   // línea completa del hero
+    const heroWrapperRef = useRef<HTMLDivElement | null>(null); // wrapper para medir altura
+    // Eliminado manejo dinámico de salto: se controla sólo por CSS responsivo
+    const originalFontSizeRef = useRef<string | null>(null); // almacena font-size inicial
+    const rafRef = useRef<number | null>(null);              // id de requestAnimationFrame para throttling
 
-    const recalcularHero = useCallback(() => {
+    const recalcularHero = useCallback(() => { // asegura altura estable del hero
         const line = heroLineRef.current;
         const wrap = heroWrapperRef.current;
         if (!line || !wrap) return;
-
-    // Reset transform y letter-spacing para medir correctamente
-        line.style.transform = 'none';
-    line.style.letterSpacing = '';
-
-        // Guardar font-size original sólo una vez
         if (!originalFontSizeRef.current) {
-            originalFontSizeRef.current = getComputedStyle(line).fontSize; // ej: "54.4px"
+            originalFontSizeRef.current = getComputedStyle(line).fontSize;
         }
-        // Reiniciar font-size a original antes de cálculos
-        if (originalFontSizeRef.current) {
-            line.style.fontSize = originalFontSizeRef.current;
-        }
-
-        const available = wrap.clientWidth;
-
-        // Paso 1: intentar reducir font-size (sin transform) hasta cierto límite
-        let needed = line.scrollWidth;
-        // minPx dinámico: teléfonos muy pequeños permiten bajar un poco más
-        const viewportW = window.innerWidth || available;
-        const minPx = viewportW < 350 ? 20 : viewportW < 400 ? 22 : 26; // nunca menos de 20px
-        let loops = 0;
-        while (needed > available && loops < 12) {
-            const currentSizePx = parseFloat(getComputedStyle(line).fontSize);
-            if (currentSizePx <= minPx) break; // no reduzcas más
-            const nextSize = Math.max(minPx, currentSizePx * 0.94); // reduce ~6%
-            line.style.fontSize = nextSize + 'px';
-            needed = line.scrollWidth;
-            loops++;
-        }
-
-        // Paso 2: si todavía no cabe, aplicar scale como último recurso
-        needed = line.scrollWidth;
-        if (needed > available) {
-            // Paso 2.1 micro-compresión de letter-spacing antes de escalar
-            let lsSteps = 0;
-            while (needed > available && lsSteps < 4) { // hasta -2px total (4 * -0.5)
-                line.style.letterSpacing = `${-(lsSteps + 1) * 0.5}px`;
-                needed = line.scrollWidth;
-                lsSteps++;
-            }
-            // Paso 2.2 si aún no cabe -> scale final
-            if (needed > available) {
-                const safety = 1;
-                const scale = Math.max((available - safety) / needed, 0.45);
-                line.style.transformOrigin = 'left center';
-                line.style.transform = `scale(${scale})`;
-            } else {
-                // Mantén compresión aplicada
-                line.style.transform = 'none';
-            }
-        } else {
-            line.style.transform = 'none';
-        }
-
-        // Ajustar wrapper height para evitar saltos
+        if (originalFontSizeRef.current) line.style.fontSize = originalFontSizeRef.current;
+        line.style.transform = 'none';
+        line.style.letterSpacing = '';
+        // Altura estable (aunque podríamos permitir flujo natural, se conserva para evitar micro-jumps)
         wrap.style.height = line.getBoundingClientRect().height + 'px';
     }, []);
 
     // Throttle / schedule recalculation to evitar múltiples cálculos en el mismo frame
-    // Prevent thrashing by cancelling previous recalculations when the word updates.
-    const programarRecalc = useCallback(() => {
+    const programarRecalc = useCallback(() => { // throttle de recalculo
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       rafRef.current = requestAnimationFrame(() => { rafRef.current = null; recalcularHero(); });
     }, [recalcularHero]);
 
-    useLayoutEffect(() => { recalcularHero(); }, [recalcularHero]);
+    useLayoutEffect(() => { recalcularHero(); }, [recalcularHero]); // primera medición al montar
 
-    useEffect(() => {
+    useEffect(() => { // observa cambios de tamaño y orientación
         const r = new ResizeObserver(() => programarRecalc());
         if (heroWrapperRef.current) r.observe(heroWrapperRef.current);
         window.addEventListener('resize', programarRecalc);
@@ -284,8 +273,25 @@ export default function Nominas() {
         };
     }, [programarRecalc]);
 
-    return (
-        <div className="flex flex-col min-h-screen">
+        return (
+                                <div className="flex flex-col min-h-screen">
+                                        {/* Estilos en-línea: controlan salto condicional y tamaño del chip final sin alterar CSS global */}
+                                                                                                                        <style>{`
+                                                                                                                            /* Desktop: una sola línea */
+                                                                                                                            #heroLine.hero-line--force-break { flex-wrap: nowrap; }
+                                                                                                                            /* Móviles y tablets: wrap + salto limpio + chip final centrado */
+                                                                                                                            @media (max-width:1023px){
+                                                                                                                                #heroLine.hero-line--force-break { flex-wrap: wrap; }
+                                                                                                                                #heroLine.hero-line--force-break .hero-break { flex-basis:100%; height:0; width:0; padding:0; margin:0; }
+                                                                                                                                #heroLine.hero-line--force-break .hero-chip--break-mobile { flex-basis:auto !important; margin-top:.30rem; }
+                                                                                                                                #heroLine.hero-line--force-break .hero-chip--short { margin-left:auto; margin-right:auto; }
+                                                                                                                            }
+                                                                                                                            /* Chip final compacto (diagonales por default al quitar --rect) */
+                                                                                                                            #heroLine.hero-line--force-break .hero-chip--short.hero-chip--tight .hero-chip__inner {
+                                                                                                                                padding:.14em .48em .20em .50em;
+                                                                                                                                letter-spacing:-0.35px;
+                                                                                                                            }
+                                                                                                                        `}</style>
             <section
                 aria-label="Hero Nóminas"
                 className="hero-section relative overflow-hidden text-white bg-cover bg-bottom"
@@ -301,7 +307,7 @@ export default function Nominas() {
                         <div className="relative w-full">
                             <h1 aria-label="Tu nómina rápido y sin errores" className="sr-only">Tu nómina rápido y sin errores</h1>
                             <div ref={heroWrapperRef} className="w-full overflow-visible hero-line-wrapper">
-                                <div ref={heroLineRef} id="heroLine" className="hero-line justify-center md:justify-start font-extrabold leading-tight tracking-tight select-none text-white">
+                                <div ref={heroLineRef} id="heroLine" className="hero-line hero-line--force-break justify-center md:justify-start font-extrabold leading-tight tracking-tight select-none text-white">
                                     <span className="hero-rot-word">Tu</span>
                                     <span className="hero-chip hero-chip--rect hero-chip--tight" style={{ ['--chip-bg' as any]:'#6f00ff' }}>
                                         <span className="hero-chip__inner hero-rot-word text-white">nómina</span>
@@ -310,7 +316,9 @@ export default function Nominas() {
                                         <span className="hero-chip__inner hero-rot-word text-white">rápido</span>
                                     </span>
                                     <span className="hero-rot-word">y</span>
-                                    <span className="hero-chip hero-chip--rect hero-chip--tight hero-chip--break-mobile" style={{ ['--chip-bg' as any]:'#6f00ff' }}>
+                                    {/* Separador que sólo fuerza el salto en <=1023px sin ensanchar el chip final */}
+                                    <span className="hero-break" aria-hidden="true"></span>
+                                    <span className="hero-chip hero-chip--tight hero-chip--break-mobile hero-chip--short" style={{ ['--chip-bg' as any]:'#6f00ff' }}>
                                         <span className="hero-chip__inner hero-rot-word text-white">sin <TextoAnimado className="rot-mango ml-2" onWordChange={programarRecalc} /></span>
                                     </span>
                                 </div>
@@ -328,7 +336,6 @@ export default function Nominas() {
                     >
                         Conoce nuestro servicio
                     </a>
-                    {/* Imagen original opcional debajo (descomenta si quieres mostrarla) */}
                     {/* <img src={Text1} alt="Tu nómina rápido y sin errores" className="w-full max-w-3xl md:max-w-4xl lg:max-w-5xl h-auto opacity-70" /> */}
                 </div>
             </section>
