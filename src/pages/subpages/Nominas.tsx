@@ -11,10 +11,12 @@ function TextoAnimado({ className = "", onWordChange }: { className?: string; on
   const [fadeIn, setFadeIn] = useState(true);
   const timeoutRef = useRef<number | null>(null);
 
+  // Notify parent as soon as we render the first word.
   useEffect(() => { onWordChange?.(); }, [onWordChange]);
 
   useEffect(() => {
     let mounted = true;
+    // Loop that fades out, swaps the word and fades in again.
     const ciclo = () => {
       timeoutRef.current = window.setTimeout(() => {
         setFadeIn(false);
@@ -22,6 +24,7 @@ function TextoAnimado({ className = "", onWordChange }: { className?: string; on
           if (!mounted) return;
           setIndice(p => (p + 1) % palabrasAnimadas.length);
           setFadeIn(true);
+          // Double rAF to ensure layout is ready before recalculating hero width.
           requestAnimationFrame(() => requestAnimationFrame(() => onWordChange?.()));
           ciclo();
         }, 500);
@@ -80,6 +83,7 @@ function SliderServicios() {
         };
         let frame: number | null = null;
         const observer = new IntersectionObserver(entries => {
+            // Track the card that is most visible so the dots and text stay in sync.
             // Filtrar solo visibles
             const visibles = entries.filter(e => e.isIntersecting);
             if (!visibles.length) return;
@@ -88,6 +92,7 @@ function SliderServicios() {
             let bestIdx = activosRef.current; // fallback al actual
             let bestScore = -1;
             visibles.forEach(e => {
+                // Score combines visibility ratio with distance to center for stability.
                 const el = e.target as HTMLElement;
                 const idx = cardRefs.current.indexOf(el);
                 if (idx === -1) return;
@@ -99,6 +104,7 @@ function SliderServicios() {
             });
             if (frame) cancelAnimationFrame(frame);
             frame = requestAnimationFrame(() => {
+
                 if (activosRef.current !== bestIdx) {
                     setActivo(bestIdx);
                     activosRef.current = bestIdx;
@@ -258,6 +264,7 @@ export default function Nominas() {
     }, []);
 
     // Throttle / schedule recalculation to evitar múltiples cálculos en el mismo frame
+    // Prevent thrashing by cancelling previous recalculations when the word updates.
     const programarRecalc = useCallback(() => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       rafRef.current = requestAnimationFrame(() => { rafRef.current = null; recalcularHero(); });

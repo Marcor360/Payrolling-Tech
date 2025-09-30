@@ -19,8 +19,21 @@ export default function HomePage() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    console.log("Contacto:", data);
+    const selectedServices = formData.getAll("servicio");
+
+    if (selectedServices.length === 0) {
+      alert("Selecciona al menos un servicio de interés.");
+      return;
+    }
+
+    const dataEntries = Array.from(formData.entries()).filter(([key]) => key !== "servicio");
+    const data = Object.fromEntries(dataEntries) as Record<string, FormDataEntryValue>;
+    const submission: Record<string, FormDataEntryValue | FormDataEntryValue[]> = {
+      ...data,
+      servicio: selectedServices,
+    };
+
+    console.log("Contacto:", submission);
     alert("\u00A1Gracias! Hemos recibido tu mensaje.");
     e.currentTarget.reset();
   };
@@ -50,7 +63,7 @@ export default function HomePage() {
           {/* Contenido */}
           <div className="mx-auto max-w-7xl px-4 py-12 md:py-16 flex flex-col items-center">
             <div className="w-full text-center">
-              <h1 className="text-cardeno font-extrabold leading-tight text-4xl sm:text-5xl md:text-5xl lg:text-6xl">
+              <h1 className="text-cardeno font-extrabold leading-tight text-4xl sm:text-5xl md:text-5xl lg:text-7xl">
                 IMPULSA, RETEN Y DESARROLLA
               </h1>
               <h2 className="mt-6 text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-extrabold text-noche tracking-tight">
@@ -63,11 +76,11 @@ export default function HomePage() {
             </div>
 
             <div className="mt-6 w-full text-center">
-              <p className="text-lg sm:text-xl text-noche/90 mx-auto">
+              <p className="text-lg sm:text-4xl text-noche/90 mx-auto">
                 {"tu "}
                 <span className="font-bold">activo</span>
-                {" más importante"}
-                <br className="hidden sm:block" />
+                {" más importante "}
+
                 {"para "}
                 <span className="font-extrabold">fortalecer tu negocio</span>
               </p>
@@ -154,32 +167,35 @@ export default function HomePage() {
                 placeholder="tu@empresa.com"
               />
             </div>
-            <div className="md:col-span-2 flex flex-col">
-              <label htmlFor="servicio" className="text-sm font-medium text-noche">
+            <fieldset
+              className="md:col-span-2 flex flex-col"
+              aria-describedby="servicio-help"
+            >
+              <legend className="text-sm font-medium text-noche">
                 Servicio de interés
-              </label>
-              <span className="text-xs text-noche/70">
-                Selecciona la solución que mejor se ajuste a tus necesidades.
+              </legend>
+              <span id="servicio-help" className="text-xs text-noche/70">
+                Selecciona una o varias soluciones que mejor se ajusten a tus necesidades.
               </span>
               <div className="mt-2 rounded-2xl border border-white/10 bg-white/10 backdrop-blur-md shadow-lg shadow-black/10 transition-all focus-within:border-cardeno/60 focus-within:shadow-xl">
-                <select
-                  id="servicio"
-                  name="servicio"
-                  required
-                  defaultValue=""
-                  className="w-full rounded-2xl bg-transparent px-4 py-2 text-noche focus:outline-none focus:ring-2 focus:ring-cardeno/60"
-                >
-                  <option value="" disabled>
-                    Selecciona una opción
-                  </option>
+                <div className="flex flex-wrap gap-2 px-4 py-3">
                   {CONTACT_SERVICES.map((service) => (
-                    <option key={service.id} value={service.label}>
-                      {service.label}
-                    </option>
+                    <label
+                      key={service.id}
+                      className="inline-flex items-center gap-2 rounded-xl border border-cardeno/20 bg-white/80 px-3 py-2 text-sm text-noche shadow-sm transition hover:border-cardeno/60 hover:shadow focus-within:border-cardeno/60 focus-within:shadow"
+                    >
+                      <input
+                        type="checkbox"
+                        name="servicio"
+                        value={service.label}
+                        className="h-4 w-4 accent-cardeno focus:outline-none focus:ring-2 focus:ring-cardeno/60"
+                      />
+                      <span>{service.label}</span>
+                    </label>
                   ))}
-                </select>
+                </div>
               </div>
-            </div>
+            </fieldset>
             <div className="md:col-span-2 flex flex-col">
               <label htmlFor="mensaje" className="text-sm font-medium text-noche">
                 Mensaje
