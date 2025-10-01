@@ -204,15 +204,15 @@ export default function ServicesSlider() {
   return (
     <div className="w-full overflow-visible">
       {/* ===== Desktop: stack superpuesto ===== */}
-      <div className="hidden lg:flex flex-col items-center">
+      <div className="hidden lg:flex flex-col items-start xl:items-center">
         <div
           ref={hScroller}
           className="
-            relative w-full max-w-none mx-auto md:mx-auto overflow-visible [contain:paint]
-            md:[--card-w:220px] md:[--overlap:140px] md:[--card-h:340px] md:[--safe-w:16px] md:[--stack-offset:16px]
-            lg:[--card-w:300px] lg:[--overlap:220px] lg:[--card-h:400px] lg:[--safe-w:28px] lg:[--stack-offset:28px]
-            xl:[--card-w:280px] xl:[--overlap:200px] xl:[--card-h:400px] xl:[--safe-w:32px] xl:[--stack-offset:32px]
-            2xl:[--card-w:340px] 2xl:[--overlap:260px] 2xl:[--card-h:460px] 2xl:[--safe-w:48px] 2xl:[--stack-offset:48px]
+            relative w-full max-w-none overflow-visible [contain:paint] xl:mx-auto
+            md:[--card-w:210px] md:[--overlap:150px] md:[--card-h:320px] md:[--safe-w:14px] md:[--stack-offset:0px]
+            lg:[--card-w:230px] lg:[--overlap:170px] lg:[--card-h:340px] lg:[--safe-w:18px] lg:[--stack-offset:0px]
+            xl:[--card-w:240px] xl:[--overlap:165px] xl:[--card-h:310px] xl:[--safe-w:24px] xl:[--stack-offset:0px]
+            2xl:[--card-w:230px] 2xl:[--overlap:240px] 2xl:[--card-h:280px] 2xl:[--safe-w:36px] 2xl:[--stack-offset:0px]
           "
           style={{
             width: desktopTrackWidth,
@@ -420,3 +420,16 @@ export default function ServicesSlider() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

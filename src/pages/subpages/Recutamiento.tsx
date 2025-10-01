@@ -5,7 +5,7 @@ import BotonCobertura from "/img/tarjetas/Botones/Blanco.png";
 import BotonCandidatos from "/img/tarjetas/Botones/Cardeno.png";
 import BotonCosto from "/img/tarjetas/Botones/Mango.png";
 import Costotext from "/img/textos/Costostext.png";
-import Reclutamiento1 from "/img/img-tarjetas/Reclutamiento1.png";
+import Reclutamiento1 from "/img/img-tarjetas/Reclutamiento1.webp";
 
 const HERO_TAGS = [
   "Tiempo de cobertura de 4 días hábiles*",
@@ -19,6 +19,8 @@ type HeroMetric = {
   image: string;
   title: string;
   caption: string;
+  titleClass?: string;
+  captionClass?: string;
 };
 
 const HERO_METRICS: HeroMetric[] = [
@@ -31,6 +33,8 @@ const HERO_METRICS: HeroMetric[] = [
     image: BotonCandidatos,
     title: "3x",
     caption: "Más candidatos calificados por vacante",
+    titleClass: "text-white",
+    captionClass: "text-white/80",
   },
   {
     image: BotonCosto,
@@ -183,25 +187,32 @@ export default function Reclutamiento() {
                   />
                 </div>
                 <div className="relative z-10 -mt-20 flex flex-col items-center gap-3 px-4 sm:-mt-16 sm:flex-row sm:items-stretch sm:justify-center lg:-mt-24 lg:gap-6 lg:justify-between">
-                  {HERO_METRICS.map((metric) => (
-                    <article
-                      key={metric.title}
-                      className="relative w-full max-w-[220px] overflow-hidden rounded-3xl shadow-lg shadow-black/15 sm:flex-1 sm:max-w-none md:max-w-[240px] lg:max-w-[300px] min-h-[140px] sm:min-h-[160px] lg:min-h-[190px]"
-                    >
-                      <img
-                        src={metric.image}
-                        alt={metric.title}
-                        className="h-full w-full object-cover"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 py-4 text-center text-black sm:gap-3 sm:px-7 sm:py-5 lg:gap-2 lg:px-8 lg:py-5">
-                        <p className="text-xl font-extrabold lg:text-lg">{metric.title}</p>
-                        <p className="mt-2 text-sm font-medium text-black/80 sm:mt-3 sm:text-sm lg:mt-3 lg:text-xs">
-                          {metric.caption}
-                        </p>
-                      </div>
-                    </article>
-                  ))}
+                  {HERO_METRICS.map((metric) => {
+                    const titleClass = metric.titleClass ?? "text-black";
+                    const captionClass = metric.captionClass ?? "text-black/80";
+                    const baseTitleClass = "text-xl font-extrabold lg:text-lg";
+                    const baseCaptionClass = "mt-2 text-sm font-medium sm:mt-3 sm:text-sm lg:mt-3 lg:text-xs";
+
+                    return (
+                      <article
+                        key={metric.title}
+                        className="relative w-full max-w-[220px] overflow-hidden rounded-3xl shadow-lg shadow-black/15 sm:flex-1 sm:max-w-none md:max-w-[240px] lg:max-w-[300px] min-h-[140px] sm:min-h-[160px] lg:min-h-[190px]"
+                      >
+                        <img
+                          src={metric.image}
+                          alt={metric.title}
+                          className="h-full w-full object-cover"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 py-4 text-center sm:gap-3 sm:px-7 sm:py-5 lg:gap-2 lg:px-8 lg:py-5">
+                          <p className={[baseTitleClass, titleClass].join(" ")}>{metric.title}</p>
+                          <p className={[baseCaptionClass, captionClass].join(" ")}>
+                            {metric.caption}
+                          </p>
+                        </div>
+                      </article>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -237,9 +248,9 @@ export default function Reclutamiento() {
         </section>
 
         <section className="bg-cardeno text-white">
-          <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 lg:grid-cols-[minmax(0,360px)_1fr] lg:items-center lg:gap-20">
-            <div className="max-w-sm md:mx-auto md:text-center lg:mx-0 lg:max-w-none lg:justify-self-start lg:pl-4 lg:text-left">
-              <h3 className="text-3xl font-black leading-tight text-white sm:text-[34px] md:text-center lg:text-left">Proceso claro, orientado a resultados</h3>
+          <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 lg:grid-cols-[minmax(0,520px)_minmax(0,520px)] 2xl:grid-cols-[minmax(0,560px)_minmax(0,640px)] lg:items-center lg:gap-20 2xl:gap-24 lg:justify-items-center 2xl:justify-items-end">
+            <div className="max-w-sm md:mx-auto md:text-center lg:mx-0 lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl lg:justify-self-start lg:pl-4 lg:text-left">
+              <h3 className="text-3xl font-black leading-tight text-white sm:text-[34px] md:text-center lg:text-left lg:whitespace-nowrap">Proceso claro, orientado a resultados</h3>
               <ol
                 ref={procesoRef}
                 className={`mt-10 list-none space-y-5 sm:space-y-6 md:mx-auto md:max-w-xl lg:mx-0 proceso-list ${procesoVisible ? "proceso-list--visible" : ""}`}
@@ -257,11 +268,11 @@ export default function Reclutamiento() {
                 ))}
               </ol>
             </div>
-            <div className="flex justify-center lg:justify-center">
+            <div className="flex items-center justify-center lg:justify-end lg:justify-self-end lg:pr-6 2xl:justify-self-end 2xl:pl-16">
               <img
                 src={Costotext}
                 alt="Costo? Pagas solo por vacantes cubiertas."
-                className="w-full max-w-[480px] sm:max-w-[620px] lg:max-w-[760px] xl:max-w-[820px]"
+                className="w-full max-w-[480px] sm:max-w-[620px] lg:max-w-[760px] xl:max-w-[820px] mx-auto lg:mx-0 lg:ml-auto 2xl:max-w-[940px] 2xl:ml-auto 2xl:translate-x-12"
               />
             </div>
           </div>
@@ -398,3 +409,11 @@ export default function Reclutamiento() {
     </>
   );
 }
+
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import logoUrl from "/img/logos/1.png?url";
 
 type HeaderVariant = "default" | "darkTransparent" | "dark";
@@ -49,14 +49,14 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
         { href: "/Login", label: "Login" },
     ];
 
-    const desktopLinkClasses = `text-lg md:text-xl lg:text-2xl font-bold transition-colors ${isDarkVariant ? "text-white hover:text-mango" : "text-black hover:text-mango"}`;
+    const desktopLinkClasses = `text-base md:text-lg lg:text-xl font-semibold transition-colors ${isDarkVariant ? "text-white hover:text-mango" : "text-black hover:text-mango"}`;
     const mobileLinkClasses = "text-lg font-semibold text-white/95 hover:text-mango tracking-wide drop-shadow-sm transition-colors";
 
     return (
         <header className={`sticky top-0 z-50 ${headerBackground} backdrop-blur`}>
-            <div className="relative mx-auto w-full max-w-screen-2xl px-4 py-3 flex items-center justify-between">
+            <div className="relative mx-auto w-full max-w-screen-2xl px-4 py-2 flex items-center justify-between">
                 <a href="/" className="block">
-                    <img src={logoUrl} alt="Logo" className="h-18 md:h-30 w-auto block" />
+                    <img src={logoUrl} alt="Logo" className="h-10 md:h-14 lg:h-16 w-auto block" />
                 </a>
 
                 {/* Hamburger button */}
@@ -78,7 +78,7 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                 </button>
 
                 {/* Desktop nav */}
-                <nav className="hidden md:flex gap-8 md:gap-12 xl:gap-16" aria-label="primary">
+                <nav className="hidden md:flex gap-6 md:gap-8 xl:gap-10" aria-label="primary">
                     {links.map((l) => (
                         <a key={l.href} className={desktopLinkClasses} href={l.href}>
                             {l.label}
@@ -93,7 +93,7 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                 aria-label="mobile"
             >
                 <div className="flex items-center justify-between mb-6">
-                    <span className="text-sm font-medium text-white">Menú</span>
+                    <span className="text-sm font-medium text-white">MenÃº</span>
                     <button
                         className="text-white hover:text-mango transition-colors"
                         onClick={() => setOpen(false)}
@@ -134,3 +134,8 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
         </header>
     );
 }
+
+
+
+
+
