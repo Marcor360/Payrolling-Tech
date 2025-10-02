@@ -42,7 +42,7 @@ const CARDS: Card[] = [
     imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-1.webp",
     backTitle: "Reclutamiento",
     backText:
-      "Combinamos la experiencia \nde expertos locales, tecnologías \nde búsquedas y procesos \nestandarizados de selección \npara lograr contrataciones más rápidas \nde mayor calidad y con menor rotación.",
+      "Combinamos la experiencia de expertos locales, tecnologías de búsquedas y procesos estandarizados de selección, para lograr contrataciones más rápidas y de mayor calidad.",
     cta: "Conoce más",
     href: "/reclutamiento",
   },
@@ -53,7 +53,7 @@ const CARDS: Card[] = [
     imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-2.webp",
     backTitle: "Nómina",
     backText:
-      "Maquila y autoservicio de nómina\nasegurando el cumplimiento de las normas fiscales y de seguridad. \nEliminando viejos errores \ny garantizando tranquilidad tanto para tus empleados \ncomo para tus colaboradores.",
+      "Maquila y autoservicio de nómina asegurando el cumplimiento de las normas fiscales y de seguridad.",
     cta: "Conoce más",
     href: "/nominas",
   },
@@ -85,7 +85,7 @@ const CARDS: Card[] = [
     imgBack: "/img/tarjetas/Fondo-tarjetas/tarjeta-2.webp",
     backTitle: "Seguros de gastos\nmédicos y vida",
     backText:
-      "Beneficios que aumentan la \nlealtad y reducen la rotación, \ndeducibles fiscalmente para \noptimizar costos, proteger a tu \nequipo y fortalecer tu \ncompetitividad.",
+      "Beneficios que aumentan la lealtad y reducen la rotación, deducibles fiscalmente para optimizar costos, proteger a tu equipo y fortalecer tu competitividad.",
     cta: "Conoce más",
     href: "#",
   },
@@ -268,14 +268,14 @@ export default function ServicesSlider() {
                   <div className="relative z-10 h-full w-full flex flex-col">
                     <div className="px-5 py-6 md:px-6 md:py-7 mt-auto">
                       <h3
-                        className={`text-lg md:text-xl font-extrabold leading-tight whitespace-pre-line ${titleColorFor(
+                        className={`text-lg md:text-xl font-extrabold leading-snug whitespace-pre-line ${titleColorFor(
                           c.title
                         )}`}
                       >
                         {c.backTitle}
                       </h3>
                       <p
-                        className={`mt-3 text-xs md:text-sm leading-relaxed whitespace-pre-line ${bodyColorFor(
+                        className={`mt-3 text-xs md:text-sm leading-normal whitespace-pre-line ${bodyColorFor(
                           c.title
                         )}`}
                       >
@@ -376,14 +376,14 @@ export default function ServicesSlider() {
                     {/* Texto abajo */}
                     <div className="px-5 py-5 mt-auto">
                       <h3
-                        className={`text-base font-extrabold leading-tight whitespace-pre-line ${titleColorFor(
+                        className={`text-base font-extrabold leading-snug whitespace-pre-line ${titleColorFor(
                           c.title
                         )}`}
                       >
                         {c.backTitle}
                       </h3>
                       <p
-                        className={`mt-2 text-xs leading-relaxed whitespace-pre-line ${bodyColorFor(
+                        className={`mt-2 text-xs leading-normal whitespace-pre-line ${bodyColorFor(
                           c.title
                         )}`}
                       >
@@ -420,6 +420,7 @@ export default function ServicesSlider() {
     </div>
   );
 }
+
 
 
 
