@@ -215,13 +215,13 @@ export default function Vales() {
 
                 <section className="bg-noche py-16">
                     <div className="mx-auto max-w-7xl px-4">
-                        <div className="grid gap-12 lg:[grid-template-columns:0.7fr_1.3fr] lg:items-center xl:[grid-template-columns:0.65fr_1.35fr]">
-                            <div className="max-w-3xl text-center text-mango lg:order-2 lg:ml-auto lg:text-right lg:pl-0 lg:pr-0 xl:pr-12">
+                        <div className="grid gap-12 lg:[grid-template-columns:1.25fr_0.75fr] lg:items-center lg:gap-16 xl:[grid-template-columns:1.2fr_0.8fr]">
+                            <div className="max-w-3xl text-center text-mango lg:order-2 lg:mx-auto xl:pr-6">
                                 <h2 className="text-3xl font-black leading-tight sm:text-4xl lg:text-5xl lg:leading-tight">
                                     Agenda una cita para conocer mas sobre nuestros vales.
                                 </h2>
                             </div>
-                            <form className="w-full space-y-8 rounded-[2rem] bg-white px-6 py-10 shadow-[0_32px_70px_rgba(0,0,0,0.22)] lg:order-1 lg:max-w-[52rem] lg:px-16 xl:max-w-[60rem]" noValidate>
+                            <form className="w-full space-y-8 rounded-[2rem] bg-white px-6 py-10 shadow-[0_32px_70px_rgba(0,0,0,0.22)] lg:order-1 lg:max-w-[58rem] lg:px-16 lg:justify-self-end xl:max-w-[64rem]" noValidate>
                                 <fieldset className="space-y-4">
                                     <legend className="text-base font-semibold text-noche">Cuentanos mas de ti</legend>
                                     <div className="grid gap-4 sm:grid-cols-2">
