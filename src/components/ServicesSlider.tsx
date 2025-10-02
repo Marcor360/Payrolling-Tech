@@ -66,7 +66,7 @@ const CARDS: Card[] = [
     backText:
       "Centraliza vales, simplifica \nprocesos y motiva a tu equipo, \ncon control total de gastos, \noptimización de recursos y \nmáximas deducciones fiscales",
     cta: "Conoce más",
-    href: "#",
+    href: "/vales",
   },
   {
     title: "Adelantos Nómina",
@@ -212,7 +212,7 @@ export default function ServicesSlider() {
             md:[--card-w:210px] md:[--overlap:150px] md:[--card-h:320px] md:[--safe-w:14px] md:[--stack-offset:0px]
             lg:[--card-w:230px] lg:[--overlap:170px] lg:[--card-h:340px] lg:[--safe-w:18px] lg:[--stack-offset:0px]
             xl:[--card-w:240px] xl:[--overlap:165px] xl:[--card-h:310px] xl:[--safe-w:24px] xl:[--stack-offset:0px]
-            2xl:[--card-w:230px] 2xl:[--overlap:240px] 2xl:[--card-h:280px] 2xl:[--safe-w:36px] 2xl:[--stack-offset:0px]
+            2xl:[--card-w:235px] 2xl:[--overlap:240px] 2xl:[--card-h:300px] 2xl:[--safe-w:36px] 2xl:[--stack-offset:0px]
           "
           style={{
             width: desktopTrackWidth,

@@ -4,6 +4,7 @@ import HomePage from './pages/Homepage'
 import Nominas from './pages/subpages/Nominas'
 import Login from './pages/subpages/Login'
 import Recclutamiento from './pages/subpages/Recutamiento'
+import Vale from './pages/subpages/Vales'
 function App() {
   return (
     <>
@@ -12,6 +13,7 @@ function App() {
         <Route path="/nominas" element={<Nominas />} />
         <Route path="/login" element={<Login />} />
         <Route path='/reclutamiento' element={<Recclutamiento />} />
+        <Route path='/vales' element={<Vale />} />
       </Routes>
     </>
   )
