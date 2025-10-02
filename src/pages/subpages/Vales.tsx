@@ -179,7 +179,7 @@ export default function Vales() {
                                 Apoyar a tu equipo con vales de despensa no solo mejora su calidad de vida, tambien impulsa la salud financiera de tu empresa. &iexcl;El beneficio es para todos!
                             </p>
                         </div>
-                        <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                             {BENEFITS.map((benefit) => {
                                 const filled = benefit.variant === "filled";
                                 const cardClasses = filled
@@ -190,10 +190,10 @@ export default function Vales() {
                                 return (
                                     <article
                                         key={benefit.id}
-                                        className={`flex h-full flex-col justify-between rounded-[2rem] border px-8 py-8 text-left transition-transform duration-200 hover:-translate-y-1 ${cardClasses}`}
+                                        className={`flex h-full flex-col gap-4 rounded-[2rem] border px-8 py-8 text-left transition-transform duration-200 hover:-translate-y-1 ${cardClasses}`}
                                     >
                                         <h3 className="text-lg font-extrabold leading-tight text-noche">
-                                            {benefit.id}. {benefit.title}
+                                            <span className="font-black">{benefit.id}.</span> {benefit.title}
                                         </h3>
                                         <p className={`mt-3 text-sm leading-relaxed ${descriptionClasses}`}>
                                             {benefit.description}
