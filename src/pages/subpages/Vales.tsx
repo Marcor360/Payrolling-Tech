@@ -1,7 +1,7 @@
 import Headers from "../../components/header.tsx";
 import Footer from "../../components/footer.tsx";
 //Importacion de imagenes
-import vales from "/img/Contenido/TarjetasVales.webp";
+import Vale from "/img/Contenido/TarjetasVales.webp";
 //import tablaVales from "../../../public/img/Contenido/TablaVales.png";
 type BenefitCard = {
     id: string;
@@ -31,33 +31,26 @@ const BENEFITS: BenefitCard[] = [
     },
     {
         id: "4",
-        title: "Cero comision de servicio",
-        description: "Al contratar vales de despensa con Payrolling Tech disfrutas 0% de comision durante los primeros 12 meses*.",
-        variant: "outline",
-    },
-    {
-        id: "5",
         title: "Mejora tu employer branding",
         description: "Reten y atrae talento elevando la reputacion de tu empresa con un beneficio tangible.",
         variant: "outline",
     },
 ];
-
 const STEPS = [
     {
         id: "1",
         title: "Cotiza en linea",
-        description: "Cotiza gratis en linea y solicita tus vales al 0% de comision por servicio durante los primeros 12 meses de contratacion*.",
+        description: "Solicita tu cotizacion en linea y accede a beneficios exclusivos durante tu primer ano de contratacion.",
     },
     {
         id: "2",
-        title: "Envia tu documentacion",
-        description: "Recibiras un correo donde te indicamos los documentos necesarios para activar el beneficio.",
+        title: "Envia tus documentos",
+        description: "Recibiras un correo electronico donde te indicamos la documentacion necesaria que debes enviar.",
     },
     {
         id: "3",
-        title: "Deduccion de impuestos",
-        description: "Aprovecha deducciones del 47% al 53% en ISR y maximiza el presupuesto para tu equipo.",
+        title: "Activa tus vales de despensa",
+        description: "Recibe tus tarjetas de vales y entregalas a tu equipo; las podran activar al instante desde la aplicacion movil.",
     },
 ];
 
@@ -160,11 +153,15 @@ export default function Vales() {
                             <div className="relative w-full max-w-md">
                                 <div className="absolute -inset-6 rounded-[3rem] bg-cardeno/15 blur-3xl" aria-hidden="true" />
                                 <img
-                                    src={vales}
+                                    src={Vale}
                                     alt="Tarjetas de vales Payrolling Tech"
                                     className="relative w-full drop-shadow-[0_18px_45px_rgba(97,37,221,0.35)]"
                                 />
                             </div>
+                        </div>
+                        <div className="mt-12 rounded-3xl border border-dashed border-cardeno/40 bg-white/60 p-10 text-center shadow-inner">
+                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cardeno/80">Espacio para fotografia secundaria</p>
+                            <p className="mt-3 text-base text-noche/70">Reserva este bloque para ilustraciones de colaboradores usando vales.</p>
                         </div>
                     </div>
                 </section>
@@ -179,51 +176,51 @@ export default function Vales() {
                                 Apoyar a tu equipo con vales de despensa no solo mejora su calidad de vida, tambien impulsa la salud financiera de tu empresa. &iexcl;El beneficio es para todos!
                             </p>
                         </div>
-                        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                             {BENEFITS.map((benefit) => {
                                 const filled = benefit.variant === "filled";
                                 const cardClasses = filled
-                                    ? "bg-[#ffbf2b] border-[#f5a400] text-noche shadow-[0_14px_0_rgba(0,0,0,0.15)]"
-                                    : "bg-white border-noche/15 text-noche shadow-[0_12px_0_rgba(0,0,0,0.08)]";
+                                    ? "bg-[#ffbf2b] border-[#f5a400] text-noche shadow-[0_12px_0_rgba(0,0,0,0.16)]"
+                                    : "bg-white border-noche/20 text-noche shadow-[0_10px_0_rgba(0,0,0,0.12)]";
                                 const descriptionClasses = filled ? "text-noche/90" : "text-noche/70";
 
                                 return (
                                     <article
                                         key={benefit.id}
-                                        className={`flex h-full flex-col gap-4 rounded-[2rem] border px-8 py-8 text-left transition-transform duration-200 hover:-translate-y-1 ${cardClasses}`}
+                                        className={`flex h-full flex-col gap-4 rounded-[1rem] border px-8 py-8 text-left transition-transform duration-200 hover:-translate-y-1 ${cardClasses}`}
                                     >
                                         <h3 className="text-lg font-extrabold leading-tight text-noche">
                                             <span className="font-black">{benefit.id}.</span> {benefit.title}
                                         </h3>
-                                        <p className={`mt-3 text-sm leading-relaxed ${descriptionClasses}`}>
+                                        <p className={`text-sm leading-relaxed ${descriptionClasses}`}>
                                             {benefit.description}
                                         </p>
                                     </article>
                                 );
                             })}
                         </div>
-                        <div className="mt-12 rounded-3xl border border-dashed border-cardeno/40 bg-white/60 p-10 text-center shadow-inner">
-                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cardeno/80">Espacio para fotografia secundaria</p>
-                            <p className="mt-3 text-base text-noche/70">Reserva este bloque para ilustraciones de colaboradores usando vales.</p>
-                        </div>
                     </div>
                 </section>
 
-                <section className="bg-white/80 py-16">
+                <section className="bg-gradient-to-br from-[#701dff] via-[#7a28ff] to-[#8d3bff] py-20">
                     <div className="mx-auto max-w-6xl px-4">
-                        <h2 className="text-center text-3xl font-extrabold text-noche sm:text-4xl">Compra tus vales de despensa en tres pasos</h2>
-                        <p className="mx-auto mt-4 max-w-3xl text-center text-sm text-noche/70">
-                            Cotiza gratis en linea y en tan solo tres pasos asegurate de que tus colaboradores aprovechen al maximo los vales de despensa. Mejora la salud financiera de tu equipo.
-                        </p>
+                        <div className="text-center text-white">
+                            <h2 className="text-3xl font-black sm:text-4xl">Compra tus vales de despensa en tres pasos</h2>
+                            <p className="mx-auto mt-3 max-w-3xl text-base text-white/85">Cotiza gratis en linea y en tan solo 3 pasos entrega vales de despensa a tus colaboradores. &iexcl;Mejora la salud financiera de tu equipo!
+                            </p>
+                        </div>
                         <div className="mt-12 grid gap-6 md:grid-cols-3">
                             {STEPS.map((step) => (
-                                <div key={step.id} className="flex h-full flex-col rounded-3xl border border-cardeno/15 bg-white p-6 shadow-md shadow-cardeno/10">
-                                    <div className="flex h-12 w-12 items-center justify-center self-start rounded-full bg-cardeno text-base font-bold text-white shadow">
+                                <article
+                                    key={step.id}
+                                    className="relative flex h-full flex-col gap-4 rounded-[1.4rem] border border-black/10 bg-white px-8 pb-10 pt-12 text-left shadow-[0_14px_0_rgba(0,0,0,0.18)] transition-transform duration-200 hover:-translate-y-1"
+                                >
+                                    <div className="absolute -top-8 right-8 flex h-14 w-14 items-center justify-center rounded-full border-4 border-white bg-[#7a28ff] text-lg font-bold text-white shadow-[0_8px_0_rgba(0,0,0,0.2)]">
                                         {step.id}
                                     </div>
-                                    <h3 className="mt-4 text-lg font-semibold text-noche">{step.title}</h3>
-                                    <p className="mt-3 text-sm text-noche/70">{step.description}</p>
-                                </div>
+                                    <h3 className="text-lg font-extrabold text-noche">{step.title}</h3>
+                                    <p className="text-sm leading-relaxed text-noche/80">{step.description}</p>
+                                </article>
                             ))}
                         </div>
                     </div>
@@ -260,3 +257,4 @@ export default function Vales() {
         </div>
     );
 }
+
