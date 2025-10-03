@@ -76,7 +76,7 @@ const CARDS: Card[] = [
     backTitle: "Adelantos y\npréstamos sobre\nnómina",
     backText: "Centraliza la administración \nde vales y préstamos de \nhasta 3 meses.",
     cta: "Conoce más",
-    href: "#",
+    href: "/beneficios",
   },
   {
     title: "Seguros de vida",
