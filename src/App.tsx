@@ -6,6 +6,7 @@ import Login from './pages/subpages/Login'
 import Recclutamiento from './pages/subpages/Recutamiento'
 import Vale from './pages/subpages/Vales'
 import Beneficios from './pages/subpages/Beneficios'
+import Nom35 from './pages/subpages/Nom35'
 function App() {
   return (
     <>
@@ -16,6 +17,7 @@ function App() {
         <Route path='/reclutamiento' element={<Recclutamiento />} />
         <Route path='/vales' element={<Vale />} />
         <Route path='/beneficios' element={<Beneficios />} />
+        <Route path='/nom35' element={<Nom35 />} />
       </Routes>
     </>
   )

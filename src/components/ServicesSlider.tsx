@@ -87,7 +87,7 @@ const CARDS: Card[] = [
     backText:
       "Beneficios que aumentan la lealtad y reducen la rotación, deducibles fiscalmente para optimizar costos, proteger a tu equipo y fortalecer tu competitividad.",
     cta: "Conoce más",
-    href: "#",
+    href: "/nom35",
   },
 ];
 
