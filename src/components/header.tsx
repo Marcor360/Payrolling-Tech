@@ -40,8 +40,8 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
     const headerBackground = effectiveVariant === "dark"
         ? "bg-noche/90"
         : effectiveVariant === "darkTransparent"
-        ? "bg-transparent"
-        : "bg-white/20";
+            ? "bg-transparent"
+            : "bg-white/20";
 
     const links = [
         { href: "/#servicios", label: "Servicios" },
