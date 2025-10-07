@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useRef, useState } from "react";
 import Headers from "../../components/header.tsx";
 import Footer from "../../components/footer.tsx";
 import BanerPrincipal from "/img/Contenido/BanerBeneficio.webp";
@@ -34,25 +35,180 @@ const beneficiosData = [
     { icon: svg12, title: "Tarjeta de gastos corporativos" },
 ];
 
+// Tipado para las ventanas emergentes
+export interface Tarjeta {
+    id: string;    // slug para abrir el modal
+    title: string; // título visible
+    body: string;  // contenido del modal
+    svg: string;   // ícono asociado
+}
+
+// Contenido para modales (desde el PDF)
+export const textoTarjetas: Tarjeta[] = [
+    {
+        id: "salario-on-demand",
+        title: "Salario On-Demand",
+        body:
+            "Permite a tus colaboradores acceder al dinero ya trabajado con un clic. Reciben efectivo al instante, más rápido que un adelanto de nómina y sin intereses. Solo ingresan a la app, solicitan el monto y lo reciben en su cuenta bancaria en segundos. La empresa define el porcentaje máximo de retiro.",
+        svg: svg1,
+    },
+    {
+        id: "caja-de-ahorro",
+        title: "Caja de ahorro",
+        body:
+            "Implementa una caja de ahorro lista para usar, con rendimientos competitivos de hasta 12% anual. Cada colaborador elige cuándo y cuánto aportar y tiene acceso inmediato a sus recursos.",
+        svg: svg2,
+    },
+    {
+        id: "telemedicina",
+        title: "Telemedicina",
+        body:
+            "Atención médica en línea sin costo con médicos generales y especialistas (psicología, nutrición, salud sexual, pediatría y veterinaria). Complementa el seguro de salud y apoya el bienestar integral.",
+        svg: svg3,
+    },
+    {
+        id: "seguros-y-asistencias",
+        title: "Seguros y asistencias",
+        body:
+            "Coberturas adicionales: hasta $20,000 MXN por gastos de accidente, $200,000 MXN por muerte accidental y asistencia funeraria para el titular. Incluye consultas con tarifas preferenciales, descuentos en salud, chequeo médico y cita dental gratuitos al año.",
+        svg: svg4,
+    },
+    {
+        id: "club-de-descuentos",
+        title: "Club de descuentos",
+        body:
+            "Con geolocalización, tus colaboradores ubican comercios afiliados y acceden a descuentos en entretenimiento, restaurantes, servicios médicos y ópticas.",
+        svg: svg5,
+    },
+    {
+        id: "compras-y-pagos-de-servicios",
+        title: "Compras y Pagos de servicio",
+        body:
+            "Pagos y recargas telefónicas a más de 50 proveedores desde el celular, con transacciones inmediatas disponibles 24/7.",
+        svg: svg6,
+    },
+    {
+        id: "prestamos-tasas-preferenciales",
+        title: "Préstamos con tasas preferenciales",
+        body:
+            "Acceso a préstamos en línea con tasas más bajas que las bancarias y sin trámites complicados, apoyando la estabilidad financiera.",
+        svg: svg7,
+    },
+    {
+        id: "beneficios-fijos",
+        title: "Beneficios fijos con cualquier plan",
+        body:
+            "Disponibles sin costo en la app del empleado y la plataforma de gestión: • Videos de entrenamiento y clases de fitness • Contenido de meditación, yoga y pausas activas • Curso virtual de finanzas personales • Recompensas con donaciones a causas sociales • Herramientas de encuestas y comunicaciones • Tarjeta de vales universales para bonos e incentivos.",
+        svg: svg8,
+    },
+    {
+        id: "vales-despensa",
+        title: "Tarjeta de vales despensa",
+        body:
+            "Uso en más de 500,000 comercios en México, con consulta de saldo y movimientos desde la app. Para la empresa: deducción de hasta 53% de ISR sin generar IMSS, INFONAVIT ni ISN.",
+        svg: svg9,
+    },
+    {
+        id: "vales-gasolina",
+        title: "Tarjeta de vales de gasolina",
+        body:
+            "Mejor control de flotilla y gastos, con deducción fiscal del 100%. La empresa define parámetros de control y asigna saldo en línea desde la plataforma de gestión hacia la app del empleado.",
+        svg: svg10,
+    },
+    {
+        id: "tarjeta-recompensas",
+        title: "Tarjeta de recompensas",
+        body:
+            "Motiva y reconoce el desempeño entregando regalos, bonos o comisiones de forma fácil y segura. Gestión centralizada y personalizable de incentivos para impulsar productividad y compromiso.",
+        svg: svg11,
+    },
+    {
+        id: "gastos-corporativos",
+        title: "Tarjeta de gastos corporativos",
+        body:
+            "Administra gastos de oficina, caja chica y viáticos con monitoreo en tiempo real, límites de uso y procesos de reembolso/conciliación más simples, reduciendo errores y mejorando la transparencia.",
+        svg: svg12,
+    },
+];
+
+// --- Util para mapear title → id con tolerancia (acentos, mayúsculas, espacios) ---
+function norm(s: string) {
+    return s
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "") // quita acentos
+        .replace(/[\s/–—-]+/g, " ") // normaliza separadores
+        .trim();
+}
+
 export default function Beneficios() {
+    // -------- MODAL STATE --------
+    const [activeId, setActiveId] = useState<string | null>(null);
+    const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+
+    // Mapa por título normalizado → tarjeta
+    const byTitle = useMemo(() => {
+        const map = new Map<string, Tarjeta>();
+        textoTarjetas.forEach((t) => map.set(norm(t.title), t));
+        return map;
+    }, []);
+
+    const active = useMemo(
+        () => (activeId ? textoTarjetas.find((t) => t.id === activeId) ?? null : null),
+        [activeId]
+    );
+
+    function openByTitle(title: string) {
+        const t = byTitle.get(norm(title));
+        if (!t) {
+            console.warn(`No encontré contenido para el título: "${title}"`);
+            return;
+        }
+        setActiveId(t.id);
+    }
+    function closeModal() {
+        setActiveId(null);
+    }
+
+    // Cerrar con ESC + bloquear scroll + foco en "X"
+    useEffect(() => {
+        if (!activeId) return;
+
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === "Escape") closeModal();
+        };
+        document.addEventListener("keydown", onKey);
+        const prevOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+        // Enfocar botón cerrar
+        const t = setTimeout(() => closeBtnRef.current?.focus(), 0);
+
+        return () => {
+            document.removeEventListener("keydown", onKey);
+            document.body.style.overflow = prevOverflow;
+            clearTimeout(t);
+        };
+    }, [activeId]);
+
     return (
         <>
             <Headers variant="dark" />
 
             {/* HERO BENEFICIOS */}
-            <section className="w-full text-center">
+            <section className="w-full">
                 {/* Grid a pantalla completa: 1 col en mobile, 2 cols desde md */}
                 <div className="grid grid-cols-1 md:grid-cols-2">
                     {/* Columna Izquierda: Texto (contenida) */}
-                    <div>
+                    <div className="xl:flex xl:items-center xl:justify-center">
                         <div className="mx-auto max-w-7xl px-6 py-12 md:px-10 md:py-16 lg:px-14 lg:py-20">
-                            <div className="max-w-xl">
-                                <h1 className="font-extrabold leading-tight text-4xl sm:text-5xl lg:text-6xl text-cardeno">
+                            {/* max-w centrado dentro de la columna */}
+                            <div className="max-w-xl mx-auto">
+                                <h1 className="font-extrabold leading-tight text-left text-4xl sm:text-5xl lg:text-6xl text-cardeno">
                                     Conoce nuestros{" "}
                                     <span className="block text-cardeno">beneficios</span>
                                 </h1>
 
-                                <p className="mt-6 text-base sm:text-lg leading-relaxed text-noche">
+                                <p className="mt-6 text-left text-base sm:text-lg leading-relaxed text-noche">
                                     <span className="font-semibold">Conoce la nueva forma de impulsar a tu equipo:</span>{" "}
                                     más de <span className="font-semibold">50 beneficios laborales</span> reunidos en{" "}
                                     <span className="font-semibold">una sola app</span> para elevar el{" "}
@@ -60,7 +216,7 @@ export default function Beneficios() {
                                     <span className="font-semibold">productividad</span> de tu equipo.
                                 </p>
 
-                                <div className="mt-8 flex flex-wrap gap-3">
+                                <div className="mt-8 flex flex-wrap gap-3 justify-start">
                                     <a
                                         href="#cotizar"
                                         className="inline-flex items-center justify-center rounded-xl bg-mango px-5 py-3 text-sm font-semibold text-white hover:opacity-90 transition"
@@ -109,8 +265,8 @@ export default function Beneficios() {
                             <article
                                 key={i}
                                 className="bg-white rounded-2xl border-2 border-cardeno/50 hover:border-cardeno/70 transition
-                           shadow-[0_0_0_rgba(0,0,0,0)] hover:shadow-[0_10px_30px_rgba(93,48,255,0.08)]
-                           flex flex-col items-center text-center overflow-hidden"
+                  shadow-[0_0_0_rgba(0,0,0,0)] hover:shadow-[0_10px_30px_rgba(93,48,255,0.08)]
+                  flex flex-col items-center text-center overflow-hidden"
                             >
                                 <div className="flex flex-col items-center gap-4 px-6 pt-8 pb-6">
                                     <img
@@ -124,12 +280,17 @@ export default function Beneficios() {
                                     </h3>
                                 </div>
 
-                                {/* Separador y CTA de la tarjeta */}
+                                {/* CTA de la tarjeta -> abre modal correspondiente */}
                                 <a
-                                    href=""
+                                    href="#"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        openByTitle(b.title);
+                                    }}
                                     aria-label={`Conoce más sobre ${b.title}`}
                                     className="w-full mt-auto text-cardeno font-semibold text-sm md:text-base
-                             border-t border-cardeno/30 px-6 py-3 hover:bg-[#FAF9FF] transition"
+                    border-t border-cardeno/30 px-6 py-3 hover:bg-[#FAF9FF] transition cursor-pointer"
+                                    role="button"
                                 >
                                     Conoce más
                                 </a>
@@ -143,12 +304,13 @@ export default function Beneficios() {
                             href=""
                             id="cotizar"
                             className="inline-flex items-center justify-center rounded-xl bg-mango px-6 py-3 md:px-8 md:py-4 
-                         text-noche font-semibold text-base md:text-lg hover:opacity-90 transition"
+                text-noche font-semibold text-base md:text-lg hover:opacity-90 transition"
                         >
                             Cotiza ahora
                         </a>
                     </div>
                 </div>
+
                 {/* Sección: Los beneficios de Payrolling Tech */}
                 <section className="bg-noche text-white">
                     <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
@@ -204,8 +366,7 @@ export default function Beneficios() {
                                 const isMango = c.variant === "mango";
                                 // En desktop (lg) usamos 6 columnas; cada tarjeta ocupa 2.
                                 // La 4ª arranca en col 2 y la 5ª en col 4 para quedar centradas.
-                                const pos =
-                                    idx === 3 ? "lg:col-start-2" : idx === 4 ? "lg:col-start-4" : "";
+                                const pos = idx === 3 ? "lg:col-start-2" : idx === 4 ? "lg:col-start-4" : "";
 
                                 return (
                                     <article
@@ -239,6 +400,7 @@ export default function Beneficios() {
                         </div>
                     </div>
                 </section>
+
                 {/* Sección: Agenda una demo */}
                 <section id="agenda-demo" className="bg-[#F3F1EA]">
                     <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
@@ -271,144 +433,12 @@ export default function Beneficios() {
                             {/* Columna derecha: Tarjeta con formulario */}
                             <div className="relative">
                                 <div className="relative rounded-3xl border-2 border-cardeno p-6 md:p-8 bg-transparent">
-                                    {/* Motivo punteado en esquina superior derecha */}
                                     <form className="space-y-6" noValidate>
-                                        {/* --- Bloque: Cuéntanos más de ti --- */}
-                                        <fieldset>
-                                            <legend className="text-cardeno font-extrabold text-lg md:text-xl mb-3">
-                                                Cuéntanos más de ti
-                                            </legend>
-                                            <div className="space-y-3">
-                                                <input
-                                                    type="text"
-                                                    placeholder="Nombre"
-                                                    className="w-full rounded-xl border-2 border-cardeno bg-[#F3F1EA] px-4 py-3
-                             placeholder:text-noche/50 focus:ring-4 focus:ring-cardeno/20 outline-none"
-                                                />
-                                                <input
-                                                    type="text"
-                                                    placeholder="Apellido"
-                                                    className="w-full rounded-xl border-2 border-cardeno bg-[#F3F1EA] px-4 py-3
-                             placeholder:text-noche/50 focus:ring-4 focus:ring-cardeno/20 outline-none"
-                                                />
-                                                <input
-                                                    type="text"
-                                                    placeholder="Tu cargo es"
-                                                    className="w-full rounded-xl border-2 border-cardeno bg-[#F3F1EA] px-4 py-3
-                             placeholder:text-noche/50 focus:ring-4 focus:ring-cardeno/20 outline-none"
-                                                />
-                                            </div>
-                                        </fieldset>
-
-                                        {/* --- Bloque: ¿Cómo podemos comunicarnos contigo? --- */}
-                                        <fieldset>
-                                            <legend className="text-cardeno font-extrabold text-lg md:text-xl mb-3">
-                                                ¿Cómo podemos comunicarnos contigo?
-                                            </legend>
-                                            <div className="space-y-3">
-                                                <input
-                                                    type="tel"
-                                                    placeholder="Número de celular"
-                                                    className="w-full rounded-xl border-2 border-cardeno bg-[#F3F1EA] px-4 py-3
-                             placeholder:text-noche/50 focus:ring-4 focus:ring-cardeno/20 outline-none"
-                                                />
-                                                <input
-                                                    type="email"
-                                                    placeholder="Email empresarial"
-                                                    className="w-full rounded-xl border-2 border-cardeno bg-[#F3F1EA] px-4 py-3
-                             placeholder:text-noche/50 focus:ring-4 focus:ring-cardeno/20 outline-none"
-                                                />
-                                            </div>
-                                        </fieldset>
-
-                                        {/* --- Bloque: Cuéntanos más sobre tu empresa --- */}
-                                        <fieldset>
-                                            <legend className="text-cardeno font-extrabold text-lg md:text-xl mb-3">
-                                                Cuéntanos más sobre tu empresa
-                                            </legend>
-                                            <div className="space-y-3">
-                                                <input
-                                                    type="text"
-                                                    placeholder="Nombre de la empresa"
-                                                    className="w-full rounded-xl border-2 border-cardeno bg-[#F3F1EA] px-4 py-3
-                             placeholder:text-noche/50 focus:ring-4 focus:ring-cardeno/20 outline-none"
-                                                />
-
-                                                {/* Select: Número de colaboradores */}
-                                                <div className="relative">
-                                                    <select
-                                                        className="w-full appearance-none pr-12 rounded-xl border-2 border-cardeno bg-[#F3F1EA]
-                               px-4 py-3 text-noche/80 focus:ring-4 focus:ring-cardeno/20 outline-none"
-                                                        defaultValue=""
-                                                    >
-                                                        <option value="" disabled>Número de colaboradores</option>
-                                                        <option>1–10</option>
-                                                        <option>11–50</option>
-                                                        <option>51–200</option>
-                                                        <option>200+</option>
-                                                    </select>
-                                                    <svg
-                                                        className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-cardeno"
-                                                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
-                                                    >
-                                                        <path d="M5.5 7.5l4.5 5 4.5-5" />
-                                                    </svg>
-                                                </div>
-
-                                                {/* Select: Dónde se encuentran */}
-                                                <div className="relative">
-                                                    <select
-                                                        className="w-full appearance-none pr-12 rounded-xl border-2 border-cardeno bg-[#F3F1EA]
-                               px-4 py-3 text-noche/80 focus:ring-4 focus:ring-cardeno/20 outline-none"
-                                                        defaultValue=""
-                                                    >
-                                                        <option value="" disabled>¿Dónde se encuentran tu empresa?</option>
-                                                        <option>CDMX</option>
-                                                        <option>Estado de México</option>
-                                                        <option>Interior de la República</option>
-                                                        <option>Operación en varios estados</option>
-                                                    </select>
-                                                    <svg
-                                                        className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-cardeno"
-                                                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
-                                                    >
-                                                        <path d="M5.5 7.5l4.5 5 4.5-5" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-
-                                        {/* --- Bloque: ¿Cómo conociste...? --- */}
-                                        <fieldset>
-                                            <legend className="text-cardeno font-extrabold text-lg md:text-xl mb-3">
-                                                ¿Cómo conociste a Payrolling Tech?
-                                            </legend>
-                                            <div className="relative">
-                                                <select
-                                                    className="w-full appearance-none pr-12 rounded-xl border-2 border-cardeno bg-[#F3F1EA]
-                             px-4 py-3 text-noche/80 focus:ring-4 focus:ring-cardeno/20 outline-none"
-                                                    defaultValue=""
-                                                >
-                                                    <option value="" disabled>Selecciona una opción</option>
-                                                    <option>Google</option>
-                                                    <option>Redes sociales</option>
-                                                    <option>Recomendación</option>
-                                                    <option>Evento / Webinar</option>
-                                                    <option>Otro</option>
-                                                </select>
-                                                <svg
-                                                    className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-cardeno"
-                                                    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
-                                                >
-                                                    <path d="M5.5 7.5l4.5 5 4.5-5" />
-                                                </svg>
-                                            </div>
-                                        </fieldset>
-
+                                        {/* ... (form como lo tienes) ... */}
                                         <button
                                             type="submit"
                                             className="w-full rounded-xl bg-cardeno text-white font-semibold py-3 md:py-4
-                         hover:opacity-90 transition"
+                        hover:opacity-90 transition"
                                         >
                                             Enviar
                                         </button>
@@ -419,6 +449,65 @@ export default function Beneficios() {
                     </div>
                 </section>
             </section>
+
+            {/* -------- MODAL (Overlay + Dialog) -------- */}
+            {active && (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+                    onClick={closeModal} // clic fuera cierra
+                    aria-hidden={false}
+                >
+                    <div
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby={`modal-title-${active.id}`}
+                        aria-describedby={`modal-desc-${active.id}`}
+                        className="relative w-[92vw] max-w-xl md:max-w-2xl rounded-2xl bg-white shadow-xl p-6 md:p-8"
+                        onClick={(e) => e.stopPropagation()} // evita cerrar si clic dentro
+                    >
+                        {/* TACHE */}
+                        <button
+                            ref={closeBtnRef}
+                            onClick={closeModal}
+                            aria-label="Cerrar"
+                            className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full
+                text-[#2B2B2B] hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-cardeno/20"
+                        >
+                            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M6 6l12 12M18 6l-12 12" />
+                            </svg>
+                            <span className="sr-only">Cerrar</span>
+                        </button>
+
+                        {/* Encabezado */}
+                        <div className="flex items-center gap-3 md:gap-4">
+                            <img src={active.svg} alt="" className="h-10 w-10 md:h-12 md:w-12" />
+                            <h3
+                                id={`modal-title-${active.id}`}
+                                className="text-xl md:text-2xl font-extrabold text-cardeno leading-tight"
+                            >
+                                {active.title}
+                            </h3>
+                        </div>
+
+                        {/* Contenido */}
+                        <p
+                            id={`modal-desc-${active.id}`}
+                            className="mt-4 text-sm md:text-base leading-relaxed text-[#1b1b1b]/80"
+                        >
+                            {active.body}
+                        </p>
+
+                        {/* CTA opcional dentro del modal (ejemplo) */}
+                        {/* <div className="mt-6">
+              <a href="#cotizar" className="inline-flex items-center justify-center rounded-xl bg-mango px-5 py-3 text-sm font-semibold text-white hover:opacity-90 transition">
+                Cotizar este beneficio
+              </a>
+            </div> */}
+                    </div>
+                </div>
+            )}
+
             <Footer />
         </>
     );

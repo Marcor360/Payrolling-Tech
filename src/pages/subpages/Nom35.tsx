@@ -186,7 +186,7 @@ export default function Nom35() {
                     {/* Barra morada inferior */}
                     <Reveal delay={200} className="mt-8 flex justify-center">
                         <p className="max-w-5xl rounded-2xl bg-cardeno px-6 py-4 text-center text-sm leading-relaxed text-white shadow-lg">
-                            De esta manera, tu empresa cumple con la normativa de forma sencilla y eficiente, protege a sus colaboradores y se posiciona como un empleador responsable y comprometido con el bienestar laboral.
+                            De esta manera, tu empresa cumple con la normativa de forma sencilla y eficiente, protege a sus colaboradores y te posiciona como un empleador responsable y comprometido con el bienestar laboral.
                         </p>
                     </Reveal>
                 </div>
