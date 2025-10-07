@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, } from "react";
 import { Link } from "react-router-dom";
 
 type Card = {
@@ -91,115 +91,192 @@ const CARDS: Card[] = [
   },
 ];
 
+const BackBodyCTA = ({ c }: { c: Card }) => (
+  <div className="relative z-10 h-full w-full flex flex-col">
+    <div className="px-5 py-6 md:px-6 md:py-7 mt-auto">
+      <h3
+        className={`text-lg md:text-xl font-extrabold leading-snug whitespace-pre-line ${titleColorFor(
+          c.title
+        )}`}
+      >
+        {c.backTitle}
+      </h3>
+      <p
+        className={`mt-3 text-xs md:text-sm leading-normal whitespace-pre-line ${bodyColorFor(
+          c.title
+        )}`}
+      >
+        {c.backText}
+      </p>
+    </div>
+
+    {c.href?.startsWith("/") ? (
+      <Link
+        to={c.href}
+        className="block px-5 py-3 md:py-3.5 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl"
+        aria-label={`Conoce más sobre ${c.title}`}
+      >
+        {c.cta ?? "Conoce más"}
+      </Link>
+    ) : (
+      <a
+        href={c.href ?? "#"}
+        className="block px-5 py-3 md:py-3.5 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl"
+        aria-label={`Conoce más sobre ${c.title}`}
+      >
+        {c.cta ?? "Conoce más"}
+      </a>
+    )}
+  </div>
+);
+
 export default function ServicesSlider() {
-  const hScroller = useRef<HTMLDivElement>(null); // desktop arrows (se conserva)
-  const vWrapRef = useRef<HTMLDivElement>(null);  // mobile "atardecer"
+  const hScroller = useRef<HTMLDivElement>(null); // desktop
+  const cfWrapRef = useRef<HTMLDivElement>(null); // coverflow mobile/tablet
 
-
-  // MOBILE: efecto "atardecer" optimizado para scroll suave
+  // Coverflow + autoplay + flip en centrado + press&hold pause
   useEffect(() => {
-    const wrap = vWrapRef.current;
+    const wrap = cfWrapRef.current;
     if (!wrap) return;
 
     const items = Array.from(
-      wrap.querySelectorAll<HTMLDivElement>("[data-vcard]")
+      wrap.querySelectorAll<HTMLDivElement>("[data-cfcard]")
     );
     if (!items.length) return;
 
-    // knobs (ajusta a tu gusto)
-    const MAX_SHIFT = 120; // px -> cuanto se mueve de derecha a izquierda
-    const MAX_FADE = 0.28; // opacidad al alejarse del centro
-    const THRESHOLD = 0.18; // que tan cerca del centro para voltear
-
-    type Metric = {
-      el: HTMLDivElement;
-      center: number;
-    };
-
-    let metrics: Metric[] = [];
     let ticking = false;
+    let centeredIdx = 0;
 
-    const readMetrics = () => {
-      metrics = items.map((item) => ({
-        el: item,
-        center: item.offsetTop + item.offsetHeight / 2,
-      }));
-    };
+    const setCentered = (idx: number) => {
+      items.forEach((el, i) => {
+        const isC = i === idx;
 
-    const applyShadow = (cb: () => void) => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        cb();
-        ticking = false;
-      });
-    };
+        // marcar el <article> (por si quieres estilos)
+        el.classList.toggle("is-centered", isC);
+        if (isC) el.setAttribute("data-centered", "true");
+        else el.removeAttribute("data-centered");
 
-    const update = () => {
-      if (!metrics.length) {
-        readMetrics();
-      }
-
-      const halfViewport = wrap.clientHeight / 2 || 1;
-      const viewportCenter = wrap.scrollTop + halfViewport;
-
-      metrics.forEach(({ el, center }) => {
-        const raw = (center - viewportCenter) / halfViewport;
-        const clamped = Math.max(-1, Math.min(1, raw));
-        const eased = Math.sign(clamped) * Math.pow(Math.abs(clamped), 0.75);
-
-        const shiftX = eased * MAX_SHIFT;
-        const rotZ = eased * -1.6;
-        const scale = 1 - 0.06 * Math.abs(eased);
-        const opacity = 1 - MAX_FADE * Math.abs(eased);
-
-        el.style.transform = `
-          translateX(${shiftX}px)
-          rotateZ(${rotZ}deg)
-          scale(${scale})
-        `;
-        el.style.opacity = `${opacity}`;
-
-        if (Math.abs(clamped) < THRESHOLD) {
-          el.classList.add("is-centered");
-        } else {
-          el.classList.remove("is-centered");
+        // ⬇️ En lugar de rotateY, hacemos swap por opacidad (fiable en móviles)
+        const front = el.querySelector<HTMLElement>("[data-front]");
+        const back = el.querySelector<HTMLElement>("[data-back]");
+        if (front && back) {
+          front.style.opacity = isC ? "0" : "1";
+          back.style.opacity = isC ? "1" : "0";
+          back.style.pointerEvents = isC ? "auto" : "none";
+          front.style.pointerEvents = isC ? "none" : "auto";
         }
       });
     };
 
-    const recompute = () => {
-      readMetrics();
-      update();
+
+
+
+    const updateCentered = () => {
+      // Centro del viewport del carrusel en coords de pantalla
+      const wrapRect = wrap.getBoundingClientRect();
+      const midX = wrapRect.left + wrap.clientWidth / 2;
+
+      let best = 0;
+      let bestDist = Infinity;
+
+      items.forEach((el, i) => {
+        const rect = el.getBoundingClientRect(); // coords absolutas en pantalla
+        const cardCenter = rect.left + rect.width / 2;
+        const dist = Math.abs(cardCenter - midX);
+
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = i;
+        }
+      });
+
+      centeredIdx = best;
+      setCentered(best); // <- esto ya hace el flip por inline style
     };
 
-    const onScroll = () => applyShadow(update);
 
-    const handleResize = () => applyShadow(recompute);
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateCentered();
+        ticking = false;
+      });
+    };
 
     wrap.addEventListener("scroll", onScroll, { passive: true });
+    updateCentered();
 
-    const resizeObserver = (typeof ResizeObserver !== "undefined"
-      ? new ResizeObserver(() => recompute())
-      : null);
+    // Autoplay (bucle)
+    const prefersReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    resizeObserver?.observe(wrap);
-    window.addEventListener("resize", handleResize);
-    window.addEventListener("orientationchange", handleResize);
+    let timer: number | null = null;
+    const STEPS_MS = 3600;
 
-    recompute();
-    const rafId = requestAnimationFrame(recompute);
+    const stopAuto = () => {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    };
+
+    const startAuto = () => {
+      if (prefersReduced) return;
+      stopAuto();
+      timer = window.setInterval(() => {
+        const next = (centeredIdx + 1) % items.length;
+        items[next].scrollIntoView({
+          behavior: "smooth",
+          inline: "center",
+          block: "nearest",
+        });
+      }, STEPS_MS);
+    };
+
+    startAuto();
+
+    // Press & Hold → pausa autoplay y desactiva snap
+    let holding = false;
+    const holdStart = () => {
+      holding = true;
+      stopAuto();
+      wrap.style.scrollSnapType = "none";
+    };
+    const holdEnd = () => {
+      if (!holding) return;
+      holding = false;
+      wrap.style.scrollSnapType = "x mandatory";
+      startAuto();
+    };
+
+    wrap.addEventListener("pointerdown", holdStart);
+    wrap.addEventListener("pointerup", holdEnd);
+    wrap.addEventListener("pointercancel", holdEnd);
+    wrap.addEventListener("touchstart", holdStart, { passive: true });
+    wrap.addEventListener("touchend", holdEnd, { passive: true });
+
+    // Pausa también al interactuar con puntero
+    wrap.addEventListener("pointerenter", stopAuto);
+    wrap.addEventListener("pointerleave", startAuto);
 
     return () => {
       wrap.removeEventListener("scroll", onScroll as any);
-      resizeObserver?.disconnect();
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("orientationchange", handleResize);
-      cancelAnimationFrame(rafId);
+      wrap.removeEventListener("pointerdown", holdStart as any);
+      wrap.removeEventListener("pointerup", holdEnd as any);
+      wrap.removeEventListener("pointercancel", holdEnd as any);
+      wrap.removeEventListener("touchstart", holdStart as any);
+      wrap.removeEventListener("touchend", holdEnd as any);
+      wrap.removeEventListener("pointerenter", stopAuto as any);
+      wrap.removeEventListener("pointerleave", startAuto as any);
+      stopAuto();
     };
   }, []);
 
-  const desktopTrackWidth = "calc(var(--stack-offset, 0px) + var(--card-w) + 4 * var(--overlap) + var(--safe-w, 0px))";
+  const desktopTrackWidth =
+    "calc(var(--stack-offset, 0px) + var(--card-w) + 4 * var(--overlap) + var(--safe-w, 0px))";
 
   return (
     <div className="w-full overflow-visible">
@@ -245,7 +322,7 @@ export default function ServicesSlider() {
                   group-hover:[transition-delay:120ms]
                 "
               >
-                {/* Frente */}
+                {/* Frente (SOLO imagen) */}
                 <div className="absolute inset-0 rounded-2xl border border-black/5 shadow-xl overflow-hidden [backface-visibility:hidden]">
                   <img
                     src={c.img}
@@ -256,7 +333,7 @@ export default function ServicesSlider() {
                   />
                 </div>
 
-                {/* Reverso */}
+                {/* Reverso (contenido unificado) */}
                 <div className="absolute inset-0 rounded-2xl border border-black/5 shadow-xl overflow-hidden [transform:rotateY(180deg)] [backface-visibility:hidden]">
                   <img
                     src={c.imgBack ?? c.img}
@@ -265,95 +342,47 @@ export default function ServicesSlider() {
                     loading="lazy"
                     draggable={false}
                   />
-                  <div className="relative z-10 h-full w-full flex flex-col">
-                    <div className="px-5 py-6 md:px-6 md:py-7 mt-auto">
-                      <h3
-                        className={`text-lg md:text-xl font-extrabold leading-snug whitespace-pre-line ${titleColorFor(
-                          c.title
-                        )}`}
-                      >
-                        {c.backTitle}
-                      </h3>
-                      <p
-                        className={`mt-3 text-xs md:text-sm leading-normal whitespace-pre-line ${bodyColorFor(
-                          c.title
-                        )}`}
-                      >
-                        {c.backText}
-                      </p>
-                    </div>
-
-                    {c.href?.startsWith("/") ? (
-                      <Link
-                        to={c.href}
-                        className="block px-5 py-3 md:py-3.5 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl"
-                        aria-label={`Conoce más sobre ${c.title}`}
-                      >
-                        {c.cta ?? "Conoce más"}
-                      </Link>
-                    ) : (
-                      <a
-                        href={c.href ?? "#"}
-                        className="block px-5 py-3 md:py-3.5 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl"
-                        aria-label={`Conoce más sobre ${c.title}`}
-                      >
-                        {c.cta ?? "Conoce más"}
-                      </a>
-                    )}
-                  </div>
+                  <BackBodyCTA c={c} />
                 </div>
               </div>
             </div>
           ))}
         </div>
-
       </div>
-
-      {/* ===== Mobile: “atardecer” (der → centro → izq) + flip al centrar ===== */}
-      <div className="lg:hidden relative md:flex md:justify-center">
+      {/* ===== Mobile/Tablet: Coverflow con flip en centrado ===== */}
+      <div className="lg:hidden relative py-6">
         <div
-          ref={vWrapRef}
+          ref={cfWrapRef}
           className="
-            relative w-full h-[80vh] max-h-[640px]
-            overflow-y-auto px-4
-            md:w-auto md:h-[70vh] md:max-h-[580px] md:px-0
-            snap-y snap-mandatory
-            [perspective:1000px] [transform-style:preserve-3d]
-            [-ms-overflow-style:none] [scrollbar-width:none]
-          "
+      relative w-full overflow-x-auto overflow-y-visible
+      snap-x snap-mandatory px-6
+      [-ms-overflow-style:none] [scrollbar-width:none]
+    "
           aria-label="Servicios"
         >
-          {/* separadores más altos para que la primera tarjeta alcance el centro */}
-          <div className="h-[28vh] min-h-[140px]" />
-          {CARDS.map((c) => (
-            <article
-              key={c.title}
-              data-vcard
-              className="
-                group
-                snap-center shrink-0 mx-auto my-6
-                w-[86vw] max-w-[340px] h-[420px]
-                md:w-[68vw] md:max-w-[420px] md:h-[460px]
-                rounded-2xl border border-black/5 shadow-xl overflow-hidden
-                transition-[transform,opacity] duration-300 ease-out will-change-transform
-                [transform-style:preserve-3d]
-              "
-              style={{
-                transform: "translateX(140px) rotateZ(0deg) scale(1)",
-                opacity: 0.8,
-              }}
-            >
-              {/* Flipper controlado por .is-centered en el <article> */}
-              <div
+          <div className="flex items-stretch gap-6 min-w-max">
+            {/* separador para centrar la 1ª */}
+            <span className="shrink-0 w-[7vw] sm:w-[10vw]" aria-hidden />
+
+            {CARDS.map((c) => (
+              <article
+                key={c.title}
+                data-cfcard
                 className="
-                  relative h-full w-full transform-gpu
-                  transition-transform duration-600
-                  [transform-style:preserve-3d]
-                  group-[.is-centered]:[transform:rotateY(180deg)]
-                "
+    group relative shrink-0 snap-center
+    w-[78vw] max-w-[360px] h-[440px]
+    sm:w-[64vw] sm:max-w-[420px] sm:h-[460px]
+    md:w-[56vw] md:max-w-[460px] md:h-[480px]
+    transition-transform duration-300 will-change-transform
+  "
               >
-                {/* Frente */}
-                <div className="absolute inset-0 rounded-2xl overflow-hidden [backface-visibility:hidden]">
+                {/* Capa FRONT */}
+                <div
+                  data-front
+                  className="absolute inset-0 rounded-2xl border border-black/5 shadow-xl overflow-hidden
+               transition-opacity duration-500"
+                  style={{ opacity: 1 }}
+                >
                   <img
                     src={c.img}
                     alt={c.title}
@@ -363,8 +392,12 @@ export default function ServicesSlider() {
                   />
                 </div>
 
-                {/* Reverso */}
-                <div className="absolute inset-0 rounded-2xl overflow-hidden [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                {/* Capa BACK (idéntica a desktop), inicia oculta */}
+                <div
+                  data-back
+                  className="absolute inset-0 rounded-2xl border border-black/5 shadow-xl overflow-hidden
+               transition-opacity duration-500 opacity-0 pointer-events-none"
+                >
                   <img
                     src={c.imgBack ?? c.img}
                     alt={`${c.title} reverso`}
@@ -372,65 +405,18 @@ export default function ServicesSlider() {
                     loading="lazy"
                     draggable={false}
                   />
-                  <div className="relative z-10 h-full w-full flex flex-col">
-                    {/* Texto abajo */}
-                    <div className="px-5 py-5 mt-auto">
-                      <h3
-                        className={`text-base font-extrabold leading-snug whitespace-pre-line ${titleColorFor(
-                          c.title
-                        )}`}
-                      >
-                        {c.backTitle}
-                      </h3>
-                      <p
-                        className={`mt-2 text-xs leading-normal whitespace-pre-line ${bodyColorFor(
-                          c.title
-                        )}`}
-                      >
-                        {c.backText}
-                      </p>
-                    </div>
-
-                    {/* Botón */}
-                    {c.href?.startsWith("/") ? (
-                      <Link
-                        to={c.href}
-                        className="block px-5 py-3 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl"
-                        aria-label={`Conoce más sobre ${c.title}`}
-                      >
-                        {c.cta ?? "Conoce más"}
-                      </Link>
-                    ) : (
-                      <a
-                        href={c.href ?? "#"}
-                        className="block px-5 py-3 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl"
-                        aria-label={`Conoce más sobre ${c.title}`}
-                      >
-                        {c.cta ?? "Conoce más"}
-                      </a>
-                    )}
-                  </div>
+                  <BackBodyCTA c={c} />
                 </div>
-              </div>
-            </article>
-          ))}
-          <div className="h-[28vh] min-h-[140px]" />
+              </article>
+            ))}
+
+            {/* separador final para centrar la última */}
+            <span className="shrink-0 w-[7vw] sm:w-[10vw]" aria-hidden />
+          </div>
         </div>
+
       </div>
+
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
