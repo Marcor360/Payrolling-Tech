@@ -22,8 +22,11 @@ export default function Footer() {
                         52787 Naucalpan de Juárez, Méx.
                     </div>
                     <div>
-                        <a href="+528138646238">Telefono: <br /> 8138646238</a>
+                        <a href="tel:+528138646238">
+                            Teléfono: <br /> 81 3864 6238
+                        </a>
                     </div>
+
                 </div>
 
                 {/* Iconos sociales */}

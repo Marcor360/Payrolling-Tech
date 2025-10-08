@@ -91,7 +91,8 @@ const CARDS: Card[] = [
   },
 ];
 
-const BackBodyCTA = ({ c }: { c: Card }) => (
+// ⬇️ Ahora acepta showCTA para poder ocultarlo en desktop
+const BackBodyCTA = ({ c, showCTA = true }: { c: Card; showCTA?: boolean }) => (
   <div className="relative z-10 h-full w-full flex flex-col">
     <div className="px-5 py-6 md:px-6 md:py-7 mt-auto">
       <h3
@@ -110,23 +111,25 @@ const BackBodyCTA = ({ c }: { c: Card }) => (
       </p>
     </div>
 
-    {c.href?.startsWith("/") ? (
-      <Link
-        to={c.href}
-        className="block px-5 py-3 md:py-3.5 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl"
-        aria-label={`Conoce más sobre ${c.title}`}
-      >
-        {c.cta ?? "Conoce más"}
-      </Link>
-    ) : (
-      <a
-        href={c.href ?? "#"}
-        className="block px-5 py-3 md:py-3.5 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl"
-        aria-label={`Conoce más sobre ${c.title}`}
-      >
-        {c.cta ?? "Conoce más"}
-      </a>
-    )}
+    {showCTA ? (
+      c.href?.startsWith("/") ? (
+        <Link
+          to={c.href}
+          className="block px-5 py-3 md:py-3.5 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl"
+          aria-label={`Conoce más sobre ${c.title}`}
+        >
+          {c.cta ?? "Conoce más"}
+        </Link>
+      ) : (
+        <a
+          href={c.href ?? "#"}
+          className="block px-5 py-3 md:py-3.5 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl"
+          aria-label={`Conoce más sobre ${c.title}`}
+        >
+          {c.cta ?? "Conoce más"}
+        </a>
+      )
+    ) : null}
   </div>
 );
 
@@ -156,7 +159,7 @@ export default function ServicesSlider() {
         if (isC) el.setAttribute("data-centered", "true");
         else el.removeAttribute("data-centered");
 
-        // ⬇️ En lugar de rotateY, hacemos swap por opacidad (fiable en móviles)
+        // swap por opacidad (fiable en móviles)
         const front = el.querySelector<HTMLElement>("[data-front]");
         const back = el.querySelector<HTMLElement>("[data-back]");
         if (front && back) {
@@ -168,9 +171,6 @@ export default function ServicesSlider() {
       });
     };
 
-
-
-
     const updateCentered = () => {
       // Centro del viewport del carrusel en coords de pantalla
       const wrapRect = wrap.getBoundingClientRect();
@@ -180,7 +180,7 @@ export default function ServicesSlider() {
       let bestDist = Infinity;
 
       items.forEach((el, i) => {
-        const rect = el.getBoundingClientRect(); // coords absolutas en pantalla
+        const rect = el.getBoundingClientRect();
         const cardCenter = rect.left + rect.width / 2;
         const dist = Math.abs(cardCenter - midX);
 
@@ -191,9 +191,8 @@ export default function ServicesSlider() {
       });
 
       centeredIdx = best;
-      setCentered(best); // <- esto ya hace el flip por inline style
+      setCentered(best);
     };
-
 
     const onScroll = () => {
       if (ticking) return;
@@ -243,12 +242,12 @@ export default function ServicesSlider() {
     const holdStart = () => {
       holding = true;
       stopAuto();
-      wrap.style.scrollSnapType = "none";
+      (wrap as HTMLDivElement).style.scrollSnapType = "none";
     };
     const holdEnd = () => {
       if (!holding) return;
       holding = false;
-      wrap.style.scrollSnapType = "x mandatory";
+      (wrap as HTMLDivElement).style.scrollSnapType = "x mandatory";
       startAuto();
     };
 
@@ -333,7 +332,7 @@ export default function ServicesSlider() {
                   />
                 </div>
 
-                {/* Reverso (contenido unificado) */}
+                {/* Reverso (contenido unificado) — CTA oculto en desktop */}
                 <div className="absolute inset-0 rounded-2xl border border-black/5 shadow-xl overflow-hidden [transform:rotateY(180deg)] [backface-visibility:hidden]">
                   <img
                     src={c.imgBack ?? c.img}
@@ -342,14 +341,34 @@ export default function ServicesSlider() {
                     loading="lazy"
                     draggable={false}
                   />
-                  <BackBodyCTA c={c} />
+                  <BackBodyCTA c={c} showCTA={false} />
                 </div>
               </div>
+
+              {/* ⬇️ Overlay: hace TODA la card clicable en desktop */}
+              {c.href?.startsWith("/") ? (
+                <Link
+                  to={c.href}
+                  className="absolute inset-0 rounded-2xl z-[200] focus:outline-none focus:ring-2 focus:ring-white/40"
+                  aria-label={`Ir a ${c.title}`}
+                >
+                  <span className="sr-only">{`Ir a ${c.title}`}</span>
+                </Link>
+              ) : (
+                <a
+                  href={c.href ?? "#"}
+                  className="absolute inset-0 rounded-2xl z-[200] focus:outline-none focus:ring-2 focus:ring-white/40"
+                  aria-label={`Ir a ${c.title}`}
+                >
+                  <span className="sr-only">{`Ir a ${c.title}`}</span>
+                </a>
+              )}
             </div>
           ))}
         </div>
       </div>
-      {/* ===== Mobile/Tablet: Coverflow con flip en centrado ===== */}
+
+      {/* ===== Mobile/Tablet: Coverflow con swap por opacidad en centrado ===== */}
       <div className="lg:hidden relative py-6">
         <div
           ref={cfWrapRef}
@@ -392,7 +411,7 @@ export default function ServicesSlider() {
                   />
                 </div>
 
-                {/* Capa BACK (idéntica a desktop), inicia oculta */}
+                {/* Capa BACK (idéntica a desktop), inicia oculta — CTA visible en mobile */}
                 <div
                   data-back
                   className="absolute inset-0 rounded-2xl border border-black/5 shadow-xl overflow-hidden
@@ -414,9 +433,7 @@ export default function ServicesSlider() {
             <span className="shrink-0 w-[7vw] sm:w-[10vw]" aria-hidden />
           </div>
         </div>
-
       </div>
-
     </div>
   );
 }
