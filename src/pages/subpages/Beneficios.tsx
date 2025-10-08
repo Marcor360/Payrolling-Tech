@@ -209,7 +209,7 @@ export default function Beneficios() {
                                 </h1>
 
                                 <p className="mt-6 text-left text-base sm:text-lg leading-relaxed text-noche">
-                                    <span className="font-semibold">Conoce la nueva forma de impulsar a tu equipo:</span>{" "}
+                                    <span className="font-semibold">La nueva forma de impulsar a tu equipo:</span>{" "}
                                     más de <span className="font-semibold">50 beneficios laborales</span> reunidos en{" "}
                                     <span className="font-semibold">una sola app</span> para elevar el{" "}
                                     <span className="font-semibold">bienestar</span> y{" "}

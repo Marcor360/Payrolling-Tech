@@ -21,6 +21,9 @@ export default function Footer() {
                         Blvd. Palmas Hills 1 Valle de las Palmas<br />
                         52787 Naucalpan de Juárez, Méx.
                     </div>
+                    <div>
+                        <a href="+528138646238">Telefono: <br /> 8138646238</a>
+                    </div>
                 </div>
 
                 {/* Iconos sociales */}

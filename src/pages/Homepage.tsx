@@ -77,12 +77,12 @@ export default function HomePage() {
 
             <div className="mt-6 w-full text-center">
               <p className="text-lg sm:text-4xl text-noche/90 mx-auto">
-                {"tu "}
+                {"Tu "}
                 <span className="font-bold">activo</span>
                 {" más importante "}
 
                 {"para "}
-                <span className="font-extrabold">fortalecer tu negocio</span>
+                <span className="font-extrabold">fortalecer tú negocio</span>
               </p>
               <p className="mt-4 max-w-3xl text-sm sm:text-base text-cardeno md:max-w-2xl mx-auto">
                 {"Payrolling-tech potencia la "}

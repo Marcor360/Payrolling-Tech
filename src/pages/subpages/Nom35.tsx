@@ -74,7 +74,7 @@ export default function Nom35() {
                             <div className="px-6 py-12 sm:px-10 md:py-16 lg:px-14">
                                 <Reveal as="h2" className="font-extrabold leading-tight tracking-tight">
                                     <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-cardeno">
-                                        Cumplimiento con
+                                        Cumplimiento de
                                     </span>
                                     <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-cardeno">
                                         la NOM-035
@@ -106,7 +106,55 @@ export default function Nom35() {
                     </div>
                 </div>
             </section>
+            {/* Porque es importante */}
+            <section>
+                <div className="relative bg-noche">
+                    {/* Líneas decorativas (ocultas en mobile) */}
+                    <span className="hidden md:block absolute left-0 top-6 h-1 w-28 bg-mango" />
+                    <span className="hidden md:block absolute right-0 bottom-6 h-1 w-28 bg-mango" />
 
+                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+                        <Reveal as="h3" className="text-center font-extrabold text-mango text-2xl sm:text-3xl md:text-4xl">
+                            ¿Por qué es importante la NOM-035?
+                        </Reveal>
+
+                        <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+                            {/* Card 1 */}
+                            <Reveal delay={0}>
+                                <div className="rounded-xl bg-mango p-6 text-noche shadow-sm transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+                                    <h4 className="font-extrabold leading-tight">¿Por qué es importante la NOM-035?</h4>
+                                    <p className="mt-2 text-sm leading-relaxed">
+                                        Ayuda a reducir el estrés laboral, la ansiedad, la fatiga crónica y otros riesgos
+                                        psicosociales que impactan la salud de los empleados.
+                                    </p>
+                                </div>
+                            </Reveal>
+
+                            {/* Card 2 */}
+                            <Reveal delay={120}>
+                                <div className="rounded-xl bg-mango p-6 text-noche shadow-sm transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+                                    <h4 className="font-extrabold leading-tight">Cumplimiento legal:</h4>
+                                    <p className="mt-2 text-sm leading-relaxed">
+                                        Al ser obligatoria, las empresas que no cumplen con esta normativa pueden enfrentar
+                                        sanciones económicas y legales.
+                                    </p>
+                                </div>
+                            </Reveal>
+
+                            {/* Card 3 */}
+                            <Reveal delay={220}>
+                                <div className="rounded-xl bg-mango p-6 text-noche shadow-sm transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+                                    <h4 className="font-extrabold leading-tight">Productividad y clima laboral:</h4>
+                                    <p className="mt-2 text-sm leading-relaxed">
+                                        Implementar la NOM-035 fortalece la cultura organizacional, mejora la satisfacción del
+                                        personal y disminuye la rotación de talento.
+                                    </p>
+                                </div>
+                            </Reveal>
+                        </div>
+                    </div>
+                </div>
+            </section>
             {/* cumplir con la NOM-035 */}
             <section>
                 {/* Franja amarilla con el título */}
@@ -189,56 +237,6 @@ export default function Nom35() {
                             De esta manera, tu empresa cumple con la normativa de forma sencilla y eficiente, protege a sus colaboradores y te posiciona como un empleador responsable y comprometido con el bienestar laboral.
                         </p>
                     </Reveal>
-                </div>
-            </section>
-
-            {/* Porque es importante */}
-            <section>
-                <div className="relative bg-noche">
-                    {/* Líneas decorativas (ocultas en mobile) */}
-                    <span className="hidden md:block absolute left-0 top-6 h-1 w-28 bg-mango" />
-                    <span className="hidden md:block absolute right-0 bottom-6 h-1 w-28 bg-mango" />
-
-                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-                        <Reveal as="h3" className="text-center font-extrabold text-mango text-2xl sm:text-3xl md:text-4xl">
-                            ¿Por qué es importante la NOM-035?
-                        </Reveal>
-
-                        <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
-                            {/* Card 1 */}
-                            <Reveal delay={0}>
-                                <div className="rounded-xl bg-mango p-6 text-noche shadow-sm transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
-                                    <h4 className="font-extrabold leading-tight">¿Por qué es importante la NOM-035?</h4>
-                                    <p className="mt-2 text-sm leading-relaxed">
-                                        Ayuda a reducir el estrés laboral, la ansiedad, la fatiga crónica y otros riesgos
-                                        psicosociales que impactan la salud de los empleados.
-                                    </p>
-                                </div>
-                            </Reveal>
-
-                            {/* Card 2 */}
-                            <Reveal delay={120}>
-                                <div className="rounded-xl bg-mango p-6 text-noche shadow-sm transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
-                                    <h4 className="font-extrabold leading-tight">Cumplimiento legal:</h4>
-                                    <p className="mt-2 text-sm leading-relaxed">
-                                        Al ser obligatoria, las empresas que no cumplen con esta normativa pueden enfrentar
-                                        sanciones económicas y legales.
-                                    </p>
-                                </div>
-                            </Reveal>
-
-                            {/* Card 3 */}
-                            <Reveal delay={220}>
-                                <div className="rounded-xl bg-mango p-6 text-noche shadow-sm transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
-                                    <h4 className="font-extrabold leading-tight">Productividad y clima laboral:</h4>
-                                    <p className="mt-2 text-sm leading-relaxed">
-                                        Implementar la NOM-035 fortalece la cultura organizacional, mejora la satisfacción del
-                                        personal y disminuye la rotación de talento.
-                                    </p>
-                                </div>
-                            </Reveal>
-                        </div>
-                    </div>
                 </div>
             </section>
 
