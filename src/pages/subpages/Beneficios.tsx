@@ -400,7 +400,6 @@ export default function Beneficios() {
                         </div>
                     </div>
                 </section>
-
                 {/* Sección: Agenda una demo */}
                 <section id="agenda-demo" className="bg-[#F3F1EA]">
                     <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
@@ -430,24 +429,215 @@ export default function Beneficios() {
                                 </div>
                             </div>
 
-                            {/* Columna derecha: Tarjeta con formulario */}
-                            <div className="relative">
-                                <div className="relative rounded-3xl border-2 border-cardeno p-6 md:p-8 bg-transparent">
-                                    <form className="space-y-6" noValidate>
-                                        {/* ... (form como lo tienes) ... */}
-                                        <button
-                                            type="submit"
-                                            className="w-full rounded-xl bg-cardeno text-white font-semibold py-3 md:py-4
-                        hover:opacity-90 transition"
+                            {/* Columna derecha: Tarjeta = FORMULARIO */}
+                            <form
+                                className="relative rounded-3xl border-2 border-cardeno p-6 md:p-8 bg-transparent space-y-8"
+                                noValidate
+                                method="post"
+                                onSubmit={(e) => {
+                                    e.preventDefault();
+                                    // TODO: integra aquí tu POST (fetch/axios) o Server Action /api/demo
+                                }}
+                            >
+                                {/* Decoración punteada (dentro del form) */}
+                                <div
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute -top-6 -right-6 h-24 w-24 rounded-xl opacity-80"
+                                    style={{
+                                        backgroundImage: "radial-gradient(currentColor 2px, transparent 2px)",
+                                        backgroundSize: "10px 10px",
+                                        color: "rgb(128, 0, 255)" // fallback si no existe text-cardeno
+                                    }}
+                                />
+
+                                {/* 1) Cuéntanos más de ti */}
+                                <fieldset className="space-y-4">
+                                    <legend className="text-cardeno font-semibold text-lg">Cuéntanos más de ti</legend>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label htmlFor="firstName" className="sr-only">Nombre</label>
+                                            <input
+                                                id="firstName"
+                                                name="firstName"
+                                                type="text"
+                                                placeholder="Nombre"
+                                                required
+                                                className="w-full rounded-xl border-2 border-cardeno px-4 py-3 bg-white text-noche placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cardeno/20 focus:border-cardeno"
+                                            />
+                                        </div>
+
+                                        <div>
+                                            <label htmlFor="lastName" className="sr-only">Apellido</label>
+                                            <input
+                                                id="lastName"
+                                                name="lastName"
+                                                type="text"
+                                                placeholder="Apellido"
+                                                required
+                                                className="w-full rounded-xl border-2 border-cardeno px-4 py-3 bg-white text-noche placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cardeno/20 focus:border-cardeno"
+                                            />
+                                        </div>
+
+                                        <div className="md:col-span-2">
+                                            <label htmlFor="role" className="sr-only">Tu cargo es</label>
+                                            <input
+                                                id="role"
+                                                name="role"
+                                                type="text"
+                                                placeholder="Tu cargo es"
+                                                className="w-full rounded-xl border-2 border-cardeno px-4 py-3 bg-white text-noche placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cardeno/20 focus:border-cardeno"
+                                            />
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                {/* 2) ¿Cómo podemos comunicarnos contigo? */}
+                                <fieldset className="space-y-4">
+                                    <legend className="text-cardeno font-semibold text-lg">¿Cómo podemos comunicarnos contigo?</legend>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label htmlFor="phone" className="sr-only">Número de celular</label>
+                                            <input
+                                                id="phone"
+                                                name="phone"
+                                                type="tel"
+                                                inputMode="tel"
+                                                placeholder="Número de celular"
+                                                pattern="^[+0-9\\s()-]{7,}$"
+                                                required
+                                                className="w-full rounded-xl border-2 border-cardeno px-4 py-3 bg-white text-noche placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cardeno/20 focus:border-cardeno"
+                                            />
+                                        </div>
+
+                                        <div>
+                                            <label htmlFor="email" className="sr-only">Email empresarial</label>
+                                            <input
+                                                id="email"
+                                                name="email"
+                                                type="email"
+                                                placeholder="Email empresarial"
+                                                required
+                                                className="w-full rounded-xl border-2 border-cardeno px-4 py-3 bg-white text-noche placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cardeno/20 focus:border-cardeno"
+                                            />
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                {/* 3) Cuéntanos más sobre tu empresa */}
+                                <fieldset className="space-y-4">
+                                    <legend className="text-cardeno font-semibold text-lg">Cuéntanos más sobre tu empresa</legend>
+
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label htmlFor="company" className="sr-only">Nombre de la empresa</label>
+                                            <input
+                                                id="company"
+                                                name="company"
+                                                type="text"
+                                                placeholder="Nombre de la empresa"
+                                                required
+                                                className="w-full rounded-xl border-2 border-cardeno px-4 py-3 bg-white text-noche placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-cardeno/20 focus:border-cardeno"
+                                            />
+                                        </div>
+
+                                        {/* Número de colaboradores */}
+                                        <div className="relative">
+                                            <label htmlFor="employees" className="sr-only">Número de colaboradores</label>
+                                            <select
+                                                id="employees"
+                                                name="employees"
+                                                defaultValue=""
+                                                required
+                                                className="w-full appearance-none rounded-xl border-2 border-cardeno bg-white px-4 py-3 pr-12 text-noche focus:outline-none focus:ring-2 focus:ring-cardeno/20 focus:border-cardeno"
+                                            >
+                                                <option value="" disabled>Número de colaboradores</option>
+                                                <option>1–10</option>
+                                                <option>11–50</option>
+                                                <option>51–200</option>
+                                                <option>201–500</option>
+                                                <option>501–1,000</option>
+                                                <option>1,000+</option>
+                                            </select>
+                                            <svg
+                                                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-cardeno"
+                                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
+                                            >
+                                                <path d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.08 1.04l-4.25 4.25a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" />
+                                            </svg>
+                                        </div>
+
+                                        {/* Ubicación */}
+                                        <div className="relative">
+                                            <label htmlFor="location" className="sr-only">¿Dónde se encuentran tu empresa?</label>
+                                            <select
+                                                id="location"
+                                                name="location"
+                                                defaultValue=""
+                                                required
+                                                className="w-full appearance-none rounded-xl border-2 border-cardeno bg-white px-4 py-3 pr-12 text-noche focus:outline-none focus:ring-2 focus:ring-cardeno/20 focus:border-cardeno"
+                                            >
+                                                <option value="" disabled>¿Dónde se encuentran tu empresa?</option>
+                                                <option>CDMX</option>
+                                                <option>EDOMEX</option>
+                                                <option>Otro</option>
+                                            </select>
+                                            <svg
+                                                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-cardeno"
+                                                viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
+                                            >
+                                                <path d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.08 1.04l-4.25 4.25a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                {/* 4) ¿Cómo conociste a Payrolling Tech? */}
+                                <fieldset className="space-y-4">
+                                    <legend className="text-cardeno font-semibold text-lg">¿Cómo conociste a Payrolling Tech?</legend>
+
+                                    <div className="relative">
+                                        <label htmlFor="source" className="sr-only">¿Cómo conociste a Payrolling Tech?</label>
+                                        <select
+                                            id="source"
+                                            name="source"
+                                            defaultValue=""
+                                            required
+                                            className="w-full appearance-none rounded-xl border-2 border-cardeno bg-white px-4 py-3 pr-12 text-noche focus:outline-none focus:ring-2 focus:ring-cardeno/20 focus:border-cardeno"
                                         >
-                                            Enviar
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+                                            <option value="" disabled>Selecciona una opción</option>
+                                            <option>Google</option>
+                                            <option>LinkedIn</option>
+                                            <option>Webinar / Evento</option>
+                                            <option>Referencia</option>
+                                            <option>Redes sociales</option>
+                                            <option>Otro</option>
+                                        </select>
+                                        <svg
+                                            className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-cardeno"
+                                            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
+                                        >
+                                            <path d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.08 1.04l-4.25 4.25a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" />
+                                        </svg>
+                                    </div>
+                                </fieldset>
+
+                                {/* Honeypot anti-spam */}
+                                <input type="text" name="empresa_web" className="hidden" tabIndex={-1} autoComplete="off" />
+
+                                {/* Submit */}
+                                <button
+                                    type="submit"
+                                    className="w-full rounded-xl bg-cardeno text-white font-semibold py-3 md:py-4 hover:opacity-90 transition"
+                                >
+                                    Enviar
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </section>
+
             </section>
 
             {/* -------- MODAL (Overlay + Dialog) -------- */}
