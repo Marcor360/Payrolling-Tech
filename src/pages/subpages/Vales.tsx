@@ -1,217 +1,246 @@
 import Headers from "../../components/header.tsx";
 import Footer from "../../components/footer.tsx";
-//Importacion de imagenes
-import Vale from "/img/Contenido/TarjetasVales.webp";
-import tablaVales from "/img/Contenido/TablaVales.webp";
 //importar svg
-import svgPuerco from "/img/svg/Iconografia-01.svg";
-import svgEstrella from "/img/svg/Iconografia-02.svg";
-import svgValanza from "/img/svg/Iconografia-03.svg";
+import beneficiosFiscalesSvg from "../../../public/img/svg/svg-vales/Beneficios fiscales.svg";
+import coberturaNacionalSvg from "../../../public/img/svg/svg-vales/cobertura nacional.svg";
+import controlFinancieroTotalSvg from "../../../public/img/svg/svg-vales/control financiero total.svg";
+import eficienciaCorporativaSvg from "../../../public/img/svg/svg-vales/eficiencia corporativa.svg";
+import flexibilidadSvg from "../../../public/img/svg/svg-vales/flexibilidad.svg";
+import seguridadSvg from "../../../public/img/svg/svg-vales/seguridad.svg";
 
-type BenefitCard = {
-    id: string;
-    title: string;
-    description: string;
-    variant: "filled" | "outline";
-};
-
-const BENEFITS: BenefitCard[] = [
-    {
-        id: "1",
-        title: "Red abierta",
-        description: "El colaborador puede usar la tarjeta en cualquier comercio con terminal bancaria y en linea.",
-        variant: "filled",
-    },
-    {
-        id: "2",
-        title: "Sin cargas ante el IMSS, INFONAVIT e ISN",
-        description: "Este beneficio no genera cargas ante los organismos de ley, permitiendote destinar mas recursos a areas estrategicas y al bienestar de tu equipo.",
-        variant: "outline",
-    },
-    {
-        id: "3",
-        title: "Deduccion de impuestos",
-        description: "Puedes deducir desde 47% hasta 53% en el Impuesto Sobre la Renta (ISR). Ahorro fiscal directo para la empresa.",
-        variant: "filled",
-    },
-    {
-        id: "4",
-        title: "Mejora tu employer branding",
-        description: "Reten y atrae talento elevando la reputacion de tu empresa con un beneficio tangible.",
-        variant: "outline",
-    },
-];
-const STEPS = [
-    {
-        id: "1",
-        title: "Cotiza en linea",
-        description: "Solicita tu cotizacion en linea y accede a beneficios exclusivos durante tu primer ano de contratacion.",
-    },
-    {
-        id: "2",
-        title: "Envia tus documentos",
-        description: "Recibiras un correo electronico donde te indicamos la documentacion necesaria que debes enviar.",
-    },
-    {
-        id: "3",
-        title: "Activa tus vales de despensa",
-        description: "Recibe tus tarjetas de vales y entregalas a tu equipo; las podran activar al instante desde la aplicacion movil.",
-    },
-];
-
-const REASONS = [
-    {
-        title: "MENOS IMPUESTOS",
-        description: "Podras deducir entre 47% y 53% de los bonos. Su uso no genera cargas fiscales para tu equipo.",
-        icon: svgValanza,
-    },
-    {
-        title: "MAYOR BIENESTAR",
-        description: "Impulsa la salud y calidad de vida de tus empleados.",
-        icon: svgPuerco,
-    },
-    {
-        title: "MEJOR RETENCION",
-        description: "Manten a tus empleados motivados y comprometidos con tu empresa con un beneficio que promueve su bienestar.",
-        icon: svgEstrella,
-    },
-];
-
+import ValesRecomp from "../../components/TarjetaVales.tsx";
 export default function Vales() {
     return (
         <div className="min-h-screen text-noche">
             <Headers variant="dark" />
-            <main className="flex flex-col gap-24 pb-0">
-                <section className="bg-[#f4f3e9]">
-                    <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-16">
-                        <div className="absolute inset-x-0 top-12 hidden h-[420px] rounded-[3rem] bg-gradient-to-r from-[#f6ecff] via-white to-[#fff6e1] blur-3xl lg:block" aria-hidden="true" />
-                        <div className="relative grid gap-12 lg:[grid-template-columns:1.05fr_0.95fr] lg:items-center">
-                            <div className="flex flex-col gap-6">
-                                <h1 className="text-4xl font-black leading-tight text-cardeno sm:text-5xl sm:leading-tight">
-                                    Incrementa el poder adquisitivo de tus colaboradores
-                                </h1>
-                                <p className="max-w-xl text-base leading-7 text-noche/85 sm:text-lg">
-                                    <strong className="font-semibold text-noche">Aprovecha los beneficios fiscales</strong> de los vales de despensa y deduce hasta el 53% del Impuesto Sobre la Renta (ISR).
-                                    <strong className="font-semibold text-noche"> Con payrolling, opta por el mejor precio</strong> y la red de aceptacion mas amplia en vales de despensa para tu equipo.
-                                </p>
-                                <div className="flex flex-wrap gap-4 pt-2">
-                                    <a
-                                        href="https://api.whatsapp.com/send/?phone=528138646238&text=Hola%2C%20quiero%20cotizar%20vales%20de%20despensa&type=phone_number&app_absent=0"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center justify-center rounded-[1.5rem] bg-[#ffbf2b] px-9 py-3 text-base font-semibold text-noche shadow-[0_12px_0_rgba(0,0,0,0.18)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#ffc947]"
-                                    >
-                                        Cotiza ahora
-                                    </a>
-                                    <a
-                                        href="mailto:hola@payrollingtech.com"
-                                        className="inline-flex items-center justify-center rounded-[1.5rem] border border-noche/25 bg-white px-9 py-3 text-base font-semibold text-noche shadow-[0_10px_0_rgba(0,0,0,0.12)] transition-transform duration-200 hover:-translate-y-0.5 hover:border-[#6f2bff] hover:text-[#6f2bff]"
-                                    >
-                                        Habla con nosotros
-                                    </a>
-                                </div>
-                            </div>
-                            <div className="relative flex items-center justify-center lg:justify-end">
-                                <div className="absolute -left-10 top-6 hidden h-60 w-60 rounded-[3rem] bg-gradient-to-br from-[#f1d8ff] via-[#fbefff] to-[#ffe7bf] blur-3xl lg:block" aria-hidden="true" />
-                                <div className="absolute -bottom-10 right-0 hidden h-48 w-48 rounded-full bg-[#ffbf2b]/40 blur-3xl lg:block" aria-hidden="true" />
-                                <img
-                                    src={Vale}
-                                    alt="Tarjetas de vales Payrolling Tech"
-                                    className="relative w-full max-w-md -rotate-2 drop-shadow-[0_20px_55px_rgba(97,37,221,0.4)]"
-                                />
-                            </div>
+            <main className="flex flex-col gap-10 md:gap-14 pb-0">
+                {/* === HERO / VALOR === */}
+                <section id="valor" className="pt-16 md:pt-20 pb-6 md:pb-8">
+                    <div className="mx-auto max-w-5xl px-4 sm:px-6 text-center">
+                        <h1
+                            className="text-[clamp(2.75rem,6vw,4.5rem)]
+                 leading-[0.95] tracking-tight font-extrabold
+                 text-cardeno"
+                        >
+                            Vales para tu empresa
+                        </h1>
+
+                        <p className="mt-5 text-[1.05rem] sm:text-lg md:text-xl text-noche">
+                            <strong>Optimiza y controla</strong> los gastos de tu empresa con
+                            nuestras <strong>tarjetas y vales</strong> corporativos.
+                        </p>
+
+                        <p className="mt-5 max-w-3xl mx-auto text-base sm:text-[1.05rem] text-noche">
+                            Desde combustible, gastos de oficina, despensa y viáticos, hasta incentivos,
+                            recompensas y regalos, nuestras soluciones te permiten simplificar la
+                            gestión, motivar a tu equipo y maximizar beneficios fiscales.
+                        </p>
+
+                        {/* CTAs */}
+                        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                            <a
+                                href={`https://wa.me/528138646238?text=${encodeURIComponent(
+                                    "Hola, me gustaría solicitar una demo de Vales para tu empresa. ¿Podemos agendar una llamada?"
+                                )}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Solicitar demo por WhatsApp"
+                                className="inline-flex items-center justify-center
+                   rounded-xl px-6 py-3 font-semibold
+                   bg-mango text-noche shadow
+                   hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-mango/50"
+                            >
+                                Solicita tu demo
+                            </a>
+
+                            <a
+                                href={`https://wa.me/528138646238?text=${encodeURIComponent(
+                                    "Hola, quiero cotizar un paquete de vales corporativos.\nEmpresa: ____\nNúmero de colaboradores: ____\nInterés: Gasolina / Despensa / Gastos corporativos / Recompensas.\nUbicación: ____"
+                                )}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Cotizar paquete por WhatsApp"
+                                className="inline-flex items-center justify-center
+                   rounded-xl px-6 py-3 font-semibold
+                   bg-white text-noche border border-slate-300 shadow-sm
+                   hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300/50"
+                            >
+                                Cotiza tu paquete ahora
+                            </a>
                         </div>
                     </div>
                 </section>
+                <div className="">
+                    <ValesRecomp />
+                </div>
+                {/* Ventajas de nuestras soluciones */}
+                <section
+                    id="ventajas"
+                    aria-labelledby="ventajas-title"
+                    className="bg-noche py-16 sm:py-20 text-white"
+                >
+                    <div className="mx-auto max-w-7xl px-4 sm:px-6">
+                        <h2
+                            id="ventajas-title"
+                            className="text-center text-3xl sm:text-4xl md:text-5xl font-black text-mango"
+                        >
+                            Ventajas de nuestras soluciones
+                        </h2>
 
-                <section className="bg-[#f4f3e9]">
-                    <div className="mx-auto max-w-6xl px-4 py-16">
-                        <div className="text-center">
-                            <h2 className="text-3xl font-black text-cardeno sm:text-5xl">
-                                &iquest;Por que otorgar vales de despensa en tu empresa?
-                            </h2>
-                            <p className="mx-auto mt-4 max-w-3xl text-base text-noche/80 sm:text-lg">
-                                Apoyar a tu equipo con vales de despensa no solo mejora su calidad de vida, tambien impulsa la salud financiera de tu empresa. &iexcl;El beneficio es para todos!
-                            </p>
-                        </div>
-                        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                            {BENEFITS.map((benefit) => {
-                                const filled = benefit.variant === "filled";
-                                const cardClasses = filled
-                                    ? "bg-[#ffbf2b] border-[#f5a400] text-noche shadow-[0_12px_0_rgba(0,0,0,0.16)]"
-                                    : "bg-white border-noche/20 text-noche shadow-[0_10px_0_rgba(0,0,0,0.12)]";
-                                const descriptionClasses = filled ? "text-noche/90" : "text-noche/70";
-
-                                return (
-                                    <article
-                                        key={benefit.id}
-                                        className={`flex h-full flex-col gap-4 rounded-[1rem] border px-8 py-8 text-left transition-transform duration-200 hover:-translate-y-1 ${cardClasses}`}
-                                    >
-                                        <h3 className="text-lg font-extrabold leading-tight text-noche">
-                                            <span className="font-black">{benefit.id}.</span> {benefit.title}
-                                        </h3>
-                                        <p className={`text-sm leading-relaxed ${descriptionClasses}`}>
-                                            {benefit.description}
-                                        </p>
-                                    </article>
-                                );
-                            })}
-                        </div>
-                    </div>
-                </section>
-
-                <section className="bg-cardeno py-20">
-                    <div className="mx-auto max-w-6xl px-4">
-                        <div className="text-center text-white">
-                            <h2 className="text-3xl font-black sm:text-4xl">Compra tus vales de despensa en tres pasos</h2>
-                            <p className="mx-auto mt-3 max-w-3xl text-base text-white/90">Cotiza gratis en linea y en tan solo 3 pasos entrega vales de despensa a tus colaboradores. &iexcl;Mejora la salud financiera de tu equipo!
-                            </p>
-                        </div>
-                        <div className="mt-12 grid gap-6 md:grid-cols-3">
-                            {STEPS.map((step) => (
-                                <article
-                                    key={step.id}
-                                    className="relative flex h-full flex-col gap-5 rounded-[1.2rem] border border-black/10 bg-white px-9 pb-12 pt-14 text-left shadow-[0_12px_0_rgba(0,0,0,0.18)] transition-transform duration-200 hover:-translate-y-1"
-                                >
-                                    <div className="absolute top-6 right-6 flex h-12 w-12 items-center justify-center rounded-full border-4 border-white bg-[#7a28ff] text-base font-bold text-white shadow-[0_6px_0_rgba(0,0,0,0.2)]">
-                                        {step.id}
+                        <ul className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                            {[
+                                {
+                                    icon: controlFinancieroTotalSvg,
+                                    title: "Control financiero total",
+                                    desc: "Supervisa gastos en tiempo real.",
+                                },
+                                {
+                                    icon: flexibilidadSvg,
+                                    title: "Flexibilidad",
+                                    desc: "Asigna saldo en tiempo real a colaboradores o aliados.",
+                                },
+                                {
+                                    icon: eficienciaCorporativaSvg,
+                                    title: "Eficiencia operativa",
+                                    desc: "Reduce tiempos de reembolsos, facturación y manejo de efectivo.",
+                                },
+                                {
+                                    icon: coberturaNacionalSvg,
+                                    title: "Cobertura nacional",
+                                    desc: "Aceptadas en todo México gracias al sello CARNET."
+                                },
+                                {
+                                    icon: seguridadSvg,
+                                    title: "Seguridad",
+                                    desc: "Minimiza riesgos operativos en efectivo, inventarios y logística.",
+                                },
+                                {
+                                    icon: beneficiosFiscalesSvg,
+                                    title: "Beneficios fiscales",
+                                    desc: "Deducciones legales al 100% en la mayoría de los vales y tarjetas.",
+                                },
+                            ].map(({ icon, title, desc }) => (
+                                <li key={title} className="flex items-start gap-4 rounded-2xl p-2">
+                                    <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-cardeno/15 ring-1 ring-cardeno/30">
+                                        <img src={icon} alt="" width={40} height={40} loading="lazy" />
                                     </div>
-                                    <h3 className="text-lg font-extrabold text-noche">{step.title}</h3>
-                                    <p className="text-sm leading-relaxed text-noche/85">{step.description}</p>
-                                </article>
+                                    <div>
+                                        <p className="font-semibold text-white">
+                                            <span className="font-bold">{title}:</span>
+                                        </p>
+                                        <p className="mt-1 text-sm leading-relaxed text-white/80">{desc}</p>
+                                    </div>
+                                </li>
                             ))}
+                        </ul>
+                    </div>
+                </section>
+                <section
+                    id="como-funciona"
+                    aria-labelledby="cf-title"
+                    className="bg-[rgb(245,243,236)] py-16 sm:py-20 text-noche"
+                >
+                    <div className="mx-auto max-w-6xl px-4 sm:px-6">
+                        {/* Marco principal */}
+                        <div className="relative md:min-h-[38rem] overflow-hidden">
+                            {/* Líneas diagonales detrás (trazo fino y fijo) */}
+                            <svg
+                                aria-hidden="true"
+                                className="pointer-events-none absolute inset-0 z-0 text-cardeno/80"
+                                viewBox="0 0 100 100"
+                                preserveAspectRatio="none"
+                            >
+                                <line x1="78" y1="6" x2="50" y2="50" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+                                <line x1="94" y1="64" x2="50" y2="50" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+                                <line x1="22" y1="94" x2="50" y2="50" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+                                <line x1="6" y1="36" x2="50" y2="50" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+                            </svg>
+
+                            {/* Círculo central */}
+                            <div
+                                className="absolute left-1/2 top-1/2 z-10 grid h-64 w-64 -translate-x-1/2 -translate-y-1/2
+                   place-items-center rounded-full border-2 border-cardeno bg-white
+                   sm:h-72 sm:w-72"
+                            >
+                                <h2 id="cf-title" className="text-center text-3xl sm:text-4xl font-black text-cardeno">
+                                    ¿CÓMO<br />FUNCIONA?
+                                </h2>
+                            </div>
+
+                            {/* Pasos: apilados en móvil; alrededor en desktop */}
+                            <ol className="relative z-20 mt-10 grid gap-10 sm:mt-14 md:mt-0 md:absolute md:inset-0">
+                                {/* 1 – arriba */}
+                                <li className="flex items-start gap-3 md:absolute md:top-[8%] md:left-1/2 md:-translate-x-1/2 md:max-w-xs text-center">
+                                    <span className="relative grid h-10 w-10 place-items-center rounded-full bg-cardeno text-white font-bold">
+                                        1
+                                        <span className="pointer-events-none absolute -inset-1 rounded-full ring-2 ring-cardeno/60"></span>
+                                    </span>
+                                    <p className="text-sm sm:text-base">
+                                        Elige la tarjeta o vale según la necesidad de tu empresa.
+                                    </p>
+                                </li>
+
+                                {/* 2 – derecha */}
+                                <li className="flex items-start gap-3 md:absolute md:top-1/2 md:right-[8%] md:-translate-y-1/2 md:max-w-xs text-left">
+                                    <span className="relative grid h-10 w-10 place-items-center rounded-full bg-cardeno text-white font-bold">
+                                        2
+                                        <span className="pointer-events-none absolute -inset-1 rounded-full ring-2 ring-cardeno/60"></span>
+                                    </span>
+                                    <p className="text-sm sm:text-base">
+                                        Asigna el monto a tus colaboradores o aliados desde la plataforma.
+                                    </p>
+                                </li>
+
+                                {/* 3 – abajo */}
+                                <li className="flex items-start gap-3 md:absolute md:bottom-[8%] md:left-1/2 md:-translate-x-1/2 md:max-w-xs text-center">
+                                    <span className="relative grid h-10 w-10 place-items-center rounded-full bg-cardeno text-white font-bold">
+                                        3
+                                        <span className="pointer-events-none absolute -inset-1 rounded-full ring-2 ring-cardeno/60"></span>
+                                    </span>
+                                    <p className="text-sm sm:text-base">
+                                        Distribuye las tarjetas y permite su uso inmediato en cualquier comercio autorizado.
+                                    </p>
+                                </li>
+
+                                {/* 4 – izquierda */}
+                                <li className="flex items-start gap-3 md:absolute md:top-1/2 md:left-[8%] md:-translate-y-1/2 md:max-w-xs text-right">
+                                    <span className="relative grid h-10 w-10 place-items-center rounded-full bg-cardeno text-white font-bold">
+                                        4
+                                        <span className="pointer-events-none absolute -inset-1 rounded-full ring-2 ring-cardeno/60"></span>
+                                    </span>
+                                    <p className="text-sm sm:text-base">
+                                        Monitorea el uso y genera reportes fiscales desde la app o plataforma.
+                                    </p>
+                                </li>
+                            </ol>
+                        </div>
+
+                        {/* CTAs */}
+                        <div className="mt-16 md:mt-20 flex flex-col sm:flex-row items-center justify-center gap-4">
+                            <a
+                                href={`https://wa.me/528138646238?text=${encodeURIComponent("Hola, quiero cotizar vales corporativos.")}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold
+                   bg-mango text-noche shadow hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-mango/50"
+                            >
+                                Cotiza ahora
+                            </a>
+                            <a
+                                href={`https://wa.me/528138646238?text=${encodeURIComponent("Hola, me gustaría hablar con ustedes sobre sus vales.")}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center justify-center rounded-xl px-6 py-3 font-semibold
+                   bg-white text-noche border border-slate-300 shadow-sm hover:bg-slate-50
+                   focus:outline-none focus:ring-2 focus:ring-slate-300/50"
+                            >
+                                Habla con nosotros
+                            </a>
                         </div>
                     </div>
                 </section>
 
-                <section className="mx-auto max-w-6xl px-4 py-16">
-                    <div className="grid items-start gap-12 lg:grid-cols-2 xl:grid-cols-[1.1fr,0.9fr]">
-                        <div className="space-y-10">
-                            <h2 className="text-4xl font-black text-cardeno sm:text-5xl">&iquest;Por que vales?</h2>
-                            <div className="space-y-8">
-                                {REASONS.map((reason) => (
-                                    <article key={reason.title} className="flex items-start gap-6 text-left">
-                                        <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full border-4 border-white bg-cardeno shadow-[0_18px_0_rgba(0,0,0,0.18)]">
-                                            <img src={reason.icon} alt={`Icono ${reason.title.toLowerCase()}`} className="h-10 w-10" loading="lazy" />
-                                        </div>
-                                        <div className="space-y-1.5 max-w-lg">
-                                            <h3 className="text-lg font-extrabold uppercase tracking-[0.08em] text-noche">{reason.title}</h3>
-                                            <p className="text-base leading-relaxed text-noche/85">{reason.description}</p>
-                                        </div>
-                                    </article>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="flex items-start justify-center lg:justify-end lg:self-start">
-                            <img
-                                src={tablaVales}
-                                alt="Comparativo de vales versus efectivo"
-                                className="w-full max-w-xl drop-shadow-[0_32px_60px_rgba(97,37,221,0.28)]"
-                                loading="lazy"
-                            />
-                        </div>
-                    </div>
-                </section>
+
 
                 <section className="bg-noche py-16">
                     <div className="mx-auto max-w-7xl px-4">
