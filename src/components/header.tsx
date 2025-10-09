@@ -16,14 +16,29 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
     // --- Desktop: mantener abierto al bajar el mouse (delay al cerrar) ---
     const [openDesktopLabel, setOpenDesktopLabel] = useState<string | null>(null);
     const [closeTimer, setCloseTimer] = useState<number | null>(null);
+    const [openFlyoutLabel, setOpenFlyoutLabel] = useState<string | null>(null);
+    const [flyoutCloseTimer, setFlyoutCloseTimer] = useState<number | null>(null);
     const openMenu = (label: string) => {
         if (closeTimer) window.clearTimeout(closeTimer);
         setOpenDesktopLabel(label);
+        setOpenFlyoutLabel(null);
     };
     const scheduleClose = () => {
         if (closeTimer) window.clearTimeout(closeTimer);
-        const id = window.setTimeout(() => setOpenDesktopLabel(null), 180);
+        const id = window.setTimeout(() => {
+            setOpenDesktopLabel(null);
+            setOpenFlyoutLabel(null);
+        }, 180);
         setCloseTimer(id);
+    };
+    const openFlyout = (label: string) => {
+        if (flyoutCloseTimer) window.clearTimeout(flyoutCloseTimer);
+        setOpenFlyoutLabel(label);
+    };
+    const scheduleFlyoutClose = () => {
+        if (flyoutCloseTimer) window.clearTimeout(flyoutCloseTimer);
+        const id = window.setTimeout(() => setOpenFlyoutLabel(null), 160);
+        setFlyoutCloseTimer(id);
     };
 
     // Mobile: acordeones
@@ -49,6 +64,11 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
             if (closeTimer) window.clearTimeout(closeTimer);
         };
     }, [closeTimer]);
+    useEffect(() => {
+        return () => {
+            if (flyoutCloseTimer) window.clearTimeout(flyoutCloseTimer);
+        };
+    }, [flyoutCloseTimer]);
 
     useEffect(() => {
         if (variant !== "dark") return;
@@ -172,12 +192,17 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                                                 {item.children.map((c) =>
                                                     c.children ? (
                                                         // --- Fila "Vales" con mini-menú que SOLO se muestra al pasar el mouse por esta fila ---
-                                                        <li key={c.label} className="relative group">
+                                                        <li
+                                                            key={c.label}
+                                                            className="relative"
+                                                            onMouseEnter={() => openFlyout(c.label)}
+                                                            onMouseLeave={scheduleFlyoutClose}
+                                                        >
                                                             <a
                                                                 href={c.href ?? "#"}
                                                                 className={`${dropdownItemBase} ${isDarkVariant ? "text-white/95" : "text-black/90"
                                                                     } inline-flex items-center justify-between gap-4 w-full pr-6`}
-                                                            >
+                                                                >
                                                                 <span>{c.label}</span>
                                                                 <svg
                                                                     className="h-4 w-4"
@@ -191,7 +216,13 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                                                             </a>
 
                                                             {/* Flyout 2º nivel: HIDDEN por defecto, aparece SOLO en hover de esta fila */}
-                                                            <div className="absolute left-full top-0 ml-2 hidden group-hover:block z-[80]">
+                                                            <div
+                                                                className={`absolute left-full top-0 ml-2 z-[80] ${openFlyoutLabel === c.label ? "block" : "hidden"
+                                                                    }`}
+                                                                onMouseEnter={() => openFlyout(c.label)}
+                                                                onMouseLeave={scheduleFlyoutClose}
+                                                            >
+                                                                <div className="absolute -left-2 top-0 bottom-0 w-2" />
                                                                 <div className={dropdownPanel}>
                                                                     <ul className="py-2">
                                                                         {c.children.map((gc) => (

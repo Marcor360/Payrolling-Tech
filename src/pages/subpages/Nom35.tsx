@@ -171,73 +171,131 @@ export default function Nom35() {
                 {/* Contenido con las tarjetas de pasos */}
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
                     {/* Fila superior (1,2,3) */}
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
                         {/* 1 */}
                         <Reveal delay={0}>
-                            <div className="relative rounded-xl border border-mango bg-white p-5 shadow-sm transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+                            <div className="
+        relative rounded-xl border-2 border-mango/80 bg-white
+        p-5 md:p-6
+        min-h-[140px] md:min-h-[150px]
+        shadow-sm transition-transform duration-300 ease-out
+        hover:-translate-y-1 hover:shadow-lg
+        flex flex-col items-center justify-center text-center
+      ">
                                 <div className="absolute -left-3 -top-3 flex h-10 w-10 items-center justify-center rounded-full bg-mango font-bold text-noche ring-4 ring-white shadow-md">
                                     1
                                 </div>
-                                <h4 className="font-extrabold text-noche leading-tight">Diagnóstico organizacional</h4>
-                                <p className="mt-1 text-sm leading-relaxed text-noche/80">para identificar riesgos psicosociales.</p>
+                                <h4 className="font-extrabold text-noche leading-tight break-words">
+                                    Diagnóstico organizacional
+                                </h4>
+                                <p className="mt-2 text-sm leading-relaxed text-center text-noche/80 break-words">
+                                    para identificar riesgos psicosociales.
+                                </p>
                             </div>
                         </Reveal>
 
                         {/* 2 */}
                         <Reveal delay={100}>
-                            <div className="relative rounded-xl border border-mango bg-white p-5 shadow-sm transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+                            <div className="
+        relative rounded-xl border-2 border-mango/80 bg-white
+        p-5 md:p-6
+        min-h-[140px] md:min-h-[150px]
+        shadow-sm transition-transform duration-300 ease-out
+        hover:-translate-y-1 hover:shadow-lg
+        flex flex-col items-center justify-center text-center
+      ">
                                 <div className="absolute -left-3 -top-3 flex h-10 w-10 items-center justify-center rounded-full bg-mango font-bold text-noche ring-4 ring-white shadow-md">
                                     2
                                 </div>
-                                <h4 className="font-extrabold text-noche leading-tight">Aplicación de cuestionarios y evaluaciones oficiales</h4>
-                                <p className="mt-1 text-sm leading-relaxed text-noche/80">a los colaboradores.</p>
+                                <h4 className="font-extrabold text-noche leading-tight break-words">
+                                    Aplicación de cuestionarios y evaluaciones oficiales
+                                </h4>
+                                <p className="mt-2 text-sm leading-relaxed text-center text-noche/80 break-words">
+                                    a los colaboradores.
+                                </p>
                             </div>
                         </Reveal>
 
                         {/* 3 */}
                         <Reveal delay={200}>
-                            <div className="relative rounded-xl border border-mango bg-white p-5 shadow-sm transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+                            <div className="
+        relative rounded-xl border-2 border-mango/80 bg-white
+        p-5 md:p-6
+        min-h-[140px] md:min-h-[150px]
+        shadow-sm transition-transform duration-300 ease-out
+        hover:-translate-y-1 hover:shadow-lg
+        flex flex-col items-center justify-center text-center
+      ">
                                 <div className="absolute -left-3 -top-3 flex h-10 w-10 items-center justify-center rounded-full bg-mango font-bold text-noche ring-4 ring-white shadow-md">
                                     3
                                 </div>
-                                <h4 className="font-extrabold text-noche leading-tight">Elaboración de reportes y evidencias</h4>
-                                <p className="mt-1 text-sm leading-relaxed text-noche/80">que cumplen con los requisitos de la STPS.</p>
+                                <h4 className="font-extrabold text-noche leading-tight break-words">
+                                    Elaboración de reportes y evidencias
+                                </h4>
+                                <p className="mt-2 text-sm leading-relaxed text-center text-noche/80 break-words">
+                                    que cumplen con los requisitos de la STPS.
+                                </p>
                             </div>
                         </Reveal>
                     </div>
 
                     {/* Fila inferior (4,5) */}
-                    <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
                         {/* 4 */}
                         <Reveal delay={300}>
-                            <div className="relative rounded-xl border border-mango bg-white p-5 shadow-sm transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+                            <div className="
+        relative rounded-xl border-2 border-mango/80 bg-white
+        p-5 md:p-6
+        min-h-[140px] md:min-h-[150px]
+        shadow-sm transition-transform duration-300 ease-out
+        hover:-translate-y-1 hover:shadow-lg
+        flex flex-col items-center justify-center text-center
+      ">
                                 <div className="absolute -left-3 -top-3 flex h-10 w-10 items-center justify-center rounded-full bg-mango font-bold text-noche ring-4 ring-white shadow-md">
                                     4
                                 </div>
-                                <h4 className="font-extrabold text-noche leading-tight">Planes de acción y acompañamiento</h4>
-                                <p className="mt-1 text-sm leading-relaxed text-noche/80">para atender áreas de oportunidad detectadas.</p>
+                                <h4 className="font-extrabold text-noche leading-tight break-words">
+                                    Planes de acción y acompañamiento
+                                </h4>
+                                <p className="mt-2 text-sm leading-relaxed text-center text-noche/80 break-words">
+                                    para atender áreas de oportunidad detectadas.
+                                </p>
                             </div>
                         </Reveal>
 
                         {/* 5 */}
                         <Reveal delay={400}>
-                            <div className="relative rounded-xl border border-mango bg-white p-5 shadow-sm transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+                            <div className="
+        relative rounded-xl border-2 border-mango/80 bg-white
+        p-5 md:p-6
+        min-h-[140px] md:min-h-[150px]
+        shadow-sm transition-transform duration-300 ease-out
+        hover:-translate-y-1 hover:shadow-lg
+        flex flex-col items-center justify-center text-center
+      ">
                                 <div className="absolute -left-3 -top-3 flex h-10 w-10 items-center justify-center rounded-full bg-mango font-bold text-noche ring-4 ring-white shadow-md">
                                     5
                                 </div>
-                                <h4 className="font-extrabold text-noche leading-tight">Capacitación y comunicación interna</h4>
-                                <p className="mt-1 text-sm leading-relaxed text-noche/80">para promover un entorno de trabajo saludable.</p>
+                                <h4 className="font-extrabold text-noche leading-tight break-words">
+                                    Capacitación y comunicación interna
+                                </h4>
+                                <p className="mt-2 text-sm leading-relaxed text-center text-noche/80 break-words">
+                                    para promover un entorno de trabajo saludable.
+                                </p>
                             </div>
                         </Reveal>
                     </div>
 
-                    {/* Barra morada inferior */}
+                    {/* Recuadro morado inferior */}
                     <Reveal delay={200} className="mt-8 flex justify-center">
-                        <p className="max-w-5xl rounded-2xl bg-cardeno px-6 py-4 text-center text-sm leading-relaxed text-white shadow-lg">
-                            De esta manera, tu empresa cumple con la normativa de forma sencilla y eficiente, protege a sus colaboradores y te posiciona como un empleador responsable y comprometido con el bienestar laboral.
-                        </p>
+                        <div className="w-full max-w-5xl rounded-2xl bg-cardeno px-6 py-5 md:px-8 md:py-6 shadow-lg">
+                            <p className="text-white leading-relaxed text-center md:text-justify">
+                                De esta manera, tu empresa cumple con la normativa de forma sencilla y eficiente, protege a sus colaboradores y te posiciona como un empleador responsable y comprometido con el bienestar laboral.
+                            </p>
+                        </div>
                     </Reveal>
                 </div>
+
             </section>
 
             {/* Advertencia */}

@@ -222,7 +222,7 @@ a {
 
 .whatsapp-float {
     position: fixed;
-    bottom: 24px;
+    bottom: 96px;
     right: 22px;
     display: inline-flex;
     align-items: center;
@@ -249,4 +249,18 @@ a {
 .whatsapp-float svg {
     width: 28px;
     height: 28px;
+}
+
+@media (max-width: 639px) {
+    .whatsapp-float {
+        bottom: 88px;
+        right: 18px;
+        width: 56px;
+        height: 56px;
+    }
+
+    .whatsapp-float svg {
+        width: 26px;
+        height: 26px;
+    }
 }
