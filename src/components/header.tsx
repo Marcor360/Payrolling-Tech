@@ -105,15 +105,16 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                     label: "Vales",
                     href: "/vales",
                     children: [
-                        { href: "/gastos", label: "Gastos" },
-                        { href: "/despensa", label: "Despensa" },
-                        { href: "/gasolina", label: "Gasolina" },
-                        { href: "/incentivos", label: "Incentivos" },
+                        { href: "/vales-despensa", label: "Despensa" },
+                        { href: "/vales-gasolina", label: "Gasolina" },
+                        { href: "/vales-gastos", label: "Gastos" },
+                        { href: "/vales-incentivos", label: "Incentivos" },
                     ],
                 },
             ],
         },
         { href: "/#contacto", label: "Contacto" },
+        /*{ href: "/blog", label: "Blog" },*/
         { href: "/Login", label: "Login" },
     ];
 
@@ -202,7 +203,7 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                                                                 href={c.href ?? "#"}
                                                                 className={`${dropdownItemBase} ${isDarkVariant ? "text-white/95" : "text-black/90"
                                                                     } inline-flex items-center justify-between gap-4 w-full pr-6`}
-                                                                >
+                                                            >
                                                                 <span>{c.label}</span>
                                                                 <svg
                                                                     className="h-4 w-4"

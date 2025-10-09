@@ -11,8 +11,9 @@ import ValesDespensa from './pages/subpages/ValesDespensa'
 import ValesGasolina from './pages/subpages/ValesGasolina'
 import ValesGastos from './pages/subpages/ValesGastos'
 import ValesInsentivos from './pages/subpages/ValesInsentivos'
+import Blog from './pages/subpages/Blog/blog'
+// Components
 import WhatsAppFloatingButton from './components/WhatsAppFloatingButton'
-import FlowiseChatbot from './components/chatbot'
 
 function App() {
   return (
@@ -29,9 +30,9 @@ function App() {
         <Route path='/vales-gasolina' element={<ValesGasolina />} />
         <Route path='/vales-gastos' element={<ValesGastos />} />
         <Route path='/vales-incentivos' element={<ValesInsentivos />} />
+        <Route path='/blog' element={<Blog />} />
       </Routes>
       <WhatsAppFloatingButton />
-      <FlowiseChatbot />
     </>
   )
 }
