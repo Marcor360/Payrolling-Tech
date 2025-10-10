@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 // IMÁGENES (frente)
 import ValesDesp from "/img/img-tarjetas/Despensa_frontal.webp";
@@ -18,10 +19,8 @@ type Producto = {
     titulo: string[];
     frontImg: string;
     backImg: string;
-    waMsg: string;
+    route: string;
 };
-
-const WHATSAPP_PHONE = "528138646238";
 
 const PRODUCTOS: Producto[] = [
     {
@@ -29,32 +28,28 @@ const PRODUCTOS: Producto[] = [
         titulo: ["Tarjetas de", "recompensas", "e incentivos"],
         frontImg: ValesRecomp,
         backImg: valeRecompensasVuelta,
-        waMsg:
-            "Hola, me interesan *tarjetas de recompensas e incentivos*. ¿Me comparten más información?",
+        route: "/vales-incentivos",
     },
     {
         id: "despensa",
         titulo: ["Vales de", "despensa"],
         frontImg: ValesDesp,
         backImg: valeDespensaVuelta,
-        waMsg:
-            "Hola, quiero información sobre *vales de despensa* y su deducibilidad.",
+        route: "/vales-despensa",
     },
     {
         id: "gasolina",
         titulo: ["Vales de", "gasolina"],
         frontImg: ValesGas,
         backImg: valeGasolinaVuelta,
-        waMsg:
-            "Hola, me interesan los *vales de gasolina*. ¿Pueden cotizarme para mi empresa?",
+        route: "/vales-gasolina",
     },
     {
         id: "gastos-corporativos",
         titulo: ["Tarjeta de", "gastos", "corporativos"],
         frontImg: ValesGasCorp,
         backImg: valeGastosCorporativosVuelta,
-        waMsg:
-            "Hola, busco *tarjetas de gastos corporativos*. ¿Me ayudan con opciones y costos?",
+        route: "/vales-gastos",
     },
 ];
 
@@ -76,12 +71,10 @@ export default function TarjetaVales() {
 // ===== Subcomponente: Card con flip =====
 function ProductoFlipCard({ data }: { data: Producto }) {
     const [flipped, setFlipped] = useState(false);
-    const waHref = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(
-        data.waMsg
-    )}`;
 
     return (
         <article
+            id={data.id}
             className="group relative h-[250px] sm:h-[250px] md:h-[270px] lg:h-[400px] [perspective:720px]"
             onClick={() => setFlipped((v) => !v)} // tap en móvil
             role="button"
@@ -120,15 +113,14 @@ function ProductoFlipCard({ data }: { data: Producto }) {
                         <ul className="px-5 py-6 sm:px-6 sm:py-7 space-y-2.5 text-white text-sm sm:text-[15px] leading-relaxed">
                         </ul>
 
-                        <a
-                            href={waHref}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <Link
+                            to={data.route}
+                            onClick={(event) => event.stopPropagation()}
                             className="mt-auto block w-full rounded-b-2xl border-t border-white/25 bg-white/15 py-3.5 text-center font-semibold text-white backdrop-blur hover:bg-white/25 focus:outline-none focus:ring-2 focus:ring-white/40"
-                            aria-label={`Conoce más sobre ${data.id} por WhatsApp`}
+                            aria-label={`Conoce más sobre ${data.titulo.join(" ")}`}
                         >
                             Conoce más
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>
