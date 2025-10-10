@@ -82,7 +82,7 @@ export default function ValesDespensa() {
         <div className="min-h-screen text-noche">
             <Headers variant="dark" />
             <main className="flex flex-col gap-24 pb-0">
-                <section className="bg-[#f4f3e9]">
+                <section>
                     <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-16">
                         <div className="absolute inset-x-0 top-12 hidden h-[420px] rounded-[3rem] bg-gradient-to-r from-[#f6ecff] via-white to-[#fff6e1] blur-3xl lg:block" aria-hidden="true" />
                         <div className="relative grid gap-12 lg:[grid-template-columns:1.05fr_0.95fr] lg:items-center">
