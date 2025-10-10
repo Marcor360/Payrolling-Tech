@@ -80,14 +80,6 @@ export default function ValesIncentivos() {
                         <div className="relative grid gap-12 lg:[grid-template-columns:1.05fr_0.95fr] lg:items-center">
                             {/* Copy */}
                             <div className="flex flex-col gap-6">
-                                <p
-                                    data-ani
-                                    className="opacity-0 translate-y-3 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]
-                             text-sm font-semibold tracking-wide text-cardeno/80"
-                                >
-                                    Tarjetas de recompensas, incentivos o regalos
-                                </p>
-
                                 <h1
                                     data-ani
                                     style={{ transitionDelay: "80ms" }}

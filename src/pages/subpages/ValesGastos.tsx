@@ -11,12 +11,6 @@ type Benefit = {
     description: string;
 };
 
-type Step = {
-    id: string;
-    title: string;
-    description: string;
-};
-
 type UseCase = {
     id: string;
     title: string;
@@ -87,27 +81,6 @@ const USE_CASES: UseCase[] = [
     },
 ];
 
-const STEPS: Step[] = [
-    {
-        id: "1",
-        title: "Cotiza en línea",
-        description:
-            "Cotiza gratis y solicita tus tarjetas corporativas sin fricción en pocos minutos.",
-    },
-    {
-        id: "2",
-        title: "Envía tus documentos",
-        description:
-            "Recibirás por correo la lista de documentos necesarios para comenzar.",
-    },
-    {
-        id: "3",
-        title: "Activa tu tarjeta corporativa",
-        description:
-            "Recibe las tarjetas, entrégalas a tu equipo y actívalas al instante desde la app.",
-    },
-];
-
 export default function ValesGastos() {
     const pageRef = useRef<HTMLDivElement>(null);
 
@@ -160,14 +133,6 @@ export default function ValesGastos() {
                         <div className="relative grid gap-12 lg:[grid-template-columns:1.05fr_0.95fr] lg:items-center">
                             {/* Copy */}
                             <div className="flex flex-col gap-6">
-                                <p
-                                    data-ani
-                                    className="opacity-0 translate-y-3 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]
-                             text-sm font-semibold tracking-wide text-cardeno/80"
-                                >
-                                    Tarjeta de vales de gastos corporativos
-                                </p>
-
                                 <h1
                                     data-ani
                                     style={{ transitionDelay: "80ms" }}

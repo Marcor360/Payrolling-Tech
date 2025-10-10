@@ -14,10 +14,12 @@ import ValesInsentivos from './pages/subpages/ValesInsentivos'
 import Blog from './pages/subpages/Blog/blog'
 // Components
 import WhatsAppFloatingButton from './components/WhatsAppFloatingButton'
+import ScrollToTop from './components/ScrollToTop'
 
 function App() {
   return (
     <>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/nominas" element={<Nominas />} />
