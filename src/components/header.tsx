@@ -114,7 +114,7 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
             ],
         },
         { href: "/#contacto", label: "Contacto" },
-        /*{ href: "/blog", label: "Blog" },*/
+        { href: "/blog", label: "Blog" },
         { href: "/Login", label: "Login" },
     ];
 
