@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import Headers from "../../../components/header.tsx";
 import Footer from "../../../components/footer.tsx";
@@ -10,9 +10,9 @@ type Category = { id: string; label: string; enabled: boolean };
 const CATEGORIES: Category[] = [
     { id: "all", label: "Ver todos", enabled: true },
     { id: "beneficios", label: "Beneficios", enabled: true },
-    { id: "reclutamiento", label: "Reclutamiento", enabled: false },
-    { id: "vales", label: "Vales", enabled: false },
-    { id: "nomina", label: "Nómina", enabled: false },
+    { id: "reclutamiento", label: "Reclutamiento", enabled: true },
+    { id: "vales", label: "Vales e incentivos", enabled: true },
+    { id: "nomina", label: "Nómina", enabled: true },
     { id: "nom35", label: "Seguros NOM. 35", enabled: false },
 ];
 
@@ -31,29 +31,117 @@ type Post = {
 
 const POSTS: Post[] = [
     {
-        id: "beneficios-atraccion-de-personal",
+        id: "beneficios-seguros-vida-corporativos",
         tag: "Beneficios",
         categoryId: "beneficios",
-        title:
-            "Cómo atraer talento: Estrategias para construir equipos sólidos y exitosos",
+        title: "Seguros de vida corporativos en México: qué debe saber tu empresa",
         excerpt:
-            "En un entorno laboral cada vez más competitivo, atraer y retener talento se ha convertido en uno de los mayores desafíos para las empresas. Ya no se trata solo de llenar vacantes, sino de construir equipos comprometidos, motivados y alineados con los objetivos del negocio.",
+            "Descubre cómo un seguro de vida corporativo refuerza la propuesta de valor al empleado y qué factores evaluar antes de contratarlo.",
         image: Img1,
-        alt: "Personas celebrando en oficina",
-        path: "/blog/beneficios/atraccion-de-personal",
+        alt: "Equipo corporativo celebrando resultados",
+        path: "/blog/beneficios/seguros-vida-corporativos",
+    },
+    {
+        id: "beneficios-seguro-vida-retencion-talento",
+        tag: "Beneficios",
+        categoryId: "beneficios",
+        title: "Beneficios del seguro de vida para empleados y retención de talento",
+        excerpt:
+            "Aprovecha el seguro de vida como diferenciador de bienestar y retención con recomendaciones prácticas para comunicarlo a tu equipo.",
+        image: Img1,
+        alt: "Empleado recibiendo asesoría sobre beneficios corporativos",
+        path: "/blog/beneficios/seguro-vida-retencion-talento",
+    },
+    {
+        id: "reclutamiento-estrategias-efectivas-mexico",
+        tag: "Reclutamiento",
+        categoryId: "reclutamiento",
+        title: "Reclutamiento de personal en México: estrategias efectivas para empresas",
+        excerpt:
+            "Estrategias actuales para acelerar la cobertura de vacantes combinando análisis de perfiles, canales digitales y métricas accionables.",
+        image: Img1,
+        alt: "Reunión de equipo de recursos humanos revisando candidatos",
+        path: "/blog/reclutamiento/estrategias-efectivas-mexico",
+    },
+    {
+        id: "reclutamiento-seleccion-candidato-ideal",
+        tag: "Selección",
+        categoryId: "reclutamiento",
+        title: "Selección de personal eficiente: cómo elegir al candidato ideal en México",
+        excerpt:
+            "Guía práctica para definir perfiles, estructurar entrevistas y evaluar objetivamente a cada candidato para reducir la rotación.",
+        image: Img1,
+        alt: "Entrevista de trabajo en sala de juntas",
+        path: "/blog/reclutamiento/seleccion-candidato-ideal",
+    },
+    {
+        id: "reclutamiento-tendencias-digitales-2025",
+        tag: "Tendencias",
+        categoryId: "reclutamiento",
+        title: "Tendencias del reclutamiento digital en México 2025",
+        excerpt:
+            "Panorama de automatización, IA y analítica aplicada al reclutamiento para atraer talento con mejores experiencias en 2025.",
+        image: Img1,
+        alt: "Reclutador usando herramientas digitales",
+        path: "/blog/reclutamiento/tendencias-digitales-2025",
+    },
+    {
+        id: "vales-incentivo-guia-legal-fiscal",
+        tag: "Beneficios",
+        categoryId: "vales",
+        title: "Vales de incentivo para empleados en México: guía legal y fiscal",
+        excerpt:
+            "Lineamientos fiscales y operativos para implementar vales de incentivo sin incrementar la carga salarial ni perder control.",
+        image: Img1,
+        alt: "Tarjetas de beneficios corporativos sobre escritorio",
+        path: "/blog/vales/vales-incentivo-guia-legal",
+    },
+    {
+        id: "vales-bonos-incentivos",
+        tag: "Incentivos",
+        categoryId: "vales",
+        title: "Bonos e incentivos corporativos: cómo estructurarlos con vales",
+        excerpt:
+            "Diseña esquemas de bonos con vales que impulsen resultados, mantengan control financiero y eleven la motivación del equipo.",
+        image: Img1,
+        alt: "Gerente entregando bono a colaborador",
+        path: "/blog/vales/bonos-incentivos-con-vales",
+    },
+    {
+        id: "vales-digitales-futuro-incentivos",
+        tag: "Incentivos",
+        categoryId: "vales",
+        title: "Vales digitales en México: el futuro de los incentivos laborales",
+        excerpt:
+            "Explora cómo los vales digitales integran omnicanalidad, gamificación y analítica para reconocer al talento en tiempo real.",
+        image: Img1,
+        alt: "Empleado usando tarjeta de vales digital",
+        path: "/blog/vales/vales-digitales-futuro",
+    },
+    {
+        id: "nomina-tendencias-maquila-2025",
+        tag: "Nómina",
+        categoryId: "nomina",
+        title: "Tendencias tecnológicas en maquila de nómina en México 2025",
+        excerpt:
+            "Conoce las tecnologías que modernizan la maquila de nómina: nube, IA y automatización para asegurar cumplimiento y precisión.",
+        image: Img1,
+        alt: "Especialista de nómina analizando reportes digitales",
+        path: "/blog/nomina/tendencias-maquila-2025",
     },
 ];
 
 function BlogCard({ post }: { post: Post }) {
     const { tag, title, excerpt, image, alt, path } = post;
+    const thumbnail = image ?? Img1;
     return (
         <article className="rounded-2xl p-4 md:p-6 lg:p-7 border-2 border-noche/20 bg-fondo-cremita">
-            {/* GRID: dos columnas desde md y altura igualada (items-stretch) */}
+            {/* GRID: dos columnas desde md y altura igualada */}
             <div className="grid md:[grid-template-columns:minmax(0,420px)_1fr] items-stretch gap-4 md:gap-6">
-                {/* IMAGEN: ocupa casi toda la altura del artículo */}
+                {/* IMAGEN */}
                 <div className="relative self-stretch w-full min-h-[220px] md:min-h-[380px] lg:min-h-[460px] overflow-hidden rounded-2xl bg-blanco border border-cardeno/20">
                     <img
-                        src={image}
+                        src={thumbnail}
                         alt={alt}
                         className="absolute inset-0 h-full w-full object-cover"
                         loading="lazy"
@@ -61,22 +149,22 @@ function BlogCard({ post }: { post: Post }) {
                     />
                 </div>
 
-                {/* TEXTO */}
+                {/* TEXTO (siempre centrado) */}
                 <div className="md:pl-2 flex flex-col">
-                    <span className="text-cardeno font-bold text-sm md:text-base block text-center md:text-left mb-2">
+                    <span className="text-cardeno font-bold text-sm md:text-base block text-center mb-2">
                         {tag}
                     </span>
 
-                    <h3 className="text-noche font-extrabold text-xl sm:text-2xl leading-snug text-center md:text-left">
+                    <h3 className="text-noche font-extrabold text-xl sm:text-2xl leading-snug text-center">
                         {title}
                     </h3>
 
-                    <p className="mt-3 text-noche/90 text-base leading-relaxed text-center md:[text-align:justify]">
+                    <p className="mt-3 text-noche/90 text-base leading-relaxed text-center">
                         {excerpt}
                     </p>
 
-                    {/* CTA */}
-                    <div className="mt-4 md:mt-6 flex justify-center md:justify-start">
+                    {/* CTA centrado */}
+                    <div className="mt-4 md:mt-6 flex justify-center">
                         <Link
                             to={path}
                             className="group relative inline-flex items-center rounded-xl border-2 border-cardeno px-5 py-3 font-semibold text-cardeno bg-blanco"
@@ -96,14 +184,20 @@ function BlogCard({ post }: { post: Post }) {
 }
 
 export default function Blog() {
-    const [showMoreMobile, setShowMoreMobile] = useState(false);
-    const [selectedCategory, setSelectedCategory] =
-        useState<Category["id"]>("all");
+    const [selectedCategory, setSelectedCategory] = useState<Category["id"]>("all");
+    const [showAll, setShowAll] = useState(false);
+    const INITIAL_VISIBLE = 3;
 
     const postsToDisplay = useMemo(() => {
         if (selectedCategory === "all") return POSTS;
         return POSTS.filter((post) => post.categoryId === selectedCategory);
     }, [selectedCategory]);
+
+    useEffect(() => {
+        setShowAll(false);
+    }, [selectedCategory]);
+
+    const visiblePosts = showAll ? postsToDisplay : postsToDisplay.slice(0, INITIAL_VISIBLE);
 
     return (
         <>
@@ -117,13 +211,13 @@ export default function Blog() {
                     </h1>
 
                     <div className="mt-5 space-y-2 md:mx-auto md:max-w-3xl lg:max-w-4xl">
-                        <p className="text-noche text-base sm:text-lg leading-relaxed text-center md:[text-align:justify] text-balance">
+                        <p className="text-noche text-base sm:text-lg leading-relaxed text-center text-balance">
                             <span className="font-semibold">
                                 Descubre las mejores prácticas en gestión del talento, liderazgo
                                 y cultura organizacional
                             </span>
                         </p>
-                        <p className="text-noche text-base sm:text-lg leading-relaxed text-center md:[text-align:justify] text-balance">
+                        <p className="text-noche text-base sm:text-lg leading-relaxed text-center text-balance">
                             que impulsan el <span className="font-semibold">bienestar y compromiso</span> de tus colaboradores,
                             fortaleciendo el <span className="font-semibold">crecimiento de tu empresa.</span>
                         </p>
@@ -136,15 +230,18 @@ export default function Blog() {
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:[grid-template-columns:300px_1fr] gap-6 lg:gap-8">
                     {/* Sidebar (solo desktop) */}
                     <aside className="hidden lg:block">
-                        <h2 className="text-cardeno text-3xl md:text-4xl font-extrabold mb-3">
+                        <h2 className="text-cardeno text-3xl md:text-4xl font-extrabold mb-3 text-center">
                             Categorías
                         </h2>
 
-                        <nav aria-label="Categorías" className="overflow-hidden rounded-2xl border-2 border-noche/20 bg-blanco">
+                        <nav
+                            aria-label="Categorías"
+                            className="overflow-hidden rounded-2xl border-2 border-noche/20 bg-blanco text-center"
+                        >
                             <button
                                 type="button"
                                 onClick={() => setSelectedCategory("all")}
-                                className={`block w-full px-5 py-4 text-left font-semibold transition-colors ${selectedCategory === "all"
+                                className={`block w-full px-5 py-4 font-semibold transition-colors ${selectedCategory === "all"
                                     ? "bg-noche text-blanco"
                                     : "hover:bg-fondo-cremita/70"
                                     }`}
@@ -157,7 +254,7 @@ export default function Blog() {
                                     key={c.id}
                                     type="button"
                                     onClick={() => setSelectedCategory(c.id)}
-                                    className={`block w-full px-5 py-4 border-t border-noche/20 text-left transition-colors ${selectedCategory === c.id
+                                    className={`block w-full px-5 py-4 border-t border-noche/20 transition-colors ${selectedCategory === c.id
                                         ? "bg-fondo-cremita/70 font-semibold text-noche"
                                         : "hover:bg-fondo-cremita/70"
                                         }`}
@@ -171,14 +268,9 @@ export default function Blog() {
 
                     {/* Cards */}
                     <div className="space-y-6 md:space-y-8">
-                        {postsToDisplay.map((post, index) => {
-                            const hiddenOnMobile = !showMoreMobile && index > 1;
-                            return (
-                                <div key={post.id} className={hiddenOnMobile ? "hidden md:block" : ""}>
-                                    <BlogCard post={post} />
-                                </div>
-                            );
-                        })}
+                        {visiblePosts.map((post) => (
+                            <BlogCard key={post.id} post={post} />
+                        ))}
 
                         {postsToDisplay.length === 0 && (
                             <div className="rounded-xl border-2 border-dashed border-cardeno/40 bg-blanco px-6 py-10 text-center text-noche">
@@ -186,16 +278,16 @@ export default function Blog() {
                             </div>
                         )}
 
-                        {/* Botón Ver más SOLO mobile (si hubiera > 2 posts) */}
-                        {postsToDisplay.length > 2 && (
-                            <div className="md:hidden flex justify-center">
+                        {/* Botón Ver más */}
+                        {postsToDisplay.length > INITIAL_VISIBLE && (
+                            <div className="flex justify-center">
                                 <button
                                     type="button"
-                                    onClick={() => setShowMoreMobile((v) => !v)}
+                                    onClick={() => setShowAll((prev) => !prev)}
                                     className="w-full sm:w-auto rounded-xl bg-mango px-7 py-3 text-noche font-extrabold shadow-sm border border-noche/10"
-                                    aria-expanded={showMoreMobile}
+                                    aria-expanded={showAll}
                                 >
-                                    {showMoreMobile ? "Ver menos" : "Ver más"}
+                                    {showAll ? "Ver menos" : "Ver más"}
                                 </button>
                             </div>
                         )}
@@ -207,3 +299,4 @@ export default function Blog() {
         </>
     );
 }
+

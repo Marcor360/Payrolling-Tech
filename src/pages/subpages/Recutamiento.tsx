@@ -117,24 +117,29 @@ export default function Reclutamiento() {
       <Headers variant="dark" />
       <main className="bg-fondo-cremita text-black">
         <section className="mx-auto max-w-6xl px-4 pb-32 pt-24 sm:pt-28 lg:pb-36">
+          {/* H1 arriba del grid, corrido y grande */}
+          <header className="mb-10 sm:mb-12">
+            <h1
+              className="text-cardeno font-black tracking-tight leading-[0.95] text-center lg:text-left
+                 text-4xl sm:text-6xl lg:text-[56px] lg:whitespace-nowrap"
+            >
+              Reclutamiento y Selección de Personal
+            </h1>
+          </header>
+
           <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div className="text-center lg:text-left">
-              <h1 className="text-4xl font-black leading-tight text-cardeno sm:text-5xl lg:text-[56px] lg:leading-[1] text-center lg:text-left">
-                Reclutamiento y{" "}
-                <br className="hidden sm:block" />
-                Selección de{" "}
-                <br className="hidden sm:block" />
-                Personal
-              </h1>
-              <p className="mt-5 text-xl font-semibold italic text-center lg:text-left">
+              {/* Subtítulo más grande */}
+              <p className="mt-1 text-2xl sm:text-3xl font-semibold italic text-center lg:text-left">
                 Eficiente, Efectivo y sin complicaciones.
               </p>
 
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-sm font-semibold lg:justify-start">
+              {/* Tags un poco más grandes */}
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
                 {HERO_TAGS.map((tag) => (
                   <span
                     key={tag}
-                    className="inline-flex items-center gap-2 rounded-full px-4 py-2"
+                    className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-base sm:text-[17px] font-semibold"
                   >
                     <span
                       className="flex h-5 w-5 items-center justify-center rounded-full bg-noche text-[11px] font-bold text-white"
@@ -147,8 +152,9 @@ export default function Reclutamiento() {
                 ))}
               </div>
 
+              {/* Descripción más grande */}
               {HERO_DESCRIPTION && (
-                <div className="mt-3 flex max-w-2xl items-start justify-center gap-3 text-base font-medium lg:justify-start">
+                <div className="mt-3 flex max-w-2xl items-start justify-center gap-3 text-lg sm:text-xl font-medium lg:justify-start">
                   <span
                     className="mt-1 flex h-5 w-5 items-center justify-center rounded-full bg-noche text-[11px] font-bold text-white"
                     aria-hidden="true"
@@ -159,6 +165,7 @@ export default function Reclutamiento() {
                 </div>
               )}
 
+              {/* CTAs iguales */}
               <div className="mt-8 flex flex-wrap justify-center gap-4 lg:justify-start">
                 <a
                   href="#contacto"
@@ -174,14 +181,17 @@ export default function Reclutamiento() {
                 </a>
               </div>
 
+              {/* “Propuesta de valor” — ligerísimo ajuste de tamaños */}
               <div className="mt-10 max-w-2xl text-center lg:mx-0 lg:text-left">
-                <h2 className="text-2xl font-extrabold text-cardeno">La propuesta de valor</h2>
-                <p className="mt-3 text-base leading-relaxed text-black">
-                  Combinamos expertos locales, tecnología de búsqueda y procesos estandarizados de selección para darte más velocidad, mejor calidad y menor rotación por contratación.
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-cardeno">La propuesta de valor</h2>
+                <p className="mt-3 text-base sm:text-lg leading-relaxed text-black">
+                  Combinamos expertos locales, tecnología de búsqueda y procesos estandarizados de selección para darte más
+                  velocidad, mejor calidad y menor rotación por contratación.
                 </p>
               </div>
             </div>
 
+            {/* Columna imagen + métricas sin cambios funcionales */}
             <div className="flex justify-center lg:justify-end">
               <div className="relative w-full max-w-[540px]">
                 <div className="overflow-hidden rounded-[48px] shadow-xl shadow-black/10">
@@ -192,6 +202,7 @@ export default function Reclutamiento() {
                     loading="lazy"
                   />
                 </div>
+
                 <div className="relative z-10 -mt-20 flex flex-col items-center gap-3 px-4 sm:-mt-16 sm:flex-row sm:items-stretch sm:justify-center lg:-mt-24 lg:gap-6 lg:justify-between">
                   {HERO_METRICS.map((metric) => {
                     const titleClass = metric.titleClass ?? "text-black";
@@ -202,7 +213,8 @@ export default function Reclutamiento() {
                     return (
                       <article
                         key={metric.title}
-                        className="relative w-full max-w-[220px] overflow-hidden rounded-3xl shadow-lg shadow-black/15 sm:flex-1 sm:max-w-none md:max-w-[240px] lg:max-w-[300px] min-h-[140px] sm:min-h-[160px] lg:min-h-[190px]"
+                        className="relative w-full max-w-[220px] overflow-hidden rounded-3xl shadow-lg shadow-black/15
+                           sm:flex-1 sm:max-w-none md:max-w-[240px] lg:max-w-[300px] min-h-[140px] sm:min-h-[160px] lg:min-h-[190px]"
                       >
                         <img
                           src={metric.image}
@@ -212,9 +224,7 @@ export default function Reclutamiento() {
                         />
                         <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 py-4 text-center sm:gap-3 sm:px-7 sm:py-5 lg:gap-2 lg:px-8 lg:py-5">
                           <p className={[baseTitleClass, titleClass].join(" ")}>{metric.title}</p>
-                          <p className={[baseCaptionClass, captionClass].join(" ")}>
-                            {metric.caption}
-                          </p>
+                          <p className={[baseCaptionClass, captionClass].join(" ")}>{metric.caption}</p>
                         </div>
                       </article>
                     );
@@ -224,6 +234,7 @@ export default function Reclutamiento() {
             </div>
           </div>
         </section>
+
         <section className="mx-auto max-w-6xl px-4 pb-16">
           <div className="grid gap-10 lg:grid-cols-2">
             <div className="rounded-3xl bg-white/80 p-8 shadow-sm shadow-black/10">

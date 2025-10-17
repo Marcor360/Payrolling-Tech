@@ -12,7 +12,15 @@ import ValesGasolina from './pages/subpages/ValesGasolina'
 import ValesGastos from './pages/subpages/ValesGastos'
 import ValesInsentivos from './pages/subpages/ValesInsentivos'
 import Blog from './pages/subpages/Blog/blog'
-import AtraccionDePersonal from './pages/subpages/Blog/Beneficios/AtracciondePersonal'
+import BlogBeneficiosB1 from './pages/subpages/Blog/Beneficios/B1'
+import BlogBeneficiosB2 from './pages/subpages/Blog/Beneficios/B2'
+import BlogReclutamientoR1 from './pages/subpages/Blog/Reclutamiento/R1'
+import BlogReclutamientoR2 from './pages/subpages/Blog/Reclutamiento/R2'
+import BlogReclutamientoR3 from './pages/subpages/Blog/Reclutamiento/R3'
+import BlogValesV1 from './pages/subpages/Blog/Vales/V1'
+import BlogValesV2 from './pages/subpages/Blog/Vales/V2'
+import BlogValesDigitales from './pages/subpages/Blog/Nomina/N1'
+import BlogNominaN2 from './pages/subpages/Blog/Nomina/N2'
 // Components
 import WhatsAppFloatingButton from './components/WhatsAppFloatingButton'
 import ScrollToTop from './components/ScrollToTop'
@@ -34,7 +42,15 @@ function App() {
         <Route path='/vales-gastos' element={<ValesGastos />} />
         <Route path='/vales-incentivos' element={<ValesInsentivos />} />
         <Route path='/blog' element={<Blog />} />
-        <Route path='/blog/beneficios/atraccion-de-personal' element={<AtraccionDePersonal />} />
+        <Route path='/blog/beneficios/seguros-vida-corporativos' element={<BlogBeneficiosB1 />} />
+        <Route path='/blog/beneficios/seguro-vida-retencion-talento' element={<BlogBeneficiosB2 />} />
+        <Route path='/blog/reclutamiento/estrategias-efectivas-mexico' element={<BlogReclutamientoR1 />} />
+        <Route path='/blog/reclutamiento/seleccion-candidato-ideal' element={<BlogReclutamientoR2 />} />
+        <Route path='/blog/reclutamiento/tendencias-digitales-2025' element={<BlogReclutamientoR3 />} />
+        <Route path='/blog/vales/vales-incentivo-guia-legal' element={<BlogValesV1 />} />
+        <Route path='/blog/vales/bonos-incentivos-con-vales' element={<BlogValesV2 />} />
+        <Route path='/blog/vales/vales-digitales-futuro' element={<BlogValesDigitales />} />
+        <Route path='/blog/nomina/tendencias-maquila-2025' element={<BlogNominaN2 />} />
       </Routes>
       <WhatsAppFloatingButton />
     </>
