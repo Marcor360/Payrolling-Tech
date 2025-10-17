@@ -12,6 +12,7 @@ import ValesGasolina from './pages/subpages/ValesGasolina'
 import ValesGastos from './pages/subpages/ValesGastos'
 import ValesInsentivos from './pages/subpages/ValesInsentivos'
 import Blog from './pages/subpages/Blog/blog'
+import AtraccionDePersonal from './pages/subpages/Blog/Beneficios/AtracciondePersonal'
 // Components
 import WhatsAppFloatingButton from './components/WhatsAppFloatingButton'
 import ScrollToTop from './components/ScrollToTop'
@@ -33,6 +34,7 @@ function App() {
         <Route path='/vales-gastos' element={<ValesGastos />} />
         <Route path='/vales-incentivos' element={<ValesInsentivos />} />
         <Route path='/blog' element={<Blog />} />
+        <Route path='/blog/beneficios/atraccion-de-personal' element={<AtraccionDePersonal />} />
       </Routes>
       <WhatsAppFloatingButton />
     </>

@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import logoUrl from "/img/logos/1.png?url";
 
 type HeaderVariant = "default" | "darkTransparent" | "dark";

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es-MX" scroll-behavior: smooth;>
+<html lang="es-MX">
 
 <head>
   <meta charset="UTF-8" />
@@ -7,13 +7,18 @@
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/img/logos/Isotipo_Payrolling.svg" />
-  <!--Etiqueta html SEO-->
-  <meta name="ahrefs-site-verification" content="ae8bc45e5d2ce61003edcaa39e9d0b7df01dfe5d8a6ee7acbb51c2d698171466">
+
   <!-- SEO básico -->
-  <title>Payrolling Tech | Nómina automatizada para PyMEs en México</title>
+  <title>Servicios integrales para PYMEs en México: Nómina, Reclutamiento y Beneficios | Payrolling Tech</title>
   <meta name="description"
-    content="Servicio de nómina en línea para PyMEs en México: automatiza cálculos, cumple con el SAT y evita errores y multas. Implementación rápida y soporte especializado." />
+    content="Servicio integral para PYMEs en México: nómina automatizada y timbrado, reclutamiento eficiente, beneficios y NOM-035. Implementación rápida, cumplimiento fiscal y soporte experto." />
   <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+
+  <!-- (Opcional) meta keywords: no impacta en Google, pero puede ayudar en otros motores -->
+  <meta name="keywords"
+    content="servicios integrales para PYMEs, soluciones empresariales México, gestión de recursos humanos, outsourcing administrativo, tecnología para RRHH, administración eficiente de personal, servicios corporativos para PYMEs, reclutamiento para PYMEs, selección de personal México, cálculo de nómina automatizado, timbrado de recibos de nómina, outsourcing de nómina, beneficios laborales, vales de despensa, tarjetas de regalo corporativas, NOM-035-STPS" />
+
+  <!-- Canonical y hreflang -->
   <link rel="canonical" href="https://www.payrollingtech.com/" />
   <link rel="alternate" href="https://www.payrollingtech.com/" hreflang="es-MX" />
   <link rel="alternate" href="https://www.payrollingtech.com/" hreflang="x-default" />
@@ -21,19 +26,19 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Payrolling Tech" />
-  <meta property="og:title" content="Nómina automatizada para PyMEs en México | Payrolling Tech" />
+  <meta property="og:title" content="Servicios para PYMEs: Nómina, Reclutamiento y Beneficios | Payrolling Tech" />
   <meta property="og:description"
-    content="Automatiza tu nómina, cumple con el SAT y evita errores. Servicio de nómina en línea para PyMEs en México." />
+    content="Automatiza tu nómina, contrata mejor y ofrece beneficios. Cumple con SAT y NOM-035 con el apoyo de especialistas." />
   <meta property="og:url" content="https://www.payrollingtech.com/" />
   <meta property="og:locale" content="es_MX" />
   <meta property="og:image" content="https://www.payrollingtech.com/img/og/og-payrolling.jpg" />
-  <meta property="og:image:alt" content="Panel de nómina automatizada Payrolling Tech" />
+  <meta property="og:image:alt" content="Panel de servicios integrales Payrolling Tech para PYMEs" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Nómina automatizada para PyMEs en México | Payrolling Tech" />
+  <meta name="twitter:title" content="Servicios para PYMEs: Nómina, Reclutamiento y Beneficios | Payrolling Tech" />
   <meta name="twitter:description"
-    content="Automatiza tu nómina, cumple con el SAT y evita errores. Servicio de nómina en línea para PyMEs en México." />
+    content="Soluciones integrales de RRHH para PYMEs en México: nómina, reclutamiento, beneficios y NOM-035." />
   <meta name="twitter:image" content="https://www.payrollingtech.com/img/og/og-payrolling.jpg" />
 
   <!-- Navegadores / tema -->
@@ -41,7 +46,10 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <link rel="apple-touch-icon" href="/img/icons/apple-touch-icon.png" />
 
-  <!-- JSON-LD: Organization + Service + WebSite -->
+  <!-- Verificación Ahrefs -->
+  <meta name="ahrefs-site-verification" content="ae8bc45e5d2ce61003edcaa39e9d0b7df01dfe5d8a6ee7acbb51c2d698171466" />
+
+  <!-- JSON-LD: Organization + WebSite + WebPage + Services + OfferCatalog -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -55,15 +63,6 @@
         "sameAs": []
       },
       {
-        "@type": "Service",
-        "@id": "https://www.payrollingtech.com/#service",
-        "serviceType": "Nómina automatizada y administración de nómina",
-        "provider": { "@id": "https://www.payrollingtech.com/#organization" },
-        "areaServed": { "@type": "Country", "name": "México" },
-        "audience": { "@type": "BusinessAudience", "businessType": "PyMEs" },
-        "termsOfService": "https://www.payrollingtech.com/terminos"
-      },
-      {
         "@type": "WebSite",
         "@id": "https://www.payrollingtech.com/#website",
         "url": "https://www.payrollingtech.com/",
@@ -74,13 +73,100 @@
           "target": "https://www.payrollingtech.com/buscar?q={search_term_string}",
           "query-input": "required name=search_term_string"
         }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.payrollingtech.com/#webpage",
+        "url": "https://www.payrollingtech.com/",
+        "name": "Servicios integrales para PYMEs en México",
+        "isPartOf": { "@id": "https://www.payrollingtech.com/#website" },
+        "inLanguage": "es-MX",
+        "about": [
+          { "@id": "https://www.payrollingtech.com/#service-reclutamiento" },
+          { "@id": "https://www.payrollingtech.com/#service-nomina" },
+          { "@id": "https://www.payrollingtech.com/#service-beneficios" },
+          { "@id": "https://www.payrollingtech.com/#service-vales" },
+          { "@id": "https://www.payrollingtech.com/#service-nom035" }
+        ],
+        "description": "Soluciones empresariales para PYMEs en México: nómina automatizada, reclutamiento, beneficios y cumplimiento NOM-035."
+      },
+
+      /* Servicios: nodos independientes con keywords del documento */
+      {
+        "@type": "Service",
+        "@id": "https://www.payrollingtech.com/#service-reclutamiento",
+        "serviceType": "Reclutamiento para PYMEs",
+        "provider": { "@id": "https://www.payrollingtech.com/#organization" },
+        "areaServed": { "@type": "Country", "name": "México" },
+        "audience": { "@type": "BusinessAudience", "businessType": "PyMEs" },
+        "keywords": "reclutamiento para PYMEs, selección de personal México, servicio de reclutamiento empresarial, contratación eficiente, reducción de rotación laboral, headhunting para pequeñas empresas, tecnología de reclutamiento, outsourcing de reclutamiento, procesos de selección automatizados, talento humano calificado"
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.payrollingtech.com/#service-nomina",
+        "serviceType": "Nómina (Payrolling)",
+        "provider": { "@id": "https://www.payrollingtech.com/#organization" },
+        "areaServed": { "@type": "Country", "name": "México" },
+        "audience": { "@type": "BusinessAudience", "businessType": "PyMEs" },
+        "keywords": "cálculo de nómina automatizado, timbrado de recibos de nómina, servicio de nómina para PYMEs, outsourcing de nómina, administración de sueldos y salarios, software de nómina en México, cumplimiento fiscal en nómina, gestión de nómina digital, servicio quincenal o semanal, nómina segura y confiable"
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.payrollingtech.com/#service-vales",
+        "serviceType": "Tarjetas de regalo y vales",
+        "provider": { "@id": "https://www.payrollingtech.com/#organization" },
+        "areaServed": { "@type": "Country", "name": "México" },
+        "audience": { "@type": "BusinessAudience", "businessType": "PyMEs" },
+        "keywords": "vales de despensa para empleados, tarjetas de regalo corporativas, incentivos laborales México, programas de recompensas, vales electrónicos empresariales, beneficios fiscales para empresas, tarjetas de gasolina corporativas, incentivos para colaboradores, recompensas personalizadas, soluciones de beneficios laborales"
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.payrollingtech.com/#service-beneficios",
+        "serviceType": "Beneficios y bienestar para empleados",
+        "provider": { "@id": "https://www.payrollingtech.com/#organization" },
+        "areaServed": { "@type": "Country", "name": "México" },
+        "audience": { "@type": "BusinessAudience", "businessType": "PyMEs" },
+        "keywords": "beneficios laborales integrales, programas de bienestar para empleados, caja de ahorro empresarial, telemedicina para colaboradores, seguros y asistencias laborales, préstamos sobre nómina, club de descuentos corporativos, retención de talento, bienestar financiero del empleado, soluciones de fidelización laboral"
+      },
+      {
+        "@type": "Service",
+        "@id": "https://www.payrollingtech.com/#service-nom035",
+        "serviceType": "NOM-035-STPS",
+        "provider": { "@id": "https://www.payrollingtech.com/#organization" },
+        "areaServed": { "@type": "Country", "name": "México" },
+        "audience": { "@type": "BusinessAudience", "businessType": "PyMEs" },
+        "keywords": "cumplimiento NOM-035-STPS, riesgos psicosociales en el trabajo, evaluación organizacional México, entorno laboral favorable, consultoría en NOM-035, bienestar emocional laboral, clima organizacional saludable, prevención de estrés laboral, diagnóstico psicosocial empresarial, implementación de la NOM-035"
+      },
+
+      /* Catálogo de ofertas para interrelacionar servicios en SERP */
+      {
+        "@type": "OfferCatalog",
+        "@id": "https://www.payrollingtech.com/#catalogo-servicios",
+        "name": "Servicios Payrolling Tech",
+        "url": "https://www.payrollingtech.com/",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "item": { "@id": "https://www.payrollingtech.com/#service-reclutamiento" } },
+          { "@type": "ListItem", "position": 2, "item": { "@id": "https://www.payrollingtech.com/#service-nomina" } },
+          { "@type": "ListItem", "position": 3, "item": { "@id": "https://www.payrollingtech.com/#service-beneficios" } },
+          { "@type": "ListItem", "position": 4, "item": { "@id": "https://www.payrollingtech.com/#service-vales" } },
+          { "@type": "ListItem", "position": 5, "item": { "@id": "https://www.payrollingtech.com/#service-nom035" } }
+        ],
+        "provider": { "@id": "https://www.payrollingtech.com/#organization" }
       }
     ]
   }
   </script>
+
+  <!-- CSS mínimo para corrección de scroll suave -->
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+
+  <!-- Scripts -->
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="kcW6T9u6GD6JXk5QT8uALQ" async></script>
   <script src="https://cdn.botpress.cloud/webchat/v3.3/inject.js" defer></script>
-
   <script src="https://files.bpcontent.cloud/2025/10/09/19/20251009193543-ASKE4FWY.js" defer></script>
 </head>
 

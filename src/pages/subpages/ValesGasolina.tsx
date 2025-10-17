@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Headers from "../../components/header.tsx";
 import Footer from "../../components/footer.tsx";
+import { useFormSubmit } from "../../hooks/useFormSubmit.ts";
 
 // ¡No tocar! Imagen principal del héroe
 import Gas from "/img/Contenido/TarjetasGas.webp";
@@ -110,6 +111,11 @@ function useScrollReveal() {
 }
 
 export default function ValesGasolina() {
+    const { isSubmitting, handleSubmit } = useFormSubmit({
+        formType: "general",
+        subject: "Contacto - Vales de gasolina",
+        metadata: { form: "vales-gasolina-contact" },
+    });
     useScrollReveal();
 
     return (
@@ -317,6 +323,7 @@ export default function ValesGasolina() {
                             </div>
 
                             <form
+                                onSubmit={handleSubmit}
                                 className="w-full space-y-8 rounded-[2rem] bg-white px-6 py-10 shadow-[0_32px_70px_rgba(0,0,0,0.22)] lg:order-1 lg:max-w-[58rem] lg:px-16 lg:justify-self-end xl:max-w-[64rem]"
                                 noValidate
                                 data-animate
@@ -445,9 +452,10 @@ export default function ValesGasolina() {
 
                                 <button
                                     type="submit"
-                                    className="inline-flex w-full items-center justify-center rounded-full bg-[#ffbf2b] px-6 py-3 text-base font-semibold text-noche shadow-[0_16px_0_rgba(0,0,0,0.18)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#ffc947]"
+                                    disabled={isSubmitting}
+                                    className="inline-flex w-full items-center justify-center rounded-full bg-[#ffbf2b] px-6 py-3 text-base font-semibold text-noche shadow-[0_16px_0_rgba(0,0,0,0.18)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#ffc947] disabled:cursor-not-allowed disabled:opacity-70"
                                 >
-                                    Enviar
+                                    {isSubmitting ? "Enviando..." : "Enviar"}
                                 </button>
                             </form>
                         </div>

@@ -1,40 +1,53 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import Headers from "../../../components/header.tsx";
 import Footer from "../../../components/footer.tsx";
 import Img1 from "/img/Contenido/Blog/1.webp";
 /*import Img2 from "/img/Contenido/Blog/2.webp";*/
 
-type Category = { id: string; label: string; href: string; enabled: boolean };
+type Category = { id: string; label: string; enabled: boolean };
 
 const CATEGORIES: Category[] = [
-    { id: "all", label: "Ver todos", href: "#", enabled: true },
-    { id: "reclutamiento", label: "Reclutamiento", href: "#", enabled: true },
-    { id: "vales", label: "Vales", href: "#", enabled: true },
-    { id: "nomina", label: "Nómina", href: "#", enabled: true },
-    { id: "nom35", label: "Seguros NOM. 35", href: "#", enabled: true },
-    { id: "beneficios", label: "Beneficios", href: "#", enabled: true },
+    { id: "all", label: "Ver todos", enabled: true },
+    { id: "beneficios", label: "Beneficios", enabled: true },
+    { id: "reclutamiento", label: "Reclutamiento", enabled: false },
+    { id: "vales", label: "Vales", enabled: false },
+    { id: "nomina", label: "Nómina", enabled: false },
+    { id: "nom35", label: "Seguros NOM. 35", enabled: false },
 ];
 
 const VISIBLE_CATEGORIES = CATEGORIES.filter((c) => c.enabled);
 
-function BlogCard({
-    tag,
-    title,
-    excerpt,
-    image,
-    alt,
-    ctaHref = "#",
-}: {
+type Post = {
+    id: string;
     tag: string;
+    categoryId: Category["id"];
     title: string;
     excerpt: string;
     image: string;
     alt: string;
-    ctaHref?: string;
-}) {
+    path: string;
+};
+
+const POSTS: Post[] = [
+    {
+        id: "beneficios-atraccion-de-personal",
+        tag: "Beneficios",
+        categoryId: "beneficios",
+        title: "Cómo atraer talento: Estrategias para construir equipos sólidos y exitosos",
+        excerpt:
+            "En un entorno laboral cada vez más competitivo, atraer y retener talento se ha convertido en uno de los mayores desafíos para las empresas. Ya no se trata solo de llenar vacantes, sino de construir equipos comprometidos, motivados y alineados con los objetivos del negocio.",
+        image: Img1,
+        alt: "Personas celebrando en oficina",
+        path: "/blog/beneficios/atraccion-de-personal",
+    },
+];
+
+function BlogCard({ post }: { post: Post }) {
+    const { tag, title, excerpt, image, alt, path } = post;
     return (
-        <article className="rounded-2xl bg-blanco p-4 md:p-6 lg:p-7 border-2 border-noche/20">
-            {/* 👇 FIX: grid de dos columnas desde md usando propiedad arbitraria */}
+        <article className="rounded-2xl p-4 md:p-6 lg:p-7 border-2 border-noche/20">
+            {/* Layout: grid de dos columnas desde md */}
             <div className="grid md:[grid-template-columns:minmax(0,360px)_1fr] gap-4 md:gap-6 items-center">
                 {/* Imagen responsive */}
                 <div className="w-full overflow-hidden rounded-2xl bg-fondo-cremita border border-cardeno/10">
@@ -65,8 +78,8 @@ function BlogCard({
 
                     {/* CTA */}
                     <div className="mt-4 md:mt-6 flex justify-center md:justify-start">
-                        <a
-                            href={ctaHref}
+                        <Link
+                            to={path}
                             className="group relative inline-flex items-center rounded-xl border-2 border-cardeno px-5 py-3 font-semibold text-cardeno"
                         >
                             <span>Leer más</span>
@@ -75,7 +88,7 @@ function BlogCard({
                                     <path d="M13.172 12 8.222 7.05l1.414-1.414L16 12l-6.364 6.364-1.414-1.414z" />
                                 </svg>
                             </span>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -85,10 +98,19 @@ function BlogCard({
 
 export default function Blog() {
     const [showMoreMobile, setShowMoreMobile] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState<Category["id"]>("all");
+
+    const postsToDisplay = useMemo(() => {
+        if (selectedCategory === "all") {
+            return POSTS;
+        }
+
+        return POSTS.filter((post) => post.categoryId === selectedCategory);
+    }, [selectedCategory]);
 
     return (
         <>
-            <Headers variant="darkTransparent" />
+            <Headers variant="dark" />
 
             {/* HERO (parche de tipografía y alineación) */}
             <section className="bg-fondo-cremita pt-10 md:pt-14 pb-8">
@@ -118,56 +140,76 @@ export default function Blog() {
 
             {/* CONTENIDO */}
             <section className="py-6 md:py-10">
-                {/* 👇 FIX: sidebar + contenido en dos columnas desde lg */}
+                {/* Ajuste: sidebar + contenido en dos columnas desde lg */}
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:[grid-template-columns:300px_1fr] gap-6 lg:gap-8">
                     {/* Sidebar (solo desktop) */}
                     <aside className="hidden lg:block">
                         <h2 className="text-cardeno text-3xl md:text-4xl font-extrabold mb-3">Categorías</h2>
 
                         <div className="overflow-hidden rounded-2xl border-2 border-noche/20 bg-blanco">
-                            <a href="#" className="block bg-noche text-blanco font-semibold px-5 py-4" aria-current="page">
+                            <button
+                                type="button"
+                                onClick={() => setSelectedCategory("all")}
+                                className={`block w-full px-5 py-4 text-left font-semibold transition-colors ${selectedCategory === "all"
+                                        ? "bg-noche text-blanco"
+                                        : "bg-noche text-blanco/70 hover:text-blanco"
+                                    }`}
+                                aria-current={selectedCategory === "all"}
+                            >
                                 Ver todos
-                            </a>
+                            </button>
                             {VISIBLE_CATEGORIES.filter((c) => c.id !== "all").map((c) => (
-                                <a
+                                <button
                                     key={c.id}
-                                    href={c.href}
-                                    className="block px-5 py-4 border-t border-noche/20 hover:bg-fondo-cremita/70"
+                                    type="button"
+                                    onClick={() => setSelectedCategory(c.id)}
+                                    className={`block w-full px-5 py-4 border-t border-noche/20 text-left transition-colors ${selectedCategory === c.id
+                                            ? "bg-fondo-cremita/70 font-semibold text-noche"
+                                            : "hover:bg-fondo-cremita/70"
+                                        }`}
+                                    aria-current={selectedCategory === c.id}
                                 >
                                     {c.label}
-                                </a>
+                                </button>
                             ))}
                         </div>
                     </aside>
 
                     {/* Cards */}
                     <div className="space-y-6 md:space-y-8">
-                        <BlogCard
-                            tag="Beneficios"
-                            title="Cómo atraer talento:
- Estrategias para
- construir equipos
- sólidos y exitosos"
-                            excerpt="En un entorno laboral cada vez más competitivo, atraer y retener talento se ha convertido en uno de los mayores desafíos 
-para las empresas. Ya no se trata solo de llenar vacantes, sino de construir equipos comprometidos, motivados
- y alineados con los objetivos del negocio"
-                            image={Img1}
-                            alt="Personas celebrando en oficina"
-                            ctaHref="#"
-                        />
+                        {postsToDisplay.map((post, index) => {
+                            const hiddenOnMobile = !showMoreMobile && index > 1;
+                            return (
+                                <div
+                                    key={post.id}
+                                    className={hiddenOnMobile ? "hidden md:block" : ""}
+                                >
+                                    <BlogCard post={post} />
+                                </div>
+                            );
+                        })}
+
+                        {postsToDisplay.length === 0 && (
+                            <div className="rounded-xl border-2 border-dashed border-cardeno/40 bg-blanco px-6 py-10 text-center text-noche">
+                                Estamos preparando contenido para esta categoría. Vuelve pronto.
+                            </div>
+                        )}
 
                         {/* Botón Ver más SOLO mobile */}
-                        <div className="md:hidden flex justify-center">
-                            <button
-                                type="button"
-                                onClick={() => setShowMoreMobile((v) => !v)}
-                                className="w-full sm:w-auto rounded-xl bg-mango px-7 py-3 text-noche font-extrabold shadow-sm border border-noche/10"
-                                aria-expanded={showMoreMobile}
-                            >
-                                {showMoreMobile ? "Ver menos" : "Ver más"}
-                            </button>
-                        </div>
+                        {postsToDisplay.length > 2 && (
+                            <div className="md:hidden flex justify-center">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowMoreMobile((v) => !v)}
+                                    className="w-full sm:w-auto rounded-xl bg-mango px-7 py-3 text-noche font-extrabold shadow-sm border border-noche/10"
+                                    aria-expanded={showMoreMobile}
+                                >
+                                    {showMoreMobile ? "Ver menos" : "Ver más"}
+                                </button>
+                            </div>
+                        )}
                     </div>
+
                 </div>
             </section>
 
