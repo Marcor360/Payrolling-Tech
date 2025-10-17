@@ -71,6 +71,15 @@ router.post("/", async (req, res) => {
         subject ??
         `Nuevo formulario recibido${metadata?.page ? ` - ${metadata.page}` : ""}`;
 
+    const replyTo =
+        typeof data.email === "string"
+            ? data.email
+            : typeof data.correo === "string"
+              ? data.correo
+              : typeof data.mail === "string"
+                ? data.mail
+                : undefined;
+
     const htmlBody = `
         <div style="font-family:Arial,sans-serif;color:#1b1b1b;">
             <h2 style="color:#5a2ca0;">Nuevo formulario (${escapeHtml(formType)})</h2>
@@ -84,7 +93,7 @@ router.post("/", async (req, res) => {
     `;
 
     try {
-        await transporter.sendMail({
+        const info = await transporter.sendMail({
             from: {
                 name: process.env.MAIL_FROM_NAME ?? "Payrolling Tech Web",
                 address: process.env.SMTP_USER ?? target,
@@ -93,6 +102,20 @@ router.post("/", async (req, res) => {
             cc: CC_RECIPIENTS,
             subject: mailSubject,
             html: htmlBody,
+            replyTo,
+        });
+
+        if (!info.accepted || info.accepted.length === 0) {
+            console.error("[mail] no recipients accepted:", info);
+            return res
+                .status(502)
+                .json({ message: "El servidor de correo rechazó la entrega del formulario." });
+        }
+
+        console.log("[mail] enviado", {
+            messageId: info.messageId,
+            accepted: info.accepted,
+            rejected: info.rejected,
         });
 
         return res.status(200).json({ ok: true });

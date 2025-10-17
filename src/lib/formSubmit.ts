@@ -62,5 +62,9 @@ export async function submitForm(
         throw new Error(details.message ?? "No se pudo enviar el formulario.");
     }
 
-    return response.json();
+    try {
+        return await response.json();
+    } catch {
+        return {};
+    }
 }
