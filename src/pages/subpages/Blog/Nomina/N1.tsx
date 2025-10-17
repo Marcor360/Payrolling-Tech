@@ -1,17 +1,15 @@
-
 import { Link } from "react-router-dom";
 import Headers from "../../../../components/header.tsx";
 import Footer from "../../../../components/footer.tsx";
-import Img2 from "/img/Contenido/Blog/1.1.webp";
-
+import Img2 from "/img/Contenido/Blog/7_1.webp";
 // Opcional: SEO con react-helmet-async
 // import { Helmet } from "react-helmet-async";
 // const SEO = {
-//   title: "Vales digitales en México: el futuro de los incentivos laborales",
-//   description: "Descubre cómo los vales digitales modernizan la experiencia del empleado y simplifican la administración.",
-//   keywords: "vales digitales México, incentivos laborales, vales electrónicos, app beneficios",
+//   title: "Beneficios para PYMEs al usar maquila de nómina en México",
+//   description: "Ahorra tiempo, costos y riesgos delegando la nómina con especialistas.",
+//   keywords: "maquila nómina PYMEs México, outsourcing nómina PYME, ventajas maquila",
 //   secondaryKeywords:
-//     "programas de beneficios para empleados, vales de gasolina para empresas, beneficios laborales deducibles, incentivos para retención de personal, recompensas para empleados, beneficios fiscales para empresas, programas de motivación laboral, cómo mejorar el clima laboral, estrategias de fidelización laboral, salario emocional en México"
+//     "servicios de nómina para empresas, gestión de nómina automatizada, cálculo de nómina para pymes, externalización de nómina, timbrado de nómina CFDI 4.0, nómina electrónica SAT, consultoría de nómina, errores comunes en nómina, mejores prácticas en administración de nómina, cumplimiento fiscal en nómina"
 // };
 
 export default function Beneficios1() {
@@ -39,12 +37,10 @@ export default function Beneficios1() {
                                 {/* Imagen llena el contenedor */}
                                 <img
                                     src={Img2}
-                                    alt="Vales digitales en México para incentivos laborales"
+                                    alt="Beneficios para PYMEs al usar maquila de nómina en México"
                                     className="absolute inset-0 w-full h-full object-cover"
                                     decoding="async"
                                 />
-                                {/* Overlay sutil para contraste */}
-                                <div className="absolute inset-0 bg-gradient-to-tr from-noche/30 to-transparent pointer-events-none" />
 
                                 {/* Botón volver sobre la imagen (blanco) */}
                                 <Link
@@ -73,29 +69,21 @@ export default function Beneficios1() {
                         <div className="lg:col-span-6 flex items-center">
                             <div className="w-full">
                                 <p className="text-cardeno font-bold text-base md:text-lg text-center md:text-left mb-2">
-                                    Blog <span className="opacity-60">›</span> Incentivos
+                                    Blog <span className="opacity-60">›</span> Nómina
                                 </p>
 
                                 <h1
                                     className="text-cardeno font-extrabold leading-tight text-center md:text-left
                   text-4xl sm:text-5xl md:text-6xl text-balance"
                                 >
-                                    Vales digitales en México:
+                                    Beneficios para PYMEs al usar
                                     <br className="hidden md:block" />
-                                    el futuro de los incentivos laborales
+                                    maquila de nómina en México
                                 </h1>
 
-                                {/* Badges cortos para hacerlo más “vivo” */}
-                                <div className="mt-3 flex flex-wrap items-center justify-center md:justify-start gap-2">
-                                    <span className="text-xs font-semibold uppercase tracking-wide bg-mango/80 text-noche px-2.5 py-1 rounded-full">Omnicanal</span>
-                                    <span className="text-xs font-semibold uppercase tracking-wide bg-fondo-cremita/80 text-noche px-2.5 py-1 rounded-full">LFPDPPP</span>
-                                    <span className="text-xs font-semibold uppercase tracking-wide bg-cardeno/10 text-cardeno px-2.5 py-1 rounded-full">Tiempo real</span>
-                                </div>
-
                                 <p className="mt-4 text-noche text-base sm:text-lg leading-relaxed text-center md:text-justify md:max-w-xl">
-                                    Los vales digitales permiten entrega inmediata, control granular y una experiencia móvil superior. A
-                                    diferencia de los físicos, se gestionan en plataformas que facilitan administración, trazabilidad y
-                                    cumplimiento fiscal.
+                                    La maquila de nómina permite delegar cálculo, timbrado y administración a un proveedor experto. Combina
+                                    tecnología, cumplimiento fiscal y soporte operativo para reducir errores y cargas administrativas.
                                 </p>
 
                                 <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm md:text-[15px]">
@@ -117,8 +105,9 @@ export default function Beneficios1() {
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="md:mx-auto md:max-w-4xl text-noche space-y-4">
                         <p className="text-center md:text-justify leading-relaxed">
-                            Se pueden entregar mediante tarjetas virtuales, códigos QR y APIs integradas con nómina/contabilidad para
-                            actualizar saldos en tiempo real y asegurar un uso seguro en comercios autorizados.
+                            En México, muchas PYMEs enfrentan fechas críticas de pago, cambios frecuentes en leyes y alta rotación. Con
+                            maquila de nómina, el proceso se opera en plataformas seguras con validaciones ante SAT, IMSS e INFONAVIT y
+                            reportes listos para auditoría.
                         </p>
                     </div>
                 </div>
@@ -130,105 +119,117 @@ export default function Beneficios1() {
                     {/* Artículo */}
                     <article className="lg:col-span-8 space-y-12">
 
-                        {/* 1 - Qué son y cómo funcionan */}
-                        <section id="que-son" className="scroll-mt-24">
+                        {/* 1 - Qué es y cómo funciona */}
+                        <section id="que-es" className="scroll-mt-24">
                             <h2 className="text-cardeno font-extrabold text-3xl md:text-5xl leading-tight text-center md:text-left text-balance">
-                                ¿Qué son y cómo funcionan
-                                <br /> los vales digitales?
+                                ¿Qué es la maquila de nómina y cómo funciona?
                             </h2>
 
                             <div className="mt-4 space-y-4 text-noche">
                                 <p className="text-center md:text-justify leading-relaxed">
-                                    Instrumentos de incentivo laboral operados en plataformas tecnológicas para entrega inmediata, control
-                                    granular y cumplimiento fiscal/operativo.
+                                    Servicio de tercerización especializada para delegar cálculo, timbrado y administración de nómina a un
+                                    proveedor experto. Reduce errores y carga administrativa combinando tecnología, cumplimiento y soporte.
                                 </p>
+
+                                <p className="text-center md:text-left leading-relaxed font-semibold">Retos frecuentes de PYMEs en México:</p>
                                 <ul className="list-disc pl-6 md:pl-8 space-y-2 text-center md:text-left">
-                                    <li><span className="font-semibold">Tarjetas virtuales:</span> carga del incentivo de forma instantánea.</li>
-                                    <li><span className="font-semibold">Códigos QR:</span> canje en comercios autorizados sin fricción.</li>
-                                    <li><span className="font-semibold">Integraciones API:</span> saldos/movimientos en tiempo real con nómina y contabilidad.</li>
+                                    <li>Fechas críticas de pago y dispersión bancaria.</li>
+                                    <li>Cambios constantes en leyes laborales y fiscales.</li>
+                                    <li>Alta rotación o dependencia de personal clave.</li>
                                 </ul>
+
+                                <p className="text-center md:text-justify leading-relaxed">
+                                    Con maquila, la nómina se procesa con validaciones automáticas (SAT, IMSS, INFONAVIT) y reportes listos
+                                    para auditoría.
+                                </p>
                             </div>
                         </section>
 
-                        {/* 2 - Beneficios */}
+                        {/* 2 - Beneficios principales */}
                         <section id="beneficios" className="scroll-mt-24">
                             <h2 className="text-cardeno font-extrabold text-3xl md:text-5xl leading-tight text-center md:text-left text-balance">
-                                Beneficios de los
-                                <br /> vales digitales
+                                Beneficios principales para las PYMEs
                             </h2>
 
                             <div className="mt-4 space-y-4 text-noche">
-                                <p className="text-center md:text-left leading-relaxed font-semibold">Para el colaborador:</p>
-                                <ul className="list-disc pl-6 md:pl-8 space-y-2 text-center md:text-left">
-                                    <li>Entrega inmediata sin logística física.</li>
-                                    <li>Autoservicio: consulta de saldo y movimientos.</li>
-                                    <li>Notificaciones y catálogo de comercios.</li>
-                                    <li>Experiencia omnicanal con soporte remoto.</li>
-                                </ul>
-
-                                <p className="text-center md:text-left leading-relaxed font-semibold mt-4">Para la empresa:</p>
-                                <ul className="list-disc pl-6 md:pl-8 space-y-2 text-center md:text-left">
-                                    <li>Control por montos, categorías y destinatarios.</li>
-                                    <li>Menos fraude y menores costos logísticos/administrativos.</li>
-                                    <li>Trazabilidad total y auditoría electrónica.</li>
-                                    <li>Segmentación de incentivos por rubro/departamento.</li>
-                                    <li>Integración con nómina y contabilidad para reportes y cumplimiento fiscal.</li>
+                                <ul className="list-disc pl-6 md:pl-8 space-y-3 text-center md:text-left">
+                                    <li>
+                                        <span className="font-semibold">Orden y previsibilidad:</span> menos variabilidad y errores en cálculos,
+                                        timbrado y pagos; cumplimiento 100% fiscal y laboral.
+                                    </li>
+                                    <li>
+                                        <span className="font-semibold">Control de costos:</span> evita multas y reprocesos; convierte gastos
+                                        variables en costos fijos predecibles.
+                                    </li>
+                                    <li>
+                                        <span className="font-semibold">Valor estratégico para dirección:</span> reportes y tableros, proyecciones
+                                        de costos y soporte en inspecciones o auditorías.
+                                    </li>
+                                    <li>
+                                        <span className="font-semibold">Escalabilidad:</span> crecer o ajustar headcount sin rehacer procesos; altas,
+                                        bajas e incidencias por flujos estandarizados.
+                                    </li>
+                                    <li>
+                                        <span className="font-semibold">Cumplimiento automatizado:</span> actualización ante reformas del SAT, LFT,
+                                        IMSS y CFDI 4.0 para timbrados correctos y retenciones precisas.
+                                    </li>
                                 </ul>
                             </div>
                         </section>
 
-                        {/* 3 - Errores comunes */}
+                        {/* 3 - Errores comunes internos */}
                         <section id="errores" className="scroll-mt-24">
                             <h2 className="text-cardeno font-extrabold text-3xl md:text-5xl leading-tight text-center md:text-left text-balance">
-                                Errores comunes en la
-                                <br /> implementación
+                                Errores comunes en la gestión interna de nómina
                             </h2>
 
                             <div className="mt-4 space-y-4 text-noche">
                                 <ul className="list-disc pl-6 md:pl-8 space-y-2 text-center md:text-left">
-                                    <li>Sin piloto por área (baja adopción y errores operativos).</li>
-                                    <li>No parametrizar límites/categorías (riesgos de control y fiscales).</li>
-                                    <li>Comunicación deficiente al colaborador (confusión de uso/beneficios).</li>
-                                    <li>No medir experiencia del empleado (sin mejoras continuas).</li>
-                                    <li>Integración incompleta con nómina/contabilidad (inconsistencias de saldo/reportes).</li>
+                                    <li>Dependencia de personas clave sin respaldos ni procesos documentados.</li>
+                                    <li>Errores de cálculo en ISR, IMSS o INFONAVIT.</li>
+                                    <li>Timbrados incorrectos o fuera de tiempo (multas).</li>
+                                    <li>Cierres mensuales improvisados y sobrecarga de horas extra.</li>
+                                    <li>Falta de integración tecnológica (sin datos en tiempo real).</li>
                                 </ul>
+                                <p className="text-center md:text-justify leading-relaxed">
+                                    Estos errores afectan la operación, la confianza del colaborador y la reputación de la empresa.
+                                </p>
                             </div>
                         </section>
 
-                        {/* 4 - Soluciones Payrolling Tech */}
+                        {/* 4 - Soluciones Payrolling-Tech */}
                         <section id="soluciones" className="scroll-mt-24">
                             <h2 className="text-cardeno font-extrabold text-3xl md:text-5xl leading-tight text-center md:text-left text-balance">
-                                ¿Cómo Payrolling Tech
-                                <br /> ayuda con los vales digitales?
+                                ¿Cómo Payrolling-Tech optimiza la maquila de nómina?
                             </h2>
 
                             <div className="mt-4 space-y-4 text-noche">
                                 <ul className="list-disc pl-6 md:pl-8 space-y-2 text-center md:text-left">
-                                    <li>Plataforma con tarjetas virtuales, QR y APIs integradas.</li>
-                                    <li>Gestión de saldos/movimientos en tiempo real con reportes automáticos.</li>
-                                    <li>Cumplimiento fiscal/normativo: límites, políticas y resguardos electrónicos.</li>
-                                    <li>Implementación gradual: piloto, ajustes por feedback y escalamiento por fases.</li>
-                                    <li>Mejor experiencia del empleado: autoservicio, notificaciones y soporte omnicanal.</li>
+                                    <li>Implementación en 8 semanas: diagnóstico, limpieza, parametrización, pruebas y salida a producción.</li>
+                                    <li>Cumplimiento fiscal y laboral garantizado (SAT, IMSS, INFONAVIT, STPS).</li>
+                                    <li>Tableros ejecutivos: costos, headcount, ausentismo y proyecciones.</li>
+                                    <li>Automatización de flujos de altas, bajas e incidencias.</li>
+                                    <li>Soporte 24/7 con asesoría continua para inspecciones o auditorías.</li>
                                 </ul>
                                 <p className="text-center md:text-justify leading-relaxed">
-                                    Convertimos los vales digitales en una palanca estratégica de <em>engagement</em> y productividad.
+                                    Resultado: pagos puntuales, cumplimiento total y liberación del foco operativo.
                                 </p>
                             </div>
                         </section>
 
                         {/* 5 - Cierre (sin usar "Conclusión" en el índice) */}
-                        <section id="ventaja-estrategica" className="scroll-mt-24">
+                        <section id="menos-estres" className="scroll-mt-24">
                             <h2 className="text-cardeno font-extrabold text-3xl md:text-5xl leading-tight text-center md:text-left text-balance">
-                                Incentivos digitales como ventaja estratégica
+                                Más tiempo para el negocio, menos estrés operativo
                             </h2>
 
                             <div className="mt-4 space-y-4 text-noche">
                                 <p className="text-center md:text-justify leading-relaxed">
-                                    La digitalización convierte los vales en una herramienta eficiente, segura y motivadora: entregas rápidas,
-                                    control total y mayor satisfacción del colaborador.
+                                    La maquila de nómina libera a las PYMEs de la complejidad fiscal y administrativa, para enfocarse en
+                                    ventas, clientes y crecimiento.
                                 </p>
                                 <p className="text-center md:text-justify leading-relaxed">
-                                    Adoptar esta tecnología fortalece la marca empleadora y la cultura organizacional.
+                                    También mejora la experiencia del colaborador con pagos puntuales y precisos, fortaleciendo confianza y compromiso.
                                 </p>
                             </div>
 
@@ -257,20 +258,20 @@ export default function Beneficios1() {
                                     Índice
                                 </div>
                                 <nav className="divide-y divide-noche/20" aria-labelledby="indice-titulo">
-                                    <a href="#que-son" className="block px-5 py-4 hover:bg-fondo-cremita/70">
-                                        ¿Qué son y cómo funcionan los vales digitales?
+                                    <a href="#que-es" className="block px-5 py-4 hover:bg-fondo-cremita/70">
+                                        ¿Qué es la maquila de nómina y cómo funciona?
                                     </a>
                                     <a href="#beneficios" className="block px-5 py-4 hover:bg-fondo-cremita/70">
-                                        Beneficios de los vales digitales
+                                        Beneficios principales para las PYMEs
                                     </a>
                                     <a href="#errores" className="block px-5 py-4 hover:bg-fondo-cremita/70">
-                                        Errores comunes en la implementación
+                                        Errores comunes en la gestión interna de nómina
                                     </a>
                                     <a href="#soluciones" className="block px-5 py-4 hover:bg-fondo-cremita/70">
-                                        Cómo Payrolling Tech ayuda con los vales digitales
+                                        ¿Cómo Payrolling-Tech optimiza la maquila de nómina?
                                     </a>
-                                    <a href="#ventaja-estrategica" className="block px-5 py-4 hover:bg-fondo-cremita/70">
-                                        Incentivos digitales como ventaja estratégica
+                                    <a href="#menos-estres" className="block px-5 py-4 hover:bg-fondo-cremita/70">
+                                        Más tiempo para el negocio, menos estrés operativo
                                     </a>
                                 </nav>
                             </div>

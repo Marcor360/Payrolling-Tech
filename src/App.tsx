@@ -19,7 +19,8 @@ import BlogReclutamientoR2 from './pages/subpages/Blog/Reclutamiento/R2'
 import BlogReclutamientoR3 from './pages/subpages/Blog/Reclutamiento/R3'
 import BlogValesV1 from './pages/subpages/Blog/Vales/V1'
 import BlogValesV2 from './pages/subpages/Blog/Vales/V2'
-import BlogValesDigitales from './pages/subpages/Blog/Nomina/N1'
+import BlogValesDigitales from './pages/subpages/Blog/Vales/V3'
+import BlogNominaN1 from './pages/subpages/Blog/Nomina/N1'
 import BlogNominaN2 from './pages/subpages/Blog/Nomina/N2'
 // Components
 import WhatsAppFloatingButton from './components/WhatsAppFloatingButton'
@@ -50,6 +51,7 @@ function App() {
         <Route path='/blog/vales/vales-incentivo-guia-legal' element={<BlogValesV1 />} />
         <Route path='/blog/vales/bonos-incentivos-con-vales' element={<BlogValesV2 />} />
         <Route path='/blog/vales/vales-digitales-futuro' element={<BlogValesDigitales />} />
+        <Route path='/blog/nomina/beneficios-maquila-pymes' element={<BlogNominaN1 />} />
         <Route path='/blog/nomina/tendencias-maquila-2025' element={<BlogNominaN2 />} />
       </Routes>
       <WhatsAppFloatingButton />

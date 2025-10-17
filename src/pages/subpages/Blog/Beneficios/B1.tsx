@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Headers from "../../../../components/header.tsx";
 import Footer from "../../../../components/footer.tsx";
-import Img2 from "/img/Contenido/Blog/1.1.webp";
+import Img2 from "/img/Contenido/Blog/9_1.webp";
 
 // Opcional: SEO con react-helmet-async
 // import { Helmet } from "react-helmet-async";

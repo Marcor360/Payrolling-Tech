@@ -3,6 +3,15 @@ import { Link } from "react-router-dom";
 import Headers from "../../../components/header.tsx";
 import Footer from "../../../components/footer.tsx";
 import Img1 from "/img/Contenido/Blog/1.webp";
+import Img2 from "/img/Contenido/Blog/2.webp";
+import Img3 from "/img/Contenido/Blog/3.webp";
+import Img4 from "/img/Contenido/Blog/4.webp";
+import Img5 from "/img/Contenido/Blog/5.webp";
+import Img6 from "/img/Contenido/Blog/6.webp";
+import Img7 from "/img/Contenido/Blog/7.webp";
+import Img8 from "/img/Contenido/Blog/8.webp";
+import Img9 from "/img/Contenido/Blog/9.webp";
+import Img10 from "/img/Contenido/Blog/10.webp";
 /* import Img2 from "/img/Contenido/Blog/2.webp"; */
 
 type Category = { id: string; label: string; enabled: boolean };
@@ -30,28 +39,7 @@ type Post = {
 };
 
 const POSTS: Post[] = [
-    {
-        id: "beneficios-seguros-vida-corporativos",
-        tag: "Beneficios",
-        categoryId: "beneficios",
-        title: "Seguros de vida corporativos en México: qué debe saber tu empresa",
-        excerpt:
-            "Descubre cómo un seguro de vida corporativo refuerza la propuesta de valor al empleado y qué factores evaluar antes de contratarlo.",
-        image: Img1,
-        alt: "Equipo corporativo celebrando resultados",
-        path: "/blog/beneficios/seguros-vida-corporativos",
-    },
-    {
-        id: "beneficios-seguro-vida-retencion-talento",
-        tag: "Beneficios",
-        categoryId: "beneficios",
-        title: "Beneficios del seguro de vida para empleados y retención de talento",
-        excerpt:
-            "Aprovecha el seguro de vida como diferenciador de bienestar y retención con recomendaciones prácticas para comunicarlo a tu equipo.",
-        image: Img1,
-        alt: "Empleado recibiendo asesoría sobre beneficios corporativos",
-        path: "/blog/beneficios/seguro-vida-retencion-talento",
-    },
+    // =============== RECLUTAMIENTO ===============
     {
         id: "reclutamiento-estrategias-efectivas-mexico",
         tag: "Reclutamiento",
@@ -70,7 +58,7 @@ const POSTS: Post[] = [
         title: "Selección de personal eficiente: cómo elegir al candidato ideal en México",
         excerpt:
             "Guía práctica para definir perfiles, estructurar entrevistas y evaluar objetivamente a cada candidato para reducir la rotación.",
-        image: Img1,
+        image: Img2,
         alt: "Entrevista de trabajo en sala de juntas",
         path: "/blog/reclutamiento/seleccion-candidato-ideal",
     },
@@ -81,10 +69,61 @@ const POSTS: Post[] = [
         title: "Tendencias del reclutamiento digital en México 2025",
         excerpt:
             "Panorama de automatización, IA y analítica aplicada al reclutamiento para atraer talento con mejores experiencias en 2025.",
-        image: Img1,
+        image: Img3,
         alt: "Reclutador usando herramientas digitales",
         path: "/blog/reclutamiento/tendencias-digitales-2025",
     },
+
+    // =============== NÓMINA ===============
+    {
+        id: "nomina-beneficios-maquila-pymes",
+        tag: "Nómina",
+        categoryId: "nomina",
+        title: "Beneficios para PYMEs al usar maquila de nómina en México",
+        excerpt:
+            "Ahorra tiempo, costos y riesgos delegando la nómina: pagos puntuales, timbrado CFDI 4.0 y tableros ejecutivos para tomar decisiones.",
+        image: Img7, // cámbialo por la imagen que uses en cards (p. ej., Img7)
+        alt: "Equipo de PYME revisando la nómina en una plataforma digital",
+        path: "/blog/nomina/beneficios-maquila-pymes",
+    },
+
+    {
+        id: "nomina-tendencias-maquila-2025",
+        tag: "Nómina",
+        categoryId: "nomina",
+        title: "Tendencias tecnológicas en maquila de nómina en México 2025",
+        excerpt:
+            "Conoce las tecnologías que modernizan la maquila de nómina: nube, IA y automatización para asegurar cumplimiento y precisión.",
+        image: Img8,
+        alt: "Especialista de nómina analizando reportes digitales",
+        path: "/blog/nomina/tendencias-maquila-2025",
+    },
+
+    // =============== BENEFICIOS ===============
+    {
+        id: "beneficios-seguros-vida-corporativos",
+        tag: "Beneficios",
+        categoryId: "beneficios",
+        title: "Seguros de vida corporativos en México: qué debe saber tu empresa",
+        excerpt:
+            "Descubre cómo un seguro de vida corporativo refuerza la propuesta de valor al empleado y qué factores evaluar antes de contratarlo.",
+        image: Img9,
+        alt: "Equipo corporativo celebrando resultados",
+        path: "/blog/beneficios/seguros-vida-corporativos",
+    },
+    {
+        id: "beneficios-seguro-vida-retencion-talento",
+        tag: "Beneficios",
+        categoryId: "beneficios",
+        title: "Beneficios del seguro de vida para empleados y retención de talento",
+        excerpt:
+            "Aprovecha el seguro de vida como diferenciador de bienestar y retención con recomendaciones prácticas para comunicarlo a tu equipo.",
+        image: Img10,
+        alt: "Empleado recibiendo asesoría sobre beneficios corporativos",
+        path: "/blog/beneficios/seguro-vida-retencion-talento",
+    },
+
+    // =============== VALES ===============
     {
         id: "vales-incentivo-guia-legal-fiscal",
         tag: "Beneficios",
@@ -92,7 +131,7 @@ const POSTS: Post[] = [
         title: "Vales de incentivo para empleados en México: guía legal y fiscal",
         excerpt:
             "Lineamientos fiscales y operativos para implementar vales de incentivo sin incrementar la carga salarial ni perder control.",
-        image: Img1,
+        image: Img4,
         alt: "Tarjetas de beneficios corporativos sobre escritorio",
         path: "/blog/vales/vales-incentivo-guia-legal",
     },
@@ -103,7 +142,7 @@ const POSTS: Post[] = [
         title: "Bonos e incentivos corporativos: cómo estructurarlos con vales",
         excerpt:
             "Diseña esquemas de bonos con vales que impulsen resultados, mantengan control financiero y eleven la motivación del equipo.",
-        image: Img1,
+        image: Img5,
         alt: "Gerente entregando bono a colaborador",
         path: "/blog/vales/bonos-incentivos-con-vales",
     },
@@ -114,22 +153,12 @@ const POSTS: Post[] = [
         title: "Vales digitales en México: el futuro de los incentivos laborales",
         excerpt:
             "Explora cómo los vales digitales integran omnicanalidad, gamificación y analítica para reconocer al talento en tiempo real.",
-        image: Img1,
+        image: Img6,
         alt: "Empleado usando tarjeta de vales digital",
         path: "/blog/vales/vales-digitales-futuro",
     },
-    {
-        id: "nomina-tendencias-maquila-2025",
-        tag: "Nómina",
-        categoryId: "nomina",
-        title: "Tendencias tecnológicas en maquila de nómina en México 2025",
-        excerpt:
-            "Conoce las tecnologías que modernizan la maquila de nómina: nube, IA y automatización para asegurar cumplimiento y precisión.",
-        image: Img1,
-        alt: "Especialista de nómina analizando reportes digitales",
-        path: "/blog/nomina/tendencias-maquila-2025",
-    },
 ];
+
 
 function BlogCard({ post }: { post: Post }) {
     const { tag, title, excerpt, image, alt, path } = post;
