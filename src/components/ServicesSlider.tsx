@@ -92,46 +92,53 @@ const CARDS: Card[] = [
 ];
 
 // ⬇️ Ahora acepta showCTA para poder ocultarlo en desktop
-const BackBodyCTA = ({ c, showCTA = true }: { c: Card; showCTA?: boolean }) => (
-  <div className="relative z-10 h-full w-full flex flex-col">
-    <div className="px-5 py-6 md:px-6 md:py-7 mt-auto">
-      <h3
-        className={`text-lg md:text-xl font-extrabold leading-snug whitespace-pre-line ${titleColorFor(
-          c.title
-        )}`}
-      >
-        {c.backTitle}
-      </h3>
-      <p
-        className={`mt-3 text-xs md:text-sm leading-normal whitespace-pre-line ${bodyColorFor(
-          c.title
-        )}`}
-      >
-        {c.backText}
-      </p>
-    </div>
+const BackBodyCTA = ({
+  c,
+  showCTA = true,
+  centerContent = false,
+}: {
+  c: Card;
+  showCTA?: boolean;
+  centerContent?: boolean;
+}) => {
+  const containerClasses = `relative z-10 h-full w-full flex flex-col${
+    centerContent ? " px-6 py-6 md:px-8 md:py-8" : ""
+  }`;
+  const contentClasses = centerContent
+    ? "flex-1 flex flex-col justify-center items-center text-center gap-4"
+    : "px-5 py-6 md:px-6 md:py-7 mt-auto";
+  const titleClasses = `${
+    centerContent ? "text-2xl sm:text-3xl md:text-4xl" : "text-lg md:text-xl"
+  } font-extrabold leading-snug whitespace-pre-line ${titleColorFor(c.title)}`;
+  const bodyColor = bodyColorFor(c.title);
+  const bodyClasses = centerContent
+    ? `text-base sm:text-lg md:text-xl leading-relaxed whitespace-pre-line ${bodyColor}`
+    : `mt-3 text-xs md:text-sm leading-normal whitespace-pre-line ${bodyColor}`;
+  const ctaClasses = `block px-5 py-3 md:py-3.5 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl${
+    centerContent ? " mt-8" : ""
+  }`;
 
-    {showCTA ? (
-      c.href?.startsWith("/") ? (
-        <Link
-          to={c.href}
-          className="block px-5 py-3 md:py-3.5 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl"
-          aria-label={`Conoce más sobre ${c.title}`}
-        >
-          {c.cta ?? "Conoce más"}
-        </Link>
-      ) : (
-        <a
-          href={c.href ?? "#"}
-          className="block px-5 py-3 md:py-3.5 text-center font-semibold text-white bg-white/12 backdrop-blur border-t border-white/25 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/40 rounded-b-2xl"
-          aria-label={`Conoce más sobre ${c.title}`}
-        >
-          {c.cta ?? "Conoce más"}
-        </a>
-      )
-    ) : null}
-  </div>
-);
+  return (
+    <div className={containerClasses}>
+      <div className={contentClasses}>
+        <h3 className={titleClasses}>{c.backTitle}</h3>
+        <p className={bodyClasses}>{c.backText}</p>
+      </div>
+
+      {showCTA ? (
+        c.href?.startsWith("/") ? (
+          <Link to={c.href} className={ctaClasses} aria-label={`Conoce más sobre ${c.title}`}>
+            {c.cta ?? "Conoce más"}
+          </Link>
+        ) : (
+          <a href={c.href ?? "#"} className={ctaClasses} aria-label={`Conoce más sobre ${c.title}`}>
+            {c.cta ?? "Conoce más"}
+          </a>
+        )
+      ) : null}
+    </div>
+  );
+};
 
 export default function ServicesSlider() {
   const hScroller = useRef<HTMLDivElement>(null); // desktop
@@ -213,7 +220,7 @@ export default function ServicesSlider() {
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let timer: number | null = null;
-    const STEPS_MS = 3600;
+    const STEPS_MS = 6000;
 
     const stopAuto = () => {
       if (timer) {
@@ -392,20 +399,29 @@ export default function ServicesSlider() {
     w-[78vw] max-w-[360px] h-[440px]
     sm:w-[64vw] sm:max-w-[420px] sm:h-[460px]
     md:w-[56vw] md:max-w-[460px] md:h-[480px]
-    transition-transform duration-300 will-change-transform
+    transform-gpu scale-[0.94]
+    transition-transform duration-500 ease-out will-change-transform
+    data-[centered=true]:scale-[1.05]
+    data-[centered=true]:translate-y-[-12px]
+    data-[centered=true]:z-20
+    data-[centered=true]:drop-shadow-2xl
   "
               >
                 {/* Capa FRONT */}
                 <div
                   data-front
                   className="absolute inset-0 rounded-2xl border border-black/5 shadow-xl overflow-hidden
-               transition-opacity duration-500"
+               transition-all duration-700 ease-out will-change-transform
+               group-data-[centered=true]:scale-[1.02]
+               group-data-[centered=true]:rotate-[-1deg]"
                   style={{ opacity: 1 }}
                 >
                   <img
                     src={c.img}
                     alt={c.title}
-                    className="block h-full w-full object-cover select-none pointer-events-none"
+                    className="block h-full w-full object-cover select-none pointer-events-none
+                 transition-transform duration-700 ease-out
+                 group-data-[centered=true]:scale-[1.04]"
                     draggable={false}
                     loading="lazy"
                   />
@@ -415,16 +431,20 @@ export default function ServicesSlider() {
                 <div
                   data-back
                   className="absolute inset-0 rounded-2xl border border-black/5 shadow-xl overflow-hidden
-               transition-opacity duration-500 opacity-0 pointer-events-none"
+               transition-all duration-700 ease-out opacity-0 pointer-events-none will-change-transform
+               group-data-[centered=true]:scale-[1.02]
+               group-data-[centered=true]:rotate-[1deg]"
                 >
                   <img
                     src={c.imgBack ?? c.img}
                     alt={`${c.title} reverso`}
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover
+                 transition-transform duration-700 ease-out
+                 group-data-[centered=true]:scale-[1.05]"
                     loading="lazy"
                     draggable={false}
                   />
-                  <BackBodyCTA c={c} />
+                  <BackBodyCTA c={c} centerContent />
                 </div>
               </article>
             ))}
