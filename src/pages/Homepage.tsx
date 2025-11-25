@@ -92,7 +92,7 @@ export default function HomePage() {
                 {" más importante "}
 
                 {"para "}
-                <span className="font-extrabold">fortalecer tú negocio</span>
+                <span className="font-extrabold">fortalecer tu negocio</span>
               </p>
               <p className="mt-4 max-w-3xl text-sm sm:text-base text-cardeno md:max-w-2xl mx-auto">
                 {"Payrolling-tech potencia la "}
