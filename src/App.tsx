@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import './App.css'
 import HomePage from './pages/Homepage'
 import Nominas from './pages/subpages/Nominas'
@@ -28,6 +28,9 @@ import WhatsAppFloatingButton from './components/WhatsAppFloatingButton'
 import ScrollToTop from './components/ScrollToTop'
 
 function App() {
+  const location = useLocation();
+  const isWalmartPage = location.pathname.startsWith('/wm');
+
   return (
     <>
       <ScrollToTop />
@@ -56,7 +59,7 @@ function App() {
         <Route path='/blog/nomina/tendencias-maquila-2025' element={<BlogNominaN2 />} />
         <Route path='/wm' element={<WalmartPage />} />
       </Routes>
-      <WhatsAppFloatingButton />
+      {!isWalmartPage && <WhatsAppFloatingButton />}
     </>
   )
 }

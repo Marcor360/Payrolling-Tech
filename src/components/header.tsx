@@ -9,7 +9,19 @@ type MenuNode = {
     children?: MenuNode[];
 };
 
-export default function Navbar({ variant = "default" }: { variant?: HeaderVariant }) {
+type NavbarProps = {
+    variant?: HeaderVariant;
+    linkTarget?: "_self" | "_blank";
+    showLogin?: boolean;
+    logoHref?: string;
+};
+
+export default function Navbar({
+    variant = "default",
+    linkTarget = "_self",
+    showLogin = true,
+    logoHref = "/",
+}: NavbarProps) {
     const [open, setOpen] = useState(false);
     const [hasScrolled, setHasScrolled] = useState(false);
 
@@ -115,8 +127,10 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
         },
         { href: "/#contacto", label: "Contacto" },
         { href: "/blog", label: "Blog" },
-        { href: "/Login", label: "Login" },
     ];
+    if (showLogin) {
+        menu.push({ href: "/Login", label: "Login" });
+    }
 
     const desktopLinkClasses = `text-base md:text-lg lg:text-xl font-semibold transition-colors ${isDarkVariant ? "text-white hover:text-mango" : "text-black hover:text-mango"
         }`;
@@ -127,11 +141,12 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
         }`;
     const dropdownItemBase =
         "block px-4 py-2 text-sm md:text-base whitespace-nowrap transition-colors hover:bg-black/5";
+    const linkRel = linkTarget === "_blank" ? "noopener noreferrer" : undefined;
 
     return (
         <header className={`sticky top-0 z-50 ${headerBackground} backdrop-blur`}>
             <div className="relative mx-auto w-full max-w-screen-2xl px-4 py-2 flex items-center justify-between">
-                <a href="/" className="block">
+                <a href={logoHref} className="block">
                     <img src={logoUrl} alt="Logo" className="h-10 md:h-14 lg:h-16 w-auto block" />
                 </a>
 
@@ -162,6 +177,8 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                                     {/* Trigger como <a> clickeable */}
                                     <a
                                         href={item.href ?? "#"}
+                                        target={linkTarget}
+                                        rel={linkRel}
                                         className={`${desktopLinkClasses} inline-flex items-center gap-2`}
                                         aria-haspopup="true"
                                         aria-expanded={openDesktopLabel === item.label}
@@ -201,6 +218,8 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                                                         >
                                                             <a
                                                                 href={c.href ?? "#"}
+                                                                target={linkTarget}
+                                                                rel={linkRel}
                                                                 className={`${dropdownItemBase} ${isDarkVariant ? "text-white/95" : "text-black/90"
                                                                     } inline-flex items-center justify-between gap-4 w-full pr-6`}
                                                             >
@@ -232,6 +251,8 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                                                                                     className={`${dropdownItemBase} ${isDarkVariant ? "text-white/95" : "text-black/90"
                                                                                         }`}
                                                                                     href={gc.href!}
+                                                                                    target={linkTarget}
+                                                                                    rel={linkRel}
                                                                                 >
                                                                                     {gc.label}
                                                                                 </a>
@@ -247,6 +268,8 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                                                                 className={`${dropdownItemBase} ${isDarkVariant ? "text-white/95" : "text-black/90"
                                                                     }`}
                                                                 href={c.href!}
+                                                                target={linkTarget}
+                                                                rel={linkRel}
                                                             >
                                                                 {c.label}
                                                             </a>
@@ -259,7 +282,12 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                                 </li>
                             ) : (
                                 <li key={item.href}>
-                                    <a className={desktopLinkClasses} href={item.href!}>
+                                    <a
+                                        className={desktopLinkClasses}
+                                        href={item.href!}
+                                        target={linkTarget}
+                                        rel={linkRel}
+                                    >
                                         {item.label}
                                     </a>
                                 </li>
@@ -297,6 +325,8 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                     <div className="flex items-center justify-between">
                         <a
                             href="/#servicios"
+                            target={linkTarget}
+                            rel={linkRel}
                             className={`${mobileLinkClasses} py-2`}
                             onClick={() => setOpen(false)}
                         >
@@ -335,6 +365,8 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                                             <div className="flex items-center justify-between">
                                                 <a
                                                     href={c.href ?? "#"}
+                                                    target={linkTarget}
+                                                    rel={linkRel}
                                                     className="text-base text-white/90 hover:text-mango pl-2 py-1"
                                                     onClick={() => setOpen(false)}
                                                 >
@@ -368,6 +400,8 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                                                             key={gc.href}
                                                             className="text-[0.95rem] text-white/85 hover:text-mango pl-3 py-1"
                                                             href={gc.href!}
+                                                            target={linkTarget}
+                                                            rel={linkRel}
                                                             onClick={() => setOpen(false)}
                                                         >
                                                             {gc.label}
@@ -381,6 +415,8 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                                             key={c.href}
                                             className="text-base text-white/90 hover:text-mango pl-2 py-1"
                                             href={c.href!}
+                                            target={linkTarget}
+                                            rel={linkRel}
                                             onClick={() => setOpen(false)}
                                         >
                                             {c.label}
@@ -398,6 +434,8 @@ export default function Navbar({ variant = "default" }: { variant?: HeaderVarian
                                 key={l.href}
                                 className={`${mobileLinkClasses} py-2 mt-2`}
                                 href={l.href!}
+                                target={linkTarget}
+                                rel={linkRel}
                                 onClick={() => setOpen(false)}
                             >
                                 {l.label}

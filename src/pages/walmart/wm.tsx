@@ -1,10 +1,5 @@
 import Footer from "../../components/footer.tsx";
-
-const NAV_ITEMS = [
-    { label: "Servicios", hasDropdown: true },
-    { label: "Contacto" },
-    { label: "Blog" },
-];
+import Navbar from "../../components/header.tsx";
 
 const KEY_RESULTS = [
     { title: "<=4 dias para cubrir", subtitle: "una vacante" },
@@ -44,13 +39,38 @@ const READY_POINTS: ChecklistItem[] = [
     },
 ];
 
-const FIRST_STEP = {
-    number: 1,
-    title: "Perfil ideal y brief",
-    description: "Definicion de objetivos, seniority, competencias y requisitos criticos.",
+type ProcessStep = {
+    number: string;
+    title: string;
+    description: string;
 };
 
-const PLACEHOLDER_SEGMENTS = Array.from({ length: 3 });
+const PROCESS_STEPS: ProcessStep[] = [
+    {
+        number: "01",
+        title: "Perfil ideal y brief",
+        description:
+            "Definicion de objetivos, seniority, competencias y requisitos criticos.",
+    },
+    {
+        number: "02",
+        title: "Sourcing multicanal",
+        description:
+            "Busqueda directa con IA, base propia, referidos y plataformas lideres.",
+    },
+    {
+        number: "03",
+        title: "Candidatos y entrevistas",
+        description:
+            "Envio de perfiles validados y coordinacion de entrevistas con tu equipo.",
+    },
+    {
+        number: "04",
+        title: "Cierre y onboarding",
+        description:
+            "Acompanamiento en oferta, referencias y arranque sin riesgo.",
+    },
+];
 
 function CheckItem({ strong, text }: ChecklistItem) {
     return (
@@ -80,101 +100,28 @@ function CheckItem({ strong, text }: ChecklistItem) {
     );
 }
 
-function OutlineSegment({
-  isLast,
-  className = "",
-}: {
-  isLast?: boolean;
-  className?: string;
-}) {
-  return (
-    <div
-      className={`relative min-h-[200px] flex-1 ${className}`}
-      aria-hidden="true"
-    >
-      <div
-        className="h-full w-full bg-white"
-        style={{
-          clipPath:
-            "polygon(0 0, calc(100% - 50px) 0, 100% 50%, calc(100% - 50px) 100%, 0 100%)",
-          border: "2px solid #050633",
-          borderRadius: isLast ? "0 40px 40px 0" : "0",
-        }}
-      />
-    </div>
-  );
-}
-
-function LeadProcessStep() {
-  return (
-    <div className="relative z-10 min-h-[200px] rounded-[48px] border-2 border-[#050633] bg-[#050633] px-8 py-8 text-white shadow-[0_25px_45px_rgba(5,6,51,0.4)]">
-      <div
-        className="absolute -right-16 top-0 hidden h-full w-[150px] bg-[#050633] md:block"
-        style={{ clipPath: "polygon(0 0, 100% 50%, 0 100%)" }}
-        aria-hidden="true"
-      />
-      <div className="relative z-10 flex flex-col gap-4">
-        <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#febe0b] text-2xl font-black text-[#050633] shadow-inner shadow-black/20">
-          {FIRST_STEP.number}
-        </span>
-        <div>
-          <p className="text-2xl font-semibold">{FIRST_STEP.title}</p>
-          <p className="mt-2 text-sm leading-relaxed text-white/90">
-            {FIRST_STEP.description}
-          </p>
+function ProcessStepCard({ number, title, description }: ProcessStep) {
+    return (
+        <div className="relative overflow-hidden rounded-[36px] bg-[#050633] px-7 py-8 text-white shadow-[0_30px_55px_rgba(5,6,51,0.35)] before:absolute before:-top-16 before:right-6 before:h-32 before:w-32 before:rounded-full before:bg-white/5 before:blur-3xl before:content-['']">
+            <div className="relative z-10 flex flex-col gap-4">
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#febe0b] text-lg font-black text-[#050633] shadow-inner shadow-black/20 sm:h-14 sm:w-14 sm:text-2xl">
+                    {number}
+                </span>
+                <div>
+                    <p className="text-2xl font-semibold">{title}</p>
+                    <p className="mt-2 text-base leading-relaxed text-white/85">
+                        {description}
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default function WalmartPage() {
-  return (
-    <div className="min-h-screen bg-[#f4f3e9] text-[#08082c]">
-            <header className="bg-[#050633] text-white">
-                <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-6 px-4 py-5 lg:px-6">
-                    <div className="flex items-center gap-3">
-                        <div className="grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br from-[#febe0b] via-[#ff1d77] to-[#761bff] text-2xl font-black text-white shadow-lg shadow-black/30">
-                            P
-                        </div>
-                        <div className="leading-tight">
-                            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-white/70">
-                                Payrolling
-                            </p>
-                            <p className="text-lg font-semibold">Tech</p>
-                        </div>
-                    </div>
-                    <nav className="flex flex-wrap items-center gap-6 text-sm font-medium">
-                        {NAV_ITEMS.map((item) => (
-                            <button
-                                key={item.label}
-                                type="button"
-                                className="flex items-center gap-1 text-white/85 transition hover:text-white"
-                            >
-                                <span>{item.label}</span>
-                                {item.hasDropdown && (
-                                    <svg
-                                        aria-hidden="true"
-                                        className="h-3 w-3"
-                                        viewBox="0 0 12 8"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                        <path
-                                            d="M1 1.5L6 6.5L11 1.5"
-                                            stroke="currentColor"
-                                            strokeWidth="1.5"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                    </svg>
-                                )}
-                            </button>
-                        ))}
-                    </nav>
-                </div>
-            </header>
-
+    return (
+        <div className="min-h-screen bg-[#f4f3e9] text-[#08082c]">
+            <Navbar variant="dark" linkTarget="_blank" showLogin={false} logoHref="/wm" />
             <main>
                 <section className="px-4 pb-8 pt-12 sm:pb-12">
                     <div className="mx-auto max-w-6xl rounded-xl border-4 border-[#050633] bg-white px-4 py-10 sm:px-10 sm:py-16">
@@ -300,27 +247,21 @@ export default function WalmartPage() {
                     </div>
                 </section>
 
-        <section className="px-4 pb-16">
-          <div className="mx-auto max-w-5xl text-center">
-            <h2 className="text-4xl font-black text-cardeno">Nuestro Proceso</h2>
-          </div>
-          <div className="mx-auto mt-8 flex w-full max-w-5xl flex-col gap-6">
-            <div className="flex flex-col gap-4 md:flex-row md:items-stretch">
-              <div className="md:flex-[1.15]">
-                <LeadProcessStep />
-              </div>
-              <div className="flex flex-col gap-4 md:flex-row md:items-stretch md:gap-0">
-                {PLACEHOLDER_SEGMENTS.map((_, index) => (
-                  <OutlineSegment
-                    key={`segment-${index}`}
-                    isLast={index === PLACEHOLDER_SEGMENTS.length - 1}
-                    className={`md:flex-1 ${index === 0 ? "md:-ml-16" : index === 1 ? "md:-ml-20" : "md:-ml-20"}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+                <section className="px-4 pb-16">
+                    <div className="mx-auto max-w-4xl text-center">
+                        <h2 className="text-4xl font-black text-cardeno">Nuestro Proceso</h2>
+                        <p className="mt-3 text-base text-[#0b0b35]/80 sm:text-lg">
+                            Simple y orientado a resultados. Te acompanamos de principio a fin.
+                        </p>
+                    </div>
+                    <div className="mx-auto mt-10 w-full max-w-6xl rounded-[48px] border border-white/60 bg-[#fefaf1] px-5 py-8 shadow-[0_25px_45px_rgba(5,6,51,0.15)] sm:px-10 sm:py-12">
+                        <div className="grid gap-6 md:grid-cols-2">
+                            {PROCESS_STEPS.map((step) => (
+                                <ProcessStepCard key={step.number} {...step} />
+                            ))}
+                        </div>
+                    </div>
+                </section>
             </main>
 
             <Footer />
