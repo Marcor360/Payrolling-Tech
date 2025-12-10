@@ -1,32 +1,33 @@
+import { useEffect, useState } from "react";
 import Footer from "../../components/footer.tsx";
 import Navbar from "../../components/header.tsx";
 
 const KEY_RESULTS = [
-    { title: "<=4 dias para cubrir", subtitle: "una vacante" },
-    { title: "3x mas candidatos", subtitle: "calificados por vacante" },
-    { title: "30% de reduccion de costo", subtitle: "por contratacion" },
+    { title: "<=4 días para cubrir", subtitle: "una vacante" },
+    { title: "3x más candidatos", subtitle: "calificados por vacante" },
+    { title: "30% de reducción de costo", subtitle: "por contratación" },
 ];
 
 type ChecklistItem = { strong: string; text: string };
 
 const GUARANTEE_POINTS: ChecklistItem[] = [
     {
-        strong: "Reposicion sin costo",
-        text: " si el talento no se mantiene en el periodo pactado.",
+        strong: "Reposición sin costo",
+        text: " si el talento no se mantiene en el período pactado.",
     },
     {
-        strong: "Reportes semanales y metricas",
+        strong: "Reportes semanales y métricas",
         text: " (pipeline, entrevistas y estado de cada vacante).",
     },
     {
-        strong: "Confidencialidad total y proteccion de datos",
+        strong: "Confidencialidad total y protección de datos",
         text: " (privacidad y consentimiento).",
     },
 ];
 
 const READY_POINTS: ChecklistItem[] = [
     {
-        strong: "Respuesta en menos de 24 h habiles",
+        strong: "Respuesta en menos de 24 h hábiles",
         text: ".",
     },
     {
@@ -34,7 +35,7 @@ const READY_POINTS: ChecklistItem[] = [
         text: ".",
     },
     {
-        strong: "Cobertura nacional (Mexico) y roles remotos LATAM",
+        strong: "Cobertura nacional (México) y roles remotos LATAM",
         text: ".",
     },
 ];
@@ -50,32 +51,32 @@ const PROCESS_STEPS: ProcessStep[] = [
         number: "01",
         title: "Perfil ideal y brief",
         description:
-            "Definicion de objetivos, seniority, competencias y requisitos criticos.",
+            "Definición de objetivos, seniority, competencias y requisitos críticos.",
     },
     {
         number: "02",
         title: "Sourcing multicanal",
         description:
-            "Busqueda directa con IA, base propia, referidos y plataformas lideres.",
+            "Búsqueda directa con IA, base propia, referidos y plataformas líderes.",
     },
     {
         number: "03",
         title: "Candidatos y entrevistas",
         description:
-            "Envio de perfiles validados y coordinacion de entrevistas con tu equipo.",
+            "Envío de perfiles validados y coordinación de entrevistas con tu equipo.",
     },
     {
         number: "04",
         title: "Cierre y onboarding",
         description:
-            "Acompanamiento en oferta, referencias y arranque sin riesgo.",
+            "Acompañamiento en oferta, referencias y arranque sin riesgo.",
     },
 ];
 
 function CheckItem({ strong, text }: ChecklistItem) {
     return (
         <li className="flex items-start gap-3 text-base leading-relaxed text-[#0a0a33] sm:text-lg">
-            <span className="mt-1 inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#050633]/60 bg-[#050633] text-white shadow-[0_6px_14px_rgba(4,6,51,0.35)]">
+            <span className="mt-1 inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#050633]/60 bg-[#050633] text-white">
                 <svg
                     width="16"
                     height="12"
@@ -119,6 +120,13 @@ function ProcessStepCard({ number, title, description }: ProcessStep) {
 }
 
 export default function WalmartPage() {
+    const [showScheduleLabel, setShowScheduleLabel] = useState(false);
+
+    useEffect(() => {
+        const timer = window.setTimeout(() => setShowScheduleLabel(true), 5000);
+        return () => window.clearTimeout(timer);
+    }, []);
+
     return (
         <div className="min-h-screen bg-[#f4f3e9] text-[#08082c]">
             <Navbar variant="dark" linkTarget="_blank" showLogin={false} logoHref="/wm" />
@@ -142,13 +150,16 @@ export default function WalmartPage() {
                 </section>
 
                 <section className="bg-[#050633] px-4 py-12 text-white">
-                    <div className="mx-auto max-w-5xl text-center">
+                    <div className="mx-auto max-w-6xl text-center">
                         <p className="text-2xl font-black leading-tight md:text-[2.5rem]">
-                            <span className="inline-block rounded-sm bg-[#febe0b] px-4 py-1 text-[#050633] shadow-[0_6px_16px_rgba(0,0,0,0.25)] md:-skew-x-[6deg]">
-                                <span className="text-cardeno">“</span> <span className="-skew-x-[0deg] font-extrabold text-cardeno">Reducir tiempos</span>
-                            </span>{" "}
-                            <span className="block mt-3 md:mt-2">
-                                de cobertura empieza con la decision correcta.”
+                            <span className="inline-flex items-center rounded-md bg-[#febe0b] px-6 py-3 text-[#050633] shadow-[0_6px_16px_rgba(0,0,0,0.25)] md:-skew-x-[6deg]">
+                                <span className="mr-3 text-4xl font-black text-cardeno">"</span>
+                                <span className="-skew-x-[0deg] font-extrabold text-cardeno">
+                                    Reducir tiempos
+                                </span>
+                            </span>
+                            <span className="ml-3 inline text-white">
+                                de cobertura empieza con la decision correcta."
                             </span>
                         </p>
                     </div>
@@ -159,12 +170,12 @@ export default function WalmartPage() {
                         <p className="text-base text-[#0b0b35]/80 sm:text-lg">
                             Combinamos{" "}
                             <span className="font-semibold text-[#050633]">
-                                expertos locales, tecnologia y procesos estandarizados
+                                expertos locales, tecnología y procesos estandarizados
                             </span>{" "}
                             para lograr{" "}
                             <span className="font-semibold text-[#050633]">
-                                contrataciones mas rapidas, de mayor calidad y con menor
-                                rotacion.
+                                contrataciones más rápidas, de mayor calidad y con menor
+                                rotación.
                             </span>
                         </p>
                         <h2 className="mt-6 text-4xl font-black tracking-tight text-cardeno">
@@ -193,7 +204,7 @@ export default function WalmartPage() {
                             <div className="grid gap-10 md:grid-cols-2 md:items-center">
                                 <div>
                                     <h3 className="text-3xl font-black text-cardeno">
-                                        Garantias y diferenciales
+                                        Garantías y diferenciales
                                     </h3>
                                     <ul className="mt-6 space-y-6">
                                         {GUARANTEE_POINTS.map((point) => (
@@ -229,7 +240,7 @@ export default function WalmartPage() {
                                         Listos para cubrir tus vacantes
                                     </h3>
                                     <p className="mt-4 text-base leading-relaxed text-[#0b0b35]/80 sm:text-lg">
-                                        Cuentanos el perfil y la cantidad de personal que necesitas.
+                                        Cuéntanos el perfil y la cantidad de personal que necesitas.
                                         Te enviamos una{" "}
                                         <span className="font-semibold text-[#050633]">
                                             propuesta y un tiempo estimado de cobertura
@@ -251,7 +262,7 @@ export default function WalmartPage() {
                     <div className="mx-auto max-w-4xl text-center">
                         <h2 className="text-4xl font-black text-cardeno">Nuestro Proceso</h2>
                         <p className="mt-3 text-base text-[#0b0b35]/80 sm:text-lg">
-                            Simple y orientado a resultados. Te acompanamos de principio a fin.
+                            Simple y orientado a resultados. Te acompañamos de principio a fin.
                         </p>
                     </div>
                     <div className="mx-auto mt-10 w-full max-w-6xl rounded-[48px] border border-white/60 bg-[#fefaf1] px-5 py-8 shadow-[0_25px_45px_rgba(5,6,51,0.15)] sm:px-10 sm:py-12">
@@ -265,6 +276,43 @@ export default function WalmartPage() {
             </main>
 
             <Footer />
+            <div className="fixed bottom-24 right-6 z-40 flex flex-col items-center gap-4 md:bottom-28 md:right-10">
+                <span
+                    className={`rounded-full bg-white/95 px-4 py-1 text-sm font-semibold text-[#050633] shadow-lg transition-all duration-300 ${showScheduleLabel ? "translate-y-0 opacity-100" : "translate-y-1 opacity-0"}`}
+                >
+                    Agendar reunion
+                </span>
+                <a
+                    href="/#contacto"
+                    className="grid h-14 w-14 place-items-center rounded-full bg-gradient-to-tr from-[#febe0b] via-[#ff1d77] to-[#761bff] text-white shadow-[0_20px_35px_rgba(5,6,51,0.35)] transition hover:scale-105"
+                    aria-label="Agendar reunion"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                        <path d="M16 3v4" />
+                        <path d="M8 3v4" />
+                        <path d="M4 11h16" />
+                        <path d="M7 14h.013" />
+                        <path d="M10.01 14h.005" />
+                        <path d="M13.01 14h.005" />
+                        <path d="M16.015 14h.005" />
+                        <path d="M13.015 17h.005" />
+                        <path d="M7.01 17h.005" />
+                        <path d="M10.01 17h.005" />
+                    </svg>
+                </a>
+            </div>
         </div>
     );
 }
