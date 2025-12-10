@@ -57,7 +57,7 @@ function App() {
         <Route path='/blog/vales/vales-digitales-futuro' element={<BlogValesDigitales />} />
         <Route path='/blog/nomina/beneficios-maquila-pymes' element={<BlogNominaN1 />} />
         <Route path='/blog/nomina/tendencias-maquila-2025' element={<BlogNominaN2 />} />
-        <Route path='/wm' element={<WalmartPage />} />
+        <Route path='/wmc' element={<WalmartPage />} />
       </Routes>
       {!isWalmartPage && <WhatsAppFloatingButton />}
     </>

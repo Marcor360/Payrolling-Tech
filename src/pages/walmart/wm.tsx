@@ -283,7 +283,9 @@ export default function WalmartPage() {
                     Agendar reunion
                 </span>
                 <a
-                    href="/#contacto"
+                    href="https://calendar.app.google/MnpkYVxEqDaAQgeo6"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="grid h-14 w-14 place-items-center rounded-full bg-gradient-to-tr from-[#febe0b] via-[#ff1d77] to-[#761bff] text-white shadow-[0_20px_35px_rgba(5,6,51,0.35)] transition hover:scale-105"
                     aria-label="Agendar reunion"
                 >
