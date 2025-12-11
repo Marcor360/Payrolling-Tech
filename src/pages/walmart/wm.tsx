@@ -129,36 +129,39 @@ export default function WalmartPage() {
 
     return (
         <div className="min-h-screen bg-[#f4f3e9] text-[#08082c]">
-            <Navbar variant="dark" linkTarget="_blank" showLogin={false} logoHref="/wm" />
+            <Navbar variant="dark" linkTarget="_blank" showLogin={false} logoHref="/wmc" />
             <main>
-                <section className="px-4 pb-8 pt-12 sm:pb-12">
-                    <div className="mx-auto max-w-6xl rounded-xl border-4 border-[#050633] bg-white px-4 py-10 sm:px-10 sm:py-16">
-                        <div className="relative flex min-h-[260px] items-center justify-center rounded-lg border border-[#050633]/30 bg-white px-6 py-10 text-center text-3xl font-semibold tracking-wider text-[#050633] sm:text-4xl">
-                            VIDEO FER
-                            <span
-                                className="absolute left-6 bottom-8 hidden h-1 w-32 bg-[#050633] sm:block"
-                                style={{ transform: "rotate(25deg)" }}
-                                aria-hidden="true"
-                            />
-                            <span
-                                className="absolute right-6 top-8 hidden h-1 w-32 bg-[#050633] sm:block"
-                                style={{ transform: "rotate(25deg)" }}
-                                aria-hidden="true"
-                            />
+                <section className="px-4 pb-4 pt-8 sm:pb-8 sm:pt-12">
+                    <div className="mx-auto max-w-7xl px-0 py-4 sm:px-10 sm:py-10">
+                        <div className="mx-auto w-full max-w-[1200px] rounded-[44px] border-[6px] border-cardeno bg-white shadow-[0_35px_60px_rgba(5,6,51,0.25)]">
+                            <div className="relative overflow-hidden rounded-[36px] bg-white">
+                                <div className="aspect-video overflow-hidden rounded-[32px] bg-[#050633]">
+                                    <video
+                                        className="h-full w-full object-cover"
+                                        controls
+                                        playsInline
+                                    >
+                                        <source src="/video/walmart.mp4" type="video/mp4" />
+                                        Tu navegador no soporta la reproducción de video.
+                                    </video>
+                                </div>
+                                <span className="pointer-events-none absolute left-6 top-6 hidden h-12 w-12 rounded-full bg-[#ff4bc1]/30 blur-2xl sm:block" />
+                                <span className="pointer-events-none absolute bottom-6 right-6 hidden h-12 w-12 rounded-full bg-[#febe0b]/40 blur-2xl sm:block" />
+                            </div>
                         </div>
                     </div>
                 </section>
 
                 <section className="bg-[#050633] px-4 py-12 text-white">
                     <div className="mx-auto max-w-6xl text-center">
-                        <p className="text-2xl font-black leading-tight md:text-[2.5rem]">
+                        <p className="text-2xl font-bold leading-tight md:text-[2.5rem] md:font-black">
                             <span className="inline-flex items-center rounded-md bg-[#febe0b] px-6 py-3 text-[#050633] shadow-[0_6px_16px_rgba(0,0,0,0.25)] md:-skew-x-[6deg]">
-                                <span className="mr-3 text-4xl font-black text-cardeno">"</span>
-                                <span className="-skew-x-[0deg] font-extrabold text-cardeno">
+                                <span className="mr-3 text-4xl font-bold text-cardeno sm:font-black">"</span>
+                                <span className="-skew-x-[0deg] font-semibold text-cardeno sm:font-extrabold">
                                     Reducir tiempos
                                 </span>
                             </span>
-                            <span className="ml-3 inline text-white">
+                            <span className="ml-3 inline text-white font-semibold sm:font-black">
                                 de cobertura empieza con la decision correcta."
                             </span>
                         </p>
