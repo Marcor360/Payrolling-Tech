@@ -162,7 +162,7 @@ export default function WalmartPage() {
                                 </span>
                             </span>
                             <span className="ml-3 inline text-white font-semibold sm:font-black">
-                                de cobertura empieza con la decision correcta."
+                                de cobertura empieza con la decisión correcta."
                             </span>
                         </p>
                     </div>
@@ -283,14 +283,14 @@ export default function WalmartPage() {
                 <span
                     className={`rounded-full bg-white/95 px-4 py-1 text-sm font-semibold text-[#050633] shadow-lg transition-all duration-300 ${showScheduleLabel ? "translate-y-0 opacity-100" : "translate-y-1 opacity-0"}`}
                 >
-                    Agendar reunion
+                    Agendar reunión
                 </span>
                 <a
                     href="https://calendar.app.google/MnpkYVxEqDaAQgeo6"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="grid h-14 w-14 place-items-center rounded-full bg-gradient-to-tr from-[#febe0b] via-[#ff1d77] to-[#761bff] text-white shadow-[0_20px_35px_rgba(5,6,51,0.35)] transition hover:scale-105"
-                    aria-label="Agendar reunion"
+                    aria-label="Agendar reunión"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
