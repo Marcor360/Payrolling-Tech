@@ -76,7 +76,7 @@ const PROCESS_STEPS: ProcessStep[] = [
 function CheckItem({ strong, text }: ChecklistItem) {
     return (
         <li className="flex items-start gap-3 text-base leading-relaxed text-[#0a0a33] sm:text-lg">
-            <span className="mt-1 inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#050633]/60 bg-[#050633] text-white">
+            <span className="mt-1 inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border-2 border-[#050633]/60 bg-[#050633] text-white">
                 <svg
                     width="16"
                     height="12"
