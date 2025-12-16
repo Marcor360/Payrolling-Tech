@@ -1,4 +1,23 @@
-export default function Footer() {
+type FooterProps = {
+    phoneDisplay?: string;
+    phoneHref?: string;
+    email?: string;
+};
+
+const DEFAULT_PHONE_DISPLAY = "81 3864 6238";
+const DEFAULT_PHONE_HREF = "+528138646238";
+const DEFAULT_EMAIL = "contacto@payrollingtech.mx";
+
+export default function Footer({
+    phoneDisplay = DEFAULT_PHONE_DISPLAY,
+    phoneHref = DEFAULT_PHONE_HREF,
+    email = DEFAULT_EMAIL,
+}: FooterProps = {}) {
+    const phoneLink = `tel:${phoneHref}`;
+    const normalizedWhatsApp = phoneHref.replace(/\D/g, "");
+    const whatsappLink = `https://wa.me/${normalizedWhatsApp}?text=%C2%A1Hola%21%20Quiero%20m%C3%A1s%20info%20del%20servicio%20de%20%2APayrolling%20Tech%2A`;
+    const mailLink = `mailto:${email}`;
+
     return (
         <footer className="py-6 px-4" style={{ backgroundColor: 'var(--color-cardeno)' }}>
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-stretch justify-between gap-8 text-[var(--color-mango)]">
@@ -22,8 +41,8 @@ export default function Footer() {
                         52787 Naucalpan de Juárez, Méx.
                     </div>
                     <div>
-                        <a href="tel:+528138646238">
-                            Teléfono: <br /> 81 3864 6238
+                        <a href={phoneLink}>
+                            Teléfono: <br /> {phoneDisplay}
                         </a>
                     </div>
 
@@ -58,7 +77,7 @@ export default function Footer() {
                         </a>
                         {/* WhatsApp */}
                         <a
-                            href="https://wa.me/528138646238?text=%C2%A1Hola%21%20Quiero%20m%C3%A1s%20info%20del%20servicio%20de%20%2APayrolling%20Tech%2A"
+                            href={whatsappLink}
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="WhatsApp"
@@ -107,7 +126,7 @@ export default function Footer() {
                         </a>
                         {/* Correo */}
                         <a
-                            href="mailto:contacto@payrollingtech.mx"
+                            href={mailLink}
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Correo electrónico"

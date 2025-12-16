@@ -278,7 +278,11 @@ export default function WalmartPage() {
                 </section>
             </main>
 
-            <Footer />
+            <Footer
+                phoneDisplay="55 3827 8103"
+                phoneHref="+525538278103"
+                email="ffonseca@payrolling-tech.com"
+            />
             <div className="fixed bottom-24 right-6 z-40 flex flex-col items-center gap-4 md:bottom-28 md:right-10">
                 <span
                     className={`rounded-full bg-white/95 px-4 py-1 text-sm font-semibold text-[#050633] shadow-lg transition-all duration-300 ${showScheduleLabel ? "translate-y-0 opacity-100" : "translate-y-1 opacity-0"}`}
