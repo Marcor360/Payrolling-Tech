@@ -8,6 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "serve": "node server/checkid-proxy.js",
+    "start": "npm run build && node server/checkid-proxy.js",
     "mail:server": "node server/index.js"
   },
   "dependencies": {
