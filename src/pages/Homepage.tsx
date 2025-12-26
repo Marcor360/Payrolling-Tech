@@ -1,8 +1,8 @@
 import Header from "../components/header.tsx";
 import Footer from "../components/footer.tsx";
 import ServicesSlider from "../components/ServicesSlider";
-import { useState, type FormEvent } from "react";
-import { submitForm } from "../lib/formSubmit.ts";
+
+
 
 import HeaderFondoWeb from "/img/tarjetas/web/Header fondo.webp?url";
 import HeaderFondoMovil from "/img/tarjetas/mobile/fondo tarjetas.webp?url";
@@ -15,39 +15,8 @@ const CONTACT_SERVICES = [
 ];
 
 export default function HomePage() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    const selectedServices = formData.getAll("servicio");
 
-    if (selectedServices.length === 0) {
-      alert("Selecciona al menos un servicio de interés.");
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    submitForm(form, {
-      formType: "general",
-      subject: "Contacto - Página principal",
-      metadata: {
-        form: "home-contact",
-        serviciosSeleccionados: selectedServices,
-      },
-    })
-      .then(() => {
-        alert("¡Gracias! Hemos recibido tu mensaje.");
-        form.reset();
-      })
-      .catch((error) => {
-        console.error("Error enviando formulario:", error);
-        alert(error.message ?? "Ocurrió un error al enviar el formulario. Intenta de nuevo más tarde.");
-      })
-      .finally(() => setIsSubmitting(false));
-  };
   return (
     <div>
       <Header />
@@ -115,7 +84,7 @@ export default function HomePage() {
           </p>
 
           <form
-            onSubmit={handleSubmit}
+
             className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6"
           >
             <div className="flex flex-col">
@@ -223,11 +192,10 @@ export default function HomePage() {
             <div className="md:col-span-2">
               <button
                 type="submit"
-                disabled={isSubmitting}
+
                 className="inline-flex items-center gap-2 rounded-md bg-cardeno px-5 py-2.5 font-semibold text-white shadow-sm hover:bg-cardeno/90 focus:outline-none focus:ring-2 focus:ring-cardeno/50 disabled:cursor-not-allowed disabled:opacity-70"
                 aria-label="Enviar formulario de contacto"
               >
-                {isSubmitting ? "Enviando..." : "Enviar"}
               </button>
             </div>
           </form>

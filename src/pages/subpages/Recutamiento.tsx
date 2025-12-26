@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Headers from "../../components/header.tsx";
 import Footers from "../../components/footer.tsx";
-import { useFormSubmit } from "../../hooks/useFormSubmit.ts";
 import BotonCobertura from "/img/tarjetas/Botones/Blanco.png";
 import BotonCandidatos from "/img/tarjetas/Botones/Cardeno.png";
 import BotonCosto from "/img/tarjetas/Botones/Mango.png";
@@ -83,11 +82,6 @@ const PROCESO = [
 ];
 
 export default function Reclutamiento() {
-  const { isSubmitting, handleSubmit } = useFormSubmit({
-    formType: "recruitment",
-    subject: "Solicitud - Reclutamiento",
-    metadata: { form: "reclutamiento-contact" },
-  });
   const procesoRef = useRef<HTMLOListElement | null>(null);
   const [procesoVisible, setProcesoVisible] = useState(false);
 
@@ -296,7 +290,7 @@ export default function Reclutamiento() {
         </section>
         <section className="bg-noche py-20 text-white">
           <div className="mx-auto grid max-w-6xl gap-12 px-4 justify-items-center lg:grid-cols-[minmax(0,560px)_1fr] lg:gap-16 lg:justify-items-start">
-            <form onSubmit={handleSubmit} className="order-2 w-full max-w-[560px] rounded-3xl bg-fondo-cremita p-8 text-black shadow-2xl shadow-black/30 lg:order-1">
+            <form onSubmit={(event) => event.preventDefault()} noValidate className="order-2 w-full max-w-[560px] rounded-3xl bg-fondo-cremita p-8 text-black shadow-2xl shadow-black/30 lg:order-1">
               <div className="grid gap-5 sm:grid-cols-2">
                 <label className="flex flex-col gap-2 text-sm font-semibold">
                   Nombre*
@@ -395,10 +389,9 @@ export default function Reclutamiento() {
 
               <button
                 type="submit"
-                disabled={isSubmitting}
                 className="mt-6 w-full rounded-full bg-mango px-6 py-3 text-base font-extrabold text-black shadow-md transition hover:bg-mango/90 focus:outline-none focus:ring-2 focus:ring-mango/60 disabled:cursor-not-allowed disabled:opacity-70"
               >
-                {isSubmitting ? "Solicitando..." : "Solicitar cotización"}
+                Solicitar cotización
               </button>
               <p className="mt-3 text-center text-xs text-black/60">
                 Al enviar aceptas el tratamiento de datos conforme a nuestro Aviso de Privacidad.

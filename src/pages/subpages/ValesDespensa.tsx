@@ -1,7 +1,6 @@
 import Headers from "../../components/header.tsx";
 import Footer from "../../components/footer.tsx";
 //Importacion de imagenes
-import { useFormSubmit } from "../../hooks/useFormSubmit.ts";
 import Vale from "/img/Contenido/TarjetasVales.webp";
 import tablaVales from "/img/Contenido/TablaVales.webp";
 //importar svg
@@ -79,11 +78,6 @@ const REASONS = [
 ];
 
 export default function ValesDespensa() {
-    const { isSubmitting, handleSubmit } = useFormSubmit({
-        formType: "general",
-        subject: "Contacto - Vales de despensa",
-        metadata: { form: "vales-despensa-contact" },
-    });
     return (
         <div className="min-h-screen text-noche">
             <Headers variant="dark" />
@@ -227,7 +221,7 @@ export default function ValesDespensa() {
                                     Agenda una cita para conocer mas sobre nuestros vales.
                                 </h2>
                             </div>
-                            <form onSubmit={handleSubmit} className="w-full space-y-8 rounded-[2rem] bg-white px-6 py-10 shadow-[0_32px_70px_rgba(0,0,0,0.22)] lg:order-1 lg:max-w-[58rem] lg:px-16 lg:justify-self-end xl:max-w-[64rem]" noValidate>
+                            <form onSubmit={(event) => event.preventDefault()} className="w-full space-y-8 rounded-[2rem] bg-white px-6 py-10 shadow-[0_32px_70px_rgba(0,0,0,0.22)] lg:order-1 lg:max-w-[58rem] lg:px-16 lg:justify-self-end xl:max-w-[64rem]" noValidate>
                                 <fieldset className="space-y-4">
                                     <legend className="text-base font-semibold text-noche">Cuentanos mas de ti</legend>
                                     <div className="grid gap-4 sm:grid-cols-2">
@@ -283,10 +277,9 @@ export default function ValesDespensa() {
                                 </label>
                                 <button
                                     type="submit"
-                                    disabled={isSubmitting}
                                     className="inline-flex w-full items-center justify-center rounded-full bg-[#ffbf2b] px-6 py-3 text-base font-semibold text-noche shadow-[0_16px_0_rgba(0,0,0,0.18)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#ffc947] disabled:cursor-not-allowed disabled:opacity-70"
                                 >
-                                    {isSubmitting ? "Enviando..." : "Enviar"}
+                                    Enviar
                                 </button>
                             </form>
                         </div>

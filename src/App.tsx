@@ -22,6 +22,7 @@ import BlogValesV2 from './pages/subpages/Blog/Vales/V2'
 import BlogValesDigitales from './pages/subpages/Blog/Vales/V3'
 import BlogNominaN1 from './pages/subpages/Blog/Nomina/N1'
 import BlogNominaN2 from './pages/subpages/Blog/Nomina/N2'
+import Datos from './pages/subpages/API/Datos'
 import WalmartPage from './pages/walmart/wm'
 // Components
 import WhatsAppFloatingButton from './components/WhatsAppFloatingButton'
@@ -57,6 +58,7 @@ function App() {
         <Route path='/blog/vales/vales-digitales-futuro' element={<BlogValesDigitales />} />
         <Route path='/blog/nomina/beneficios-maquila-pymes' element={<BlogNominaN1 />} />
         <Route path='/blog/nomina/tendencias-maquila-2025' element={<BlogNominaN2 />} />
+        <Route path='/api/datos' element={<Datos />} />
         <Route path='/wmc' element={<WalmartPage />} />
       </Routes>
       {!isWalmartPage && <WhatsAppFloatingButton />}

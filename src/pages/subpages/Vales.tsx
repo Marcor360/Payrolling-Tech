@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import Headers from "../../components/header.tsx";
 import Footer from "../../components/footer.tsx";
-import { useFormSubmit } from "../../hooks/useFormSubmit.ts";
 import ComoFunciona from "/img/Contenido/ComoFunciona.webp";
 
 // importar svg
@@ -17,11 +16,6 @@ const controlFinancieroTotalSvg = "/img/svg/svg-vales/control financiero total.s
 
 export default function Vales() {
     const pageRef = useRef<HTMLDivElement>(null);
-    const { isSubmitting, handleSubmit } = useFormSubmit({
-        formType: "general",
-        subject: "Contacto - Vales",
-        metadata: { form: "vales-contact" },
-    });
 
     // Scroll reveal (sutil, lento, una sola vez)
     useEffect(() => {
@@ -256,13 +250,13 @@ export default function Vales() {
                                 data-ani
                                 style={{ transitionDelay: "160ms" }}
                                className="opacity-0 translate-y-4 transition-all duration-[1200ms]
-                           ease-[cubic-bezier(0.22,1,0.36,1)]
-                           w-full space-y-8 rounded-[2rem] bg-white px-6 py-10
-                           shadow-[0_32px_70px_rgba(0,0,0,0.22)] lg:order-1 lg:max-w-[58rem]
-                           lg:px-16 lg:justify-self-end xl:max-w-[64rem]"
-                               onSubmit={handleSubmit}
-                               noValidate
-                           >
+                            ease-[cubic-bezier(0.22,1,0.36,1)]
+                            w-full space-y-8 rounded-[2rem] bg-white px-6 py-10
+                            shadow-[0_32px_70px_rgba(0,0,0,0.22)] lg:order-1 lg:max-w-[58rem]
+                            lg:px-16 lg:justify-self-end xl:max-w-[64rem]"
+                               onSubmit={(event) => event.preventDefault()}
+                                noValidate
+                            >
                                 <fieldset className="space-y-4">
                                     <legend className="text-base font-semibold text-noche">
                                         Cuentanos mas de ti
@@ -386,10 +380,9 @@ export default function Vales() {
 
                                 <button
                                     type="submit"
-                                    disabled={isSubmitting}
                                     className="inline-flex w-full items-center justify-center rounded-full bg-[#ffbf2b] px-6 py-3 text-base font-semibold text-noche shadow-[0_16px_0_rgba(0,0,0,0.18)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#ffc947] disabled:cursor-not-allowed disabled:opacity-70"
                                 >
-                                    {isSubmitting ? "Enviando..." : "Enviar"}
+                                    Enviar
                                 </button>
                             </form>
                         </div>

@@ -19,7 +19,6 @@ import svg9 from "/img/svg/svg-beneficios/9.svg";
 import svg10 from "/img/svg/svg-beneficios/10.svg";
 import svg11 from "/img/svg/svg-beneficios/11.svg";
 import svg12 from "/img/svg/svg-beneficios/12.svg";
-import { useFormSubmit } from "../../hooks/useFormSubmit.ts";
 
 const beneficiosData = [
     { icon: svg1, title: "Salario On-Demand" },
@@ -146,11 +145,6 @@ export default function Beneficios() {
     // -------- MODAL STATE --------
     const [activeId, setActiveId] = useState<string | null>(null);
     const closeBtnRef = useRef<HTMLButtonElement | null>(null);
-    const { isSubmitting, handleSubmit } = useFormSubmit({
-        formType: "general",
-        subject: "Contacto - Beneficios",
-        metadata: { form: "beneficios-contact" },
-    });
 
     // Mapa por título normalizado → tarjeta
     const byTitle = useMemo(() => {
@@ -442,7 +436,7 @@ export default function Beneficios() {
                                 className="relative rounded-3xl border-2 border-cardeno p-6 md:p-8 bg-transparent space-y-8"
                                 noValidate
                                 method="post"
-                                onSubmit={handleSubmit}
+                                onSubmit={(event) => event.preventDefault()}
                             >
                                 {/* Decoración punteada (dentro del form) */}
                                 <div
@@ -634,10 +628,9 @@ export default function Beneficios() {
                                 {/* Submit */}
                                 <button
                                     type="submit"
-                                    disabled={isSubmitting}
                                     className="w-full rounded-xl bg-cardeno text-white font-semibold py-3 md:py-4 hover:opacity-90 transition disabled:cursor-not-allowed disabled:opacity-70"
                                 >
-                                    {isSubmitting ? "Enviando..." : "Enviar"}
+                                    Enviar
                                 </button>
                             </form>
                         </div>

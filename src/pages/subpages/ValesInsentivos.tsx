@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import Headers from "../../components/header.tsx";
 import Footer from "../../components/footer.tsx";
-import { useFormSubmit } from "../../hooks/useFormSubmit.ts";
 
 // Imagen principal del héroe (no mover ruta)
 import Gas from "/img/Contenido/TarjetasIncentivos.webp";
@@ -25,11 +24,6 @@ const STEPS: Step[] = [
 ];
 
 export default function ValesIncentivos() {
-    const { isSubmitting, handleSubmit } = useFormSubmit({
-        formType: "general",
-        subject: "Contacto - Vales de incentivos",
-        metadata: { form: "vales-incentivos-contact" },
-    });
     const pageRef = useRef<HTMLDivElement>(null);
 
     // Animaciones suaves al hacer scroll (una sola vez)
@@ -279,7 +273,7 @@ export default function ValesIncentivos() {
                             </div>
 
                             <form
-                                onSubmit={handleSubmit}
+                                onSubmit={(event) => event.preventDefault()}
                                 data-ani
                                 style={{ transitionDelay: "160ms" }}
                                 className="opacity-0 translate-y-6 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)]
@@ -346,10 +340,9 @@ export default function ValesIncentivos() {
 
                                 <button
                                     type="submit"
-                                    disabled={isSubmitting}
                                     className="inline-flex w-full items-center justify-center rounded-full bg-[#ffbf2b] px-6 py-3 text-base font-semibold text-noche shadow-[0_16px_0_rgba(0,0,0,0.18)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-[#ffc947] disabled:cursor-not-allowed disabled:opacity-70"
                                 >
-                                    {isSubmitting ? "Enviando..." : "Enviar"}
+                                    Enviar
                                 </button>
                             </form>
                         </div>
