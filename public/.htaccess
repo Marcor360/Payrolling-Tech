@@ -2,6 +2,13 @@
   RewriteEngine On
   RewriteBase /
 
+  # --- API: CheckID ---
+  # Evita que el fallback del SPA capture /api/checkid; deja que otro backend
+  # (Node, proxy del hosting) atienda esa ruta. Sin proxy directo aquí para
+  # evitar errores 500 en hostings que bloquean [P] o ProxyPass.
+  RewriteCond %{REQUEST_URI} ^/api/checkid(/.*)?$ [NC]
+  RewriteRule ^ - [L]
+
   # Allow direct access to existing files and folders
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
